@@ -3,20 +3,60 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Prendre rendez-vous | MedEmprunt">
-  <section class="pt-28 pb-16">
-    <div class="container-custom text-center mb-8">
-      <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">Prenez rendez-vous</h1>
-      <p class="text-gray-300 text-lg">Réservez votre visio gratuite avec un conseiller MedEmprunt</p>
+  <section class="section-padding bg-gray-50">
+    <div class="container-custom text-center mb-10">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-dark">
+        Prenez <span class="gradient-text">rendez-vous</span>
+      </h2>
+      <p class="text-gray-500 text-lg mt-4 max-w-xl mx-auto">
+        Réservez votre visio gratuite avec un conseiller MedEmprunt
+      </p>
     </div>
-    <div class="container-custom">
-      <iframe
-        src="https://rdvlgmed.simplybook.it/v2/"
-        width="100%"
-        height="800"
-        frameborder="0"
-        class="rounded-2xl bg-white"
-        allow="payment"
-      ></iframe>
+    <div class="container-custom max-w-3xl">
+      <div id="simplybook-widget" class="rounded-2xl overflow-hidden bg-white shadow-lg min-h-[600px]"></div>
     </div>
   </section>
 </Layout>
+
+<script is:inline>
+  var defined = false;
+  function initSimplyBookWidget() {
+    if (defined) return;
+    defined = true;
+    var widget = new SimplybookWidget({
+      "widget_type": "iframe",
+      "url": "https://rdvlgmed.simplybook.it",
+      "theme": "default",
+      "theme_settings": {
+        "timeline_show_end_time": "0",
+        "timeline_modern_display": "as_table",
+        "sb_base_color": "#2196f3",
+        "display_item_mode": "block",
+        "body_bg_color": "#ffffff",
+        "sb_review_image": "",
+        "dark_font_color": "#1a1a1a",
+        "light_font_color": "#ffffff",
+        "sb_company_label_color": "#ffffff",
+        "hide_img_mode": "0",
+        "sb_busy": "#dad2ce",
+        "sb_available": "#d6ebff"
+      },
+      "timeline": "modern",
+      "datepicker": "top_calendar",
+      "is_498": true,
+      "app_config": {
+        "clear_session": 0,
+        "allow_switch_to_498": 0
+      },
+      "container_id": "simplybook-widget"
+    });
+  }
+
+  // Load SimplyBook widget script
+  (function() {
+    var script = document.createElement('script');
+    script.src = 'https://widget.simplybook.it/v2/widget/widget.js';
+    script.onload = initSimplyBookWidget;
+    document.head.appendChild(script);
+  })();
+</script>
