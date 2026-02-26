@@ -13,53 +13,16 @@ import Layout from '../layouts/Layout.astro';
       </p>
     </div>
     <div class="container-custom max-w-3xl">
-      <div id="simplybook-widget" class="rounded-2xl overflow-hidden bg-white shadow-lg min-h-[600px]"></div>
+      <iframe
+        src="https://rdvlgmed.simplybook.it/v2/#book/service/1"
+        width="100%"
+        height="800"
+        frameborder="0"
+        scrolling="auto"
+        class="rounded-2xl bg-white shadow-lg"
+        allow="payment"
+        style="border: none;"
+      ></iframe>
     </div>
   </section>
 </Layout>
-
-<script is:inline>
-  var defined = false;
-  function initSimplyBookWidget() {
-    if (defined) return;
-    defined = true;
-    var widget = new SimplybookWidget({
-      "widget_type": "iframe",
-      "url": "https://rdvlgmed.simplybook.it",
-      "theme": "default",
-      "theme_settings": {
-        "timeline_show_end_time": "0",
-        "timeline_modern_display": "as_table",
-        "sb_base_color": "#2196f3",
-        "display_item_mode": "block",
-        "body_bg_color": "#ffffff",
-        "sb_review_image": "",
-        "dark_font_color": "#1a1a1a",
-        "light_font_color": "#ffffff",
-        "sb_company_label_color": "#ffffff",
-        "hide_img_mode": "0",
-        "sb_busy": "#dad2ce",
-        "sb_available": "#d6ebff"
-      },
-      "timeline": "modern",
-      "datepicker": "top_calendar",
-      "is_498": true,
-      "app_config": {
-        "clear_session": 0,
-        "allow_switch_to_498": 0
-      },
-      "container_id": "simplybook-widget",
-      "predefined": {
-        "service": "1"
-      }
-    });
-  }
-
-  // Load SimplyBook widget script
-  (function() {
-    var script = document.createElement('script');
-    script.src = 'https://widget.simplybook.it/v2/widget/widget.js';
-    script.onload = initSimplyBookWidget;
-    document.head.appendChild(script);
-  })();
-</script>
