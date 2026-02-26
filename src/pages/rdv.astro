@@ -13,16 +13,31 @@ import Layout from '../layouts/Layout.astro';
       </p>
     </div>
     <div class="container-custom max-w-3xl">
-      <iframe
-        src="https://rdvlgmed.simplybook.it/v2/#book/service/1"
-        width="100%"
-        height="800"
-        frameborder="0"
-        scrolling="auto"
-        class="rounded-2xl bg-white shadow-lg"
-        allow="payment"
-        style="border: none;"
-      ></iframe>
+      <!-- Wrapper that clips the top part of the SimplyBook iframe (header/banner) -->
+      <div class="sb-wrapper rounded-2xl shadow-lg overflow-hidden bg-white">
+        <iframe
+          src="https://rdvlgmed.simplybook.it/v2/#book/service/1"
+          width="100%"
+          height="1200"
+          frameborder="0"
+          scrolling="no"
+          class="sb-iframe"
+          allow="payment"
+        ></iframe>
+      </div>
     </div>
   </section>
 </Layout>
+
+<style>
+  .sb-wrapper {
+    height: 700px;
+    overflow: hidden;
+    position: relative;
+  }
+  .sb-iframe {
+    border: none;
+    margin-top: -430px;
+    position: relative;
+  }
+</style>
