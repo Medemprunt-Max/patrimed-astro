@@ -6,9 +6,20 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description?: string;
+  canonicalPath?: string;
+  ogImage?: string;
 }
 
-const { title, description = "MedEmprunt - Courtier en crédit immobilier spécialisé pour les professions médicales" } = Astro.props;
+const {
+  title,
+  description = "MedEmprunt - Courtier en crédit immobilier spécialisé pour les professions médicales",
+  canonicalPath,
+  ogImage = "/og-image.jpg",
+} = Astro.props;
+
+const siteUrl = "https://www.medemprunt.fr";
+const canonicalURL = canonicalPath ? `${siteUrl}${canonicalPath}` : new URL(Astro.url.pathname, siteUrl).href;
+const fullTitle = `${title} | MedEmprunt`;
 ---
 
 <!doctype html>
@@ -18,7 +29,53 @@ const { title, description = "MedEmprunt - Courtier en crédit immobilier spéci
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} | MedEmprunt</title>
+    <link rel="canonical" href={canonicalURL} />
+
+    <title>{fullTitle}</title>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content="MedEmprunt" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+
+    <!-- Schema.org LocalBusiness -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "MedEmprunt",
+      "description": "Courtier en crédit immobilier spécialisé pour les professions médicales : médecins, pharmaciens, dentistes.",
+      "url": "https://www.medemprunt.fr",
+      "telephone": "+33177624481",
+      "email": "contact@medemprunt.fr",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "131 boulevard Pereire",
+        "addressLocality": "Paris",
+        "postalCode": "75017",
+        "addressCountry": "FR"
+      },
+      "image": `${siteUrl}/og-image.jpg`,
+      "priceRange": "€€",
+      "sameAs": [
+        "https://www.facebook.com/medemprunt",
+        "https://www.instagram.com/medemprunt",
+        "https://fr.linkedin.com/company/medemprunt"
+      ]
+    })} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body class="min-h-screen flex flex-col">
     <Header />

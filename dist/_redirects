@@ -1,0 +1,18 @@
+# Redirections WordPress → Astro (suppression trailing slashes)
+/partenaires/          /partenaires        301
+/parrainage/           /parrainage         301
+/tarifs/               /tarifs             301
+/a-vos-cotes/          /a-vos-cotes        301
+/espace-client/        /espace-client      301
+/contact/              /contact            301
+/mentions-legales/     /mentions-legales   301
+/donnees-personnelles/ /donnees-personnelles 301
+
+# Anciennes URLs WordPress
+/simulation/           /simulation         301
+/rdv/                  /rdv                301
+/prendre-rendez-vous/  /rdv                301
+/simulateur/           /simulation         301
+
+# Catch-all trailing slashes
+/*/                    /:splat             301

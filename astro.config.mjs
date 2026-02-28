@@ -1,8 +1,10 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
     output: 'static',
-    integrations: [tailwind()],
-    site: 'https://medemprunt.fr',
+    integrations: [tailwind(), sitemap()],
+    site: 'https://www.medemprunt.fr',
+    trailingSlash: 'never',
 });

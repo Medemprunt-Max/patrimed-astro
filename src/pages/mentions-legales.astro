@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroCompact from '../components/HeroCompact.astro';
+import Section from '../components/Section.astro';
+---
+
+<Layout
+  title="Mentions légales"
+  description="Mentions légales du site medemprunt.fr — LGMED SAS, courtier en crédit immobilier spécialisé professions médicales. ORIAS, RCS, conditions d'utilisation."
+>
+  <HeroCompact title="Mentions" highlight="légales" />
+
+  <Section>
+    <div class="max-w-3xl mx-auto prose-legal">
+
+      <h2>1. Éditeur du site</h2>
+      <p>
+        Le site <strong>www.medemprunt.fr</strong> est édité par la société <strong>LGMED SAS</strong>,
+        société par actions simplifiée au capital de 4 000 €, immatriculée au Registre du Commerce et des
+        Sociétés de Paris sous le numéro <strong>RCS Paris B 845 206 093</strong>.
+      </p>
+      <ul>
+        <li><strong>Siège social :</strong> 131 boulevard Pereire, 75017 Paris</li>
+        <li><strong>Numéro de TVA intracommunautaire :</strong> FR 73845206093</li>
+        <li><strong>Téléphone :</strong> 01 77 62 44 81</li>
+        <li><strong>E-mail :</strong> contact@medemprunt.fr</li>
+        <li><strong>Directeur de la publication :</strong> Maximilien Brami</li>
+      </ul>
+
+      <h2>2. Hébergeur</h2>
+      <p>
+        Le site est hébergé par <strong>Netlify, Inc.</strong>, 512 2nd Street, Suite 200,
+        San Francisco, CA 94107, États-Unis — <a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">www.netlify.com</a>.
+      </p>
+
+      <h2>3. Activité réglementée</h2>
+      <p>
+        LGMED SAS exerce en qualité de <strong>Courtier en Opérations de Banque et en Services de Paiement (COBSP)</strong>
+        et de <strong>Courtier en Assurance (COA)</strong>.
+      </p>
+      <ul>
+        <li><strong>Numéro ORIAS :</strong> 22 005 252 — vérifiable sur <a href="https://www.orias.fr" target="_blank" rel="noopener noreferrer">www.orias.fr</a></li>
+      </ul>
+      <p>
+        L'activité de courtage est soumise au contrôle de l'<strong>Autorité de Contrôle Prudentiel et de Résolution (ACPR)</strong>,
+        4 Place de Budapest, CS 92459, 75436 Paris Cedex 09.
+      </p>
+
+      <h2>4. Responsabilité civile professionnelle</h2>
+      <p>
+        Conformément aux obligations légales, LGMED SAS dispose d'une garantie de responsabilité civile
+        professionnelle souscrite auprès des <strong>Lloyd's de Londres</strong>, couvrant les activités
+        de courtage en opérations de banque et en assurance.
+      </p>
+
+      <h2>5. Médiation</h2>
+      <p>
+        En cas de litige, le client peut recourir gratuitement au service de médiation :
+      </p>
+      <ul>
+        <li><strong>Médiateur de l'ASF</strong> (Association française des Sociétés Financières) — 75, rue Taitbout, 75009 Paris</li>
+      </ul>
+
+      <h2>6. Propriété intellectuelle</h2>
+      <p>
+        L'ensemble des éléments figurant sur le site (textes, images, logos, graphismes, icônes, sons, logiciels…)
+        est protégé par les dispositions du Code de la propriété intellectuelle. Toute reproduction, représentation,
+        modification, publication ou adaptation, totale ou partielle, de ces éléments, quel que soit le moyen ou le
+        procédé utilisé, est interdite sans l'autorisation écrite préalable de LGMED SAS.
+      </p>
+
+      <h2>7. Limitation de responsabilité</h2>
+      <p>
+        Les informations diffusées sur ce site sont fournies à titre purement indicatif et ne sauraient constituer
+        un conseil juridique, fiscal ou financier. LGMED SAS ne peut être tenue responsable des dommages directs ou
+        indirects résultant de l'accès ou de l'utilisation du site, y compris l'inaccessibilité, les pertes de données,
+        les détériorations ou les virus qui pourraient affecter l'équipement informatique de l'utilisateur.
+      </p>
+
+      <h2>8. Liens hypertextes</h2>
+      <p>
+        Le site peut contenir des liens vers d'autres sites internet. LGMED SAS ne dispose d'aucun moyen de contrôle
+        du contenu de ces sites tiers et décline toute responsabilité quant à leur contenu.
+      </p>
+
+    </div>
+  </Section>
+</Layout>
+
+<style>
+  .prose-legal h2 {
+    @apply font-display text-xl font-bold text-dark mt-10 mb-4;
+  }
+  .prose-legal h2:first-child {
+    @apply mt-0;
+  }
+  .prose-legal p {
+    @apply text-gray-600 leading-relaxed mb-4;
+  }
+  .prose-legal ul {
+    @apply list-disc list-inside text-gray-600 mb-4 space-y-1;
+  }
+  .prose-legal a {
+    @apply text-med-blue hover:underline;
+  }
+</style>
