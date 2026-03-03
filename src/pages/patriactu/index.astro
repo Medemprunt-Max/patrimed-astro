@@ -1,0 +1,96 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HeroCompact from '../../components/HeroCompact.astro';
+import Section from '../../components/Section.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+const posts = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const tags = [...new Set(posts.map(p => p.data.tag).filter(Boolean))];
+---
+
+<Layout
+  title="PatriActu — Blog Patrimed"
+  description="Actualites financieres et patrimoniales pour les professionnels de sante."
+>
+  <HeroCompact
+    title="Patri"
+    highlight="Actu"
+    subtitle="Actualites, analyses et conseils patrimoniaux pour les professionnels de sante."
+  />
+
+  <Section>
+    <SectionTitle
+      title="Nos derniers"
+      highlight="articles"
+    />
+
+    <!-- Tags filter -->
+    {tags.length > 0 && (
+      <div class="flex flex-wrap items-center justify-center gap-2 mb-10">
+        <button class="tag-filter active px-4 py-2 rounded-full text-sm font-medium transition-all bg-pat-plum text-white" data-tag="all">
+          Tous
+        </button>
+        {tags.map((tag) => (
+          <button class="tag-filter px-4 py-2 rounded-full text-sm font-medium transition-all bg-gray-100 text-gray-600 hover:bg-gray-200" data-tag={tag}>
+            {tag}
+          </button>
+        ))}
+      </div>
+    )}
+
+    <!-- Articles grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8" id="articles-grid">
+      {posts.map((post) => (
+        <div class="blog-item" data-tag={post.data.tag || ''}>
+          <BlogCard
+            title={post.data.title}
+            excerpt={post.data.excerpt}
+            date={post.data.date}
+            slug={post.id}
+            image={post.data.image}
+            tag={post.data.tag}
+          />
+        </div>
+      ))}
+    </div>
+
+    {posts.length === 0 && (
+      <div class="text-center py-16">
+        <p class="text-gray-400 text-lg">Aucun article pour le moment. Revenez bientot !</p>
+      </div>
+    )}
+  </Section>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filters = document.querySelectorAll('.tag-filter');
+    const items = document.querySelectorAll('.blog-item');
+
+    filters.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tag = btn.getAttribute('data-tag');
+
+        filters.forEach(f => {
+          f.classList.remove('active', 'bg-pat-plum', 'text-white');
+          f.classList.add('bg-gray-100', 'text-gray-600');
+        });
+        btn.classList.add('active', 'bg-pat-plum', 'text-white');
+        btn.classList.remove('bg-gray-100', 'text-gray-600');
+
+        items.forEach(item => {
+          const itemTag = item.getAttribute('data-tag');
+          if (tag === 'all' || itemTag === tag) {
+            (item as HTMLElement).style.display = '';
+          } else {
+            (item as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>

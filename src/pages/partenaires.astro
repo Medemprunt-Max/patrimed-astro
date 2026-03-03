@@ -3,57 +3,70 @@ import Layout from '../layouts/Layout.astro';
 import HeroCompact from '../components/HeroCompact.astro';
 import Section from '../components/Section.astro';
 import SectionTitle from '../components/SectionTitle.astro';
-import Card from '../components/Card.astro';
 import Button from '../components/Button.astro';
 
-const banques = [
-  { name: 'Crédit Agricole', category: 'Banque nationale' },
-  { name: 'BNP Paribas', category: 'Banque nationale' },
-  { name: 'Société Générale', category: 'Banque nationale' },
-  { name: 'Caisse d\'Épargne', category: 'Banque coopérative' },
-  { name: 'Banque Populaire', category: 'Banque coopérative' },
-  { name: 'LCL', category: 'Banque nationale' },
-  { name: 'CIC', category: 'Banque nationale' },
-  { name: 'Crédit Mutuel', category: 'Banque coopérative' },
-  { name: 'La Banque Postale', category: 'Banque nationale' },
-  { name: 'BRED', category: 'Banque coopérative' },
-  { name: 'Banque Palatine', category: 'Banque spécialisée' },
-  { name: 'AXA Banque', category: 'Banque-assurance' },
+const assureurs = [
+  { name: 'Generali', category: 'Assurance' },
+  { name: 'Suravenir', category: 'Assurance' },
+  { name: 'Spirica', category: 'Assurance' },
+  { name: 'Swiss Life', category: 'Assurance' },
+  { name: 'Cardif', category: 'Assurance' },
+  { name: 'Abeille Assurances', category: 'Assurance' },
+  { name: 'La France Mutualiste', category: 'Mutuelle' },
+  { name: 'CNP Assurances', category: 'Assurance' },
+  { name: 'AXA', category: 'Assurance' },
+  { name: 'Apicil', category: 'Assurance' },
+  { name: 'Intencial', category: 'Assurance' },
+  { name: 'Linxea', category: 'Courtier en ligne' },
+  { name: 'Nortia', category: 'Plateforme' },
+  { name: 'Primonial', category: 'Société de gestion' },
 ];
 
-const assureurs = [
-  { name: 'MACSF', category: 'Assurance professions médicales' },
-  { name: 'Generali', category: 'Assurance' },
-  { name: 'AXA', category: 'Assurance' },
-  { name: 'SwissLife', category: 'Assurance' },
-  { name: 'CNP Assurances', category: 'Assurance' },
-  { name: 'Cardif', category: 'Assurance' },
+const scpi = [
+  { name: 'Corum', category: 'SCPI' },
+  { name: 'Primonial REIM', category: 'SCPI' },
+  { name: 'Amundi Immobilier', category: 'SCPI' },
+  { name: 'Sofidy', category: 'SCPI' },
+  { name: 'Perial', category: 'SCPI' },
+  { name: 'Paref Gestion', category: 'SCPI' },
+  { name: 'Iroko', category: 'SCPI' },
+];
+
+const fiscalite = [
+  { name: 'Inter Invest', category: 'Girardin' },
+  { name: 'Ecofip', category: 'Girardin' },
+  { name: 'Groupe Profina', category: 'Défiscalisation' },
 ];
 
 const avantages = [
   {
     icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />',
-    title: 'Partenaires de confiance',
-    description: 'Nous travaillons uniquement avec des établissements bancaires et assureurs reconnus et réglementés.'
-  },
-  {
-    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />',
-    title: 'Meilleurs taux négociés',
-    description: 'Grâce à nos partenariats, nous obtenons des conditions préférentielles pour les professions médicales.'
+    title: 'Partenaires sélectionnés',
+    description: 'Nous travaillons uniquement avec des acteurs reconnus et réglementés, sélectionnés pour la qualité de leurs produits.'
   },
   {
     icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />',
-    title: 'Comparaison objective',
-    description: 'Notre rémunération fixe nous permet de vous recommander la meilleure offre, pas celle qui nous rapporte le plus.'
+    title: '100% indépendant',
+    description: 'Notre indépendance nous permet de vous recommander objectivement les meilleures solutions, sans conflit d\'intérêts.'
+  },
+  {
+    icon: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />',
+    title: 'Architecture ouverte',
+    description: 'Accès à plus de 25 partenaires financiers pour diversifier vos investissements et optimiser vos rendements.'
   },
 ];
+
+const renderPartnerGrid = (partners: {name: string; category: string}[], colorFrom: string, colorTo: string) => partners;
 ---
 
-<Layout title="Nos Partenaires" description="Découvrez les partenaires bancaires et institutionnels de MedEmprunt, courtier crédit immobilier pour les professions médicales.">
+<Layout
+  title="Nos partenaires — Patrimed"
+  description="Plus de 25 partenaires financiers sélectionnés pour leur pertinence et solidité."
+>
   <HeroCompact
     title="Nos"
     highlight="Partenaires"
-    subtitle="Nous collaborons avec les plus grands établissements bancaires et assureurs pour vous obtenir les meilleures conditions de financement."
+    subtitle="Plus de 25 partenaires financiers sélectionnés pour leur solidité et la qualité de leurs produits."
   />
 
   <!-- Avantages -->
@@ -65,8 +78,8 @@ const avantages = [
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
       {avantages.map((avantage, i) => (
         <div class="reveal bg-white rounded-2xl p-8 border border-gray-100 card-hover" style={`transition-delay: ${i * 100}ms`}>
-          <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center mb-6">
-            <svg class="w-7 h-7 text-med-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <div class="w-14 h-14 rounded-xl bg-primary-50 flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <Fragment set:html={avantage.icon} />
             </svg>
           </div>
@@ -77,45 +90,67 @@ const avantages = [
     </div>
   </Section>
 
-  <!-- Banques partenaires -->
+  <!-- Assureurs & Sociétés de gestion -->
   <Section>
     <SectionTitle
-      title="Banques"
-      highlight="partenaires"
-      subtitle="Nous travaillons avec un large réseau de banques nationales, coopératives et spécialisées pour trouver l'offre la plus adaptée à votre profil."
+      title="Assureurs & Sociétés"
+      highlight="de gestion"
+      subtitle="Nos partenaires assureurs et sociétés de gestion pour l'assurance vie, le PER et les placements financiers."
     />
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-      {banques.map((banque, i) => (
+      {assureurs.map((partner, i) => (
         <div class="reveal group bg-white rounded-2xl border border-gray-100 p-6 text-center card-hover" style={`transition-delay: ${i * 50}ms`}>
-          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-            <span class="text-2xl font-display font-bold text-med-blue">
-              {banque.name.charAt(0)}
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+            <span class="text-2xl font-display font-bold text-pat-plum">
+              {partner.name.charAt(0)}
             </span>
           </div>
-          <h3 class="font-semibold text-dark text-sm md:text-base">{banque.name}</h3>
-          <p class="text-gray-400 text-xs mt-1">{banque.category}</p>
+          <h3 class="font-semibold text-dark text-sm md:text-base">{partner.name}</h3>
+          <p class="text-gray-400 text-xs mt-1">{partner.category}</p>
         </div>
       ))}
     </div>
   </Section>
 
-  <!-- Assureurs partenaires -->
+  <!-- SCPI & Immobilier -->
   <Section bg="gray">
     <SectionTitle
-      title="Assureurs"
-      highlight="partenaires"
-      subtitle="Pour votre assurance emprunteur, nous comparons les offres de nos assureurs partenaires afin de vous proposer la meilleure couverture au meilleur tarif."
+      title="SCPI & Immobilier"
+      highlight="direct"
+      subtitle="Nos partenaires pour l'investissement immobilier en parts de SCPI et en direct."
     />
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
-      {assureurs.map((assureur, i) => (
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+      {scpi.map((partner, i) => (
         <div class="reveal group bg-white rounded-2xl border border-gray-100 p-6 text-center card-hover" style={`transition-delay: ${i * 50}ms`}>
-          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-teal-50 to-cyan-50 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300">
-            <span class="text-xl font-display font-bold text-accent-dark">
-              {assureur.name.charAt(0)}
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+            <span class="text-2xl font-display font-bold text-accent-dark">
+              {partner.name.charAt(0)}
             </span>
           </div>
-          <h3 class="font-semibold text-dark text-sm">{assureur.name}</h3>
-          <p class="text-gray-400 text-xs mt-1">{assureur.category}</p>
+          <h3 class="font-semibold text-dark text-sm md:text-base">{partner.name}</h3>
+          <p class="text-gray-400 text-xs mt-1">{partner.category}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Fiscalité & Investissements -->
+  <Section>
+    <SectionTitle
+      title="Optimisation fiscale &"
+      highlight="investissements"
+      subtitle="Nos partenaires spécialisés dans la défiscalisation et les investissements atypiques."
+    />
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6 max-w-3xl mx-auto">
+      {fiscalite.map((partner, i) => (
+        <div class="reveal group bg-white rounded-2xl border border-gray-100 p-6 text-center card-hover" style={`transition-delay: ${i * 50}ms`}>
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+            <span class="text-2xl font-display font-bold text-pat-plum">
+              {partner.name.charAt(0)}
+            </span>
+          </div>
+          <h3 class="font-semibold text-dark text-sm md:text-base">{partner.name}</h3>
+          <p class="text-gray-400 text-xs mt-1">{partner.category}</p>
         </div>
       ))}
     </div>
@@ -128,17 +163,17 @@ const avantages = [
         Prêt à bénéficier de nos <span class="gradient-text">partenariats</span> ?
       </h2>
       <p class="text-gray-300 text-lg mb-8 leading-relaxed">
-        Contactez-nous pour un rendez-vous gratuit en visioconférence et découvrez les offres que nous pouvons vous obtenir.
+        Contactez-nous pour un rendez-vous gratuit en visioconférence et découvrez les solutions que nous pouvons vous proposer.
       </p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <Button href="/contact" variant="primary" size="lg">
+        <Button href="/rdv" variant="primary" size="lg">
           RDV VISIO GRATUIT
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </Button>
-        <Button href="/tarifs" variant="secondary" size="lg">
-          Voir nos tarifs
+        <Button href="/contact" variant="secondary" size="lg" class="border-white/30 text-white hover:bg-white/10 hover:text-white">
+          Nous contacter
         </Button>
       </div>
     </div>

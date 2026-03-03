@@ -2,129 +2,342 @@
 import Layout from '../layouts/Layout.astro';
 import Section from '../components/Section.astro';
 import Button from '../components/Button.astro';
+import StatCounter from '../components/StatCounter.astro';
+import PartnerLogo from '../components/PartnerLogo.astro';
 
-const engagements = [
+const valueProps = [
   {
-    num: '01',
-    title: 'Experts des statuts',
-    description: 'Nous comprenons vos différents statuts : Interne, CCA, PH, docteur junior, assistant, libéraux en SELARL, SELAS, SCM…',
+    icon: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
+    title: 'Rentabilité',
+    description: 'Des stratégies d\'investissement personnalisées pour optimiser le rendement de votre patrimoine tout en maîtrisant les risques.',
   },
   {
-    num: '02',
-    title: 'Humains',
-    description: 'Fini les chatbots ! Bien qu\'à l\'ère du digital, profitez d\'un conseiller dédié pour échanger sur vos projets de vie, peu importe la période !',
+    icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z',
+    title: 'Proximité',
+    description: 'Un conseiller dédié qui connaît les spécificités de votre profession. Disponible 6j/7 jusqu\'à 23h en visioconférence.',
   },
   {
-    num: '03',
-    title: 'Disponibles',
-    description: 'Vos horaires ? Nos horaires ! Nous sommes disponibles en visioconférence, 6j/7 et jusqu\'à 23h.',
+    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+    title: 'Indépendance',
+    description: '100% indépendant. Nous sélectionnons les meilleurs produits parmi plus de 25 partenaires sans conflit d\'intérêts.',
   },
 ];
 
 const services = [
-  { title: 'Financement de résidence principale', description: 'Vous souhaitez obtenir un crédit immobilier ? Medemprunt vous négocie votre prêt aux meilleures conditions !' },
-  { title: 'Financement d\'installation', description: 'Vous souhaitez installer votre cabinet en tant que libéral ? Nous vous accompagnons pour obtenir un prêt aux meilleures conditions pour votre installation !' },
-  { title: 'Financement de vos travaux', description: 'Nous vous aidons à financer vos travaux énergétiques ! Découvrez dès maintenant les avantages qui vous attendent.' },
-  { title: 'Gestion de patrimoine', description: 'Avec Patrimed protégez votre famille, vos revenus et votre santé !' },
+  {
+    num: '01',
+    title: 'Patrimoine',
+    desc: 'Assurance Vie, PER, SCPI, Compte-titres, PEA, ingénierie financière.',
+    icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    size: 'lg',
+  },
+  {
+    num: '02',
+    title: 'Fiscalité',
+    desc: 'Girardin, Malraux, stratégies d\'optimisation fiscale sur mesure.',
+    icon: 'M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z',
+    size: 'md',
+  },
+  {
+    num: '03',
+    title: 'Protection',
+    desc: 'Prévoyance, capital décès, rente éducation, frais obsèques.',
+    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+    size: 'sm',
+  },
+  {
+    num: '04',
+    title: 'Retraite',
+    desc: 'Optimisation PER, ETF et réduction frais de gestion, projection chiffrée.',
+    icon: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
+    size: 'wide',
+    accent: true,
+  },
+  {
+    num: '05',
+    title: 'Immobilier & Crédit',
+    desc: 'SCPI, stratégies d\'investissement immobilier, lien avec Medemprunt.',
+    icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
+    size: 'wide',
+  },
 ];
+
+const partners = [
+  'Generali', 'Suravenir', 'Spirica', 'Swiss Life', 'Cardif',
+  'Abeille', 'La France Mutualiste', 'Corum', 'Primonial',
+  'Inter Invest', 'Linxea', 'Nortia',
+];
+
+const stats = [
+  { value: '500', suffix: '+', label: 'Clients accompagnés' },
+  { value: '25', suffix: '+', label: 'Partenaires financiers' },
+  { value: '98', suffix: '%', label: 'Taux de satisfaction' },
+  { value: '6', suffix: 'j/7', label: 'Disponibilité' },
+];
+
+const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
 ---
 
 <Layout
-  title="Courtier crédit immobilier pour médecins, pharmaciens et dentistes"
-  description="Courtier spécialisé professions médicales. Obtenez les meilleures conditions de prêt immobilier grâce à nos experts qui comprennent votre statut. Conseil gratuit."
+  title="Patrimed — Gestion de patrimoine pour professionnels de santé"
+  description="Conseil patrimonial indépendant dédié aux médecins et professions médicales. Assurance vie, PER, SCPI, fiscalité. RDV gratuit."
+  headerVariant="light"
 >
-  <!-- Hero -->
-  <section class="relative gradient-bg overflow-hidden flex items-center">
+  <!-- Hero Light -->
+  <section class="hero-light relative overflow-hidden -mt-16 md:-mt-20 pt-32 md:pt-40 pb-20 lg:pb-28">
+    <!-- Decorative -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div class="absolute -top-32 -right-32 w-[600px] h-[600px] bg-med-blue/10 rounded-full blur-3xl"></div>
-      <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+      <div class="absolute -top-40 -right-40 w-[500px] h-[500px] bg-pat-plum/5 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-40 -left-40 w-[400px] h-[400px] bg-accent/5 rounded-full blur-3xl"></div>
     </div>
 
-    <div class="container-custom relative pt-20 pb-20 lg:pb-0 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      <div>
-        <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-          L'emprunt pour les médecins,
-          <span class="gradient-text italic"> pharmaciens et dentistes</span>
-        </h1>
-        <p class="mt-6 text-gray-300 text-lg md:text-xl leading-relaxed max-w-lg">
-          Notre mission : accompagner les professions médicales pour trouver la meilleure offre de prêt
-        </p>
-
-        <div class="mt-8 flex flex-col sm:flex-row gap-4">
-          <Button href="/simulation" variant="primary" size="lg">
-            Simuler un prêt
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Button>
-        </div>
-
-        <ul class="mt-8 space-y-2">
-          <li class="flex items-center gap-2 text-gray-300">
-            <svg class="w-5 h-5 text-med-blue" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            dans les meilleures conditions !
-          </li>
-          <li class="flex items-center gap-2 text-gray-300">
-            <svg class="w-5 h-5 text-med-blue" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            en gagnant du temps !
-          </li>
-          <li class="flex items-center gap-2 text-gray-300">
-            <svg class="w-5 h-5 text-med-blue" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            en économisant de l'argent !
-          </li>
-        </ul>
+    <div class="container-custom relative text-center max-w-4xl mx-auto">
+      <!-- Badge -->
+      <div class="reveal inline-flex items-center gap-2 px-4 py-2 bg-primary-50 border border-primary-100 rounded-full mb-8">
+        <svg class="w-4 h-4 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+        <span class="text-sm font-semibold text-pat-plum">100% indépendant</span>
       </div>
 
-      <div class="hidden lg:flex justify-center">
-        <img
-          src="https://medemprunt.fr/wp-content/uploads/sites/10/woman-doctor-wearing-lab-coat-with-stethoscope-isolated-609x1024.png"
-          alt="Médecin avec stéthoscope"
-          class="w-96 h-auto rounded-3xl object-cover"
-        />
+      <!-- H1 -->
+      <h1 class="reveal font-display text-4xl md:text-5xl lg:text-6xl font-extrabold text-dark leading-tight">
+        Gestion de patrimoine
+        <br />
+        <span class="gradient-text">pour les professionnels de santé</span>
+      </h1>
+
+      <!-- Baseline -->
+      <p class="reveal mt-6 text-gray-500 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+        Pour la santé de votre patrimoine
+      </p>
+
+      <!-- Trust badges -->
+      <div class="reveal flex flex-wrap items-center justify-center gap-6 mt-8 text-sm text-gray-500">
+        <span class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-pat-plum" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          100% indépendant
+        </span>
+        <span class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-pat-plum" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          Conseil gratuit
+        </span>
+        <span class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-pat-plum" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          Disponible 6j/7
+        </span>
+      </div>
+
+      <!-- CTAs -->
+      <div class="reveal mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Button href="/rdv" variant="primary" size="lg">
+          Prendre rendez-vous
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </Button>
+        <Button href="/gestion-patrimoine" variant="secondary" size="lg">
+          Découvrir nos services
+        </Button>
       </div>
     </div>
   </section>
 
-  <!-- Engagements -->
-  <Section bg="gray">
+  <!-- Partner logos scroll -->
+  <section class="py-12 border-y border-gray-100 bg-white overflow-hidden">
+    <div class="relative">
+      <!-- Gradient masks -->
+      <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10"></div>
+
+      <div class="logos-scroll flex items-center gap-12 w-max">
+        {[...partners, ...partners].map((name) => (
+          <PartnerLogo name={name} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats banner -->
+  <section class="stats-banner py-16">
+    <div class="container-custom">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        {stats.map((stat) => (
+          <StatCounter value={stat.value} suffix={stat.suffix} label={stat.label} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Value propositions -->
+  <Section bg="white">
     <div class="text-center mb-16">
-      <h2 class="font-display text-3xl md:text-4xl font-bold text-dark">
-        Nos <span class="gradient-text">engagements</span>
+      <h2 class="reveal font-display text-3xl md:text-4xl font-bold text-dark">
+        Pourquoi choisir <span class="gradient-text">Patrimed</span> ?
       </h2>
+      <p class="reveal mt-4 text-gray-500 text-lg max-w-2xl mx-auto">
+        Un accompagnement sur-mesure pour les professionnels de santé qui veulent faire fructifier leur patrimoine.
+      </p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {engagements.map((e, i) => (
+      {valueProps.map((vp, i) => (
         <div class="reveal bg-white rounded-2xl border border-gray-100 p-8 card-hover" style={`transition-delay: ${i * 100}ms`}>
-          <span class="text-4xl font-display font-extrabold gradient-text">{e.num}.</span>
-          <h3 class="font-display text-xl font-bold text-dark mt-4 mb-3">{e.title}</h3>
-          <p class="text-gray-500 leading-relaxed">{e.description}</p>
+          <div class="w-14 h-14 rounded-xl bg-primary-50 flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d={vp.icon} />
+            </svg>
+          </div>
+          <h3 class="font-display text-xl font-bold text-dark mb-3">{vp.title}</h3>
+          <p class="text-gray-500 leading-relaxed">{vp.description}</p>
         </div>
       ))}
     </div>
   </Section>
 
-  <!-- Services -->
-  <Section>
+  <!-- Bento grid services -->
+  <Section bg="gray">
     <div class="text-center mb-16">
-      <h2 class="font-display text-3xl md:text-4xl font-bold text-dark">
-        Nos différents <span class="gradient-text">services</span>
+      <h2 class="reveal font-display text-3xl md:text-4xl font-bold text-dark">
+        Nos <span class="gradient-text">solutions</span> patrimoniales
       </h2>
+      <p class="reveal mt-4 text-gray-500 text-lg max-w-2xl mx-auto">
+        5 domaines d'expertise pour une stratégie patrimoniale complète et personnalisée.
+      </p>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {services.map((s, i) => (
-        <div class="reveal bg-white rounded-2xl border border-gray-100 p-8 card-hover" style={`transition-delay: ${i * 80}ms`}>
-          <h3 class="font-display text-lg font-bold text-dark mb-3">{s.title}</h3>
-          <p class="text-gray-500 leading-relaxed">{s.description}</p>
-        </div>
-      ))}
-    </div>
-    <div class="text-center mt-12">
-      <Button href="/rdv" variant="primary" size="lg">
-        Prendre RDV
-        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-        </svg>
-      </Button>
+
+    <div class="grid grid-cols-12 gap-4 md:gap-6">
+      {services.map((s, i) => {
+        const colSpan = s.size === 'lg' ? 'col-span-12 md:col-span-7'
+          : s.size === 'md' ? 'col-span-12 md:col-span-5'
+          : s.size === 'sm' ? 'col-span-12 md:col-span-5'
+          : 'col-span-12';
+        const isAccent = s.accent;
+
+        return (
+          <a
+            href="/gestion-patrimoine"
+            class:list={[
+              'reveal group block rounded-2xl p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1',
+              colSpan,
+              isAccent ? 'bento-item-accent text-white' : 'bg-white border border-gray-100',
+            ]}
+            style={`transition-delay: ${i * 80}ms`}
+          >
+            <div class="flex items-start justify-between mb-6">
+              <span class:list={[
+                'text-4xl font-display font-extrabold',
+                isAccent ? 'text-white/30' : 'gradient-text',
+              ]}>{s.num}</span>
+              <div class:list={[
+                'w-12 h-12 rounded-xl flex items-center justify-center',
+                isAccent ? 'bg-white/10' : 'bg-primary-50',
+              ]}>
+                <svg class:list={['w-6 h-6', isAccent ? 'text-white' : 'text-pat-plum']} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d={s.icon} />
+                </svg>
+              </div>
+            </div>
+            <h3 class:list={[
+              'font-display text-xl font-bold mb-2',
+              isAccent ? 'text-white' : 'text-dark',
+            ]}>{s.title}</h3>
+            <p class:list={[
+              'leading-relaxed',
+              isAccent ? 'text-white/80' : 'text-gray-500',
+            ]}>{s.desc}</p>
+            <span class:list={[
+              'inline-flex items-center gap-1 text-sm font-semibold mt-4 group-hover:gap-2 transition-all',
+              isAccent ? 'text-white' : 'text-pat-plum',
+            ]}>
+              En savoir plus
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </span>
+          </a>
+        );
+      })}
     </div>
   </Section>
+
+  <!-- Availability -->
+  <Section bg="white">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div class="reveal">
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-dark mb-4">
+          Vos horaires ? <span class="gradient-text">Nos horaires !</span>
+        </h2>
+        <p class="text-gray-500 text-lg leading-relaxed mb-6">
+          Nous savons que votre emploi du temps est chargé. C'est pourquoi nous sommes disponibles en visioconférence <strong class="text-dark">6 jours sur 7</strong>, de 9h à 23h.
+        </p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center gap-3 text-gray-600">
+            <svg class="w-5 h-5 text-pat-plum flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Visioconférence depuis chez vous
+          </li>
+          <li class="flex items-center gap-3 text-gray-600">
+            <svg class="w-5 h-5 text-pat-plum flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Créneaux en soirée et le samedi
+          </li>
+          <li class="flex items-center gap-3 text-gray-600">
+            <svg class="w-5 h-5 text-pat-plum flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Premier rendez-vous gratuit et sans engagement
+          </li>
+        </ul>
+        <Button href="/rdv" variant="primary" size="lg">
+          Réserver un créneau
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </Button>
+      </div>
+
+      <div class="reveal">
+        <div class="bg-gray-50 rounded-2xl p-6 md:p-8 border border-gray-100">
+          <div class="grid grid-cols-6 gap-3">
+            {days.map((day) => (
+              <div class="text-center">
+                <div class="bg-white rounded-xl p-4 border border-gray-100 hover:border-pat-plum/20 hover:shadow-soft transition-all duration-300">
+                  <span class="block text-xs text-gray-400 mb-1">{day}</span>
+                  <span class="block text-lg font-display font-bold text-dark">9h</span>
+                  <div class="w-full h-px bg-gray-200 my-2"></div>
+                  <span class="block text-lg font-display font-bold text-pat-plum">23h</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p class="text-center text-gray-400 text-sm mt-4">Horaires de disponibilité en visioconférence</p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- CTA Final -->
+  <section class="gradient-bg py-20 md:py-28">
+    <div class="container-custom text-center max-w-3xl mx-auto">
+      <h2 class="reveal font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+        Prêt à optimiser votre <span class="gradient-text">patrimoine</span> ?
+      </h2>
+      <p class="reveal text-gray-300 text-lg md:text-xl mb-10 leading-relaxed">
+        Prenez rendez-vous pour un premier échange gratuit et sans engagement avec un conseiller spécialisé.
+      </p>
+      <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Button href="/rdv" variant="white" size="lg">
+          Prendre rendez-vous
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </Button>
+        <Button href="/contact" variant="secondary" size="lg" class="border-white/30 text-white hover:bg-white/10 hover:text-white">
+          Nous contacter
+        </Button>
+      </div>
+    </div>
+  </section>
 </Layout>

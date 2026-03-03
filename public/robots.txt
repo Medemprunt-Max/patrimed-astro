@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.medemprunt.fr/sitemap-index.xml
+Sitemap: https://www.patrimed.fr/sitemap-index.xml

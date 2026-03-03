@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroCompact from '../components/HeroCompact.astro';
+import Section from '../components/Section.astro';
+import Button from '../components/Button.astro';
+
+const services = [
+  {
+    num: '01',
+    title: 'Patrimoine',
+    subtitle: 'Construire et développer votre capital',
+    icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    description: 'Nous vous accompagnons dans la construction et le développement de votre patrimoine grâce à des solutions d\'investissement diversifiées et adaptées à votre profil.',
+    features: [
+      'Assurance Vie (fonds euros, UC, gestion pilotée)',
+      'Plan d\'Épargne Retraite (PER)',
+      'SCPI (parts directes ou en assurance)',
+      'Compte-titres et PEA',
+      'Ingénierie financière (SCI, SARL de famille)',
+    ],
+  },
+  {
+    num: '02',
+    title: 'Fiscalité',
+    subtitle: 'Optimiser votre imposition',
+    icon: 'M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z',
+    description: 'Réduisez votre charge fiscale grâce à des dispositifs éprouvés et conformes à la réglementation. Notre indépendance nous permet de vous proposer les solutions les plus pertinentes.',
+    features: [
+      'Dispositif Girardin industriel (one-shot)',
+      'Dispositif Malraux (immobilier patrimonial)',
+      'Stratégies d\'optimisation fiscale sur mesure',
+      'Défiscalisation outre-mer',
+      'Audit fiscal personnalisé',
+    ],
+  },
+  {
+    num: '03',
+    title: 'Protection',
+    subtitle: 'Sécuriser votre famille et vos revenus',
+    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+    description: 'En tant que professionnel de santé, vos revenus dépendent de votre capacité à exercer. Nous mettons en place les protections essentielles pour vous et votre famille.',
+    features: [
+      'Prévoyance (incapacité, invalidité)',
+      'Capital décès',
+      'Rente éducation pour vos enfants',
+      'Frais obsèques',
+      'Complémentaire santé adaptée',
+    ],
+  },
+  {
+    num: '04',
+    title: 'Retraite',
+    subtitle: 'Préparer sereinement votre avenir',
+    icon: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
+    description: 'La retraite des professionnels de santé est souvent insuffisante. Nous vous aidons à anticiper et à constituer un complément de revenus pour maintenir votre niveau de vie.',
+    features: [
+      'Optimisation PER (versements, fiscalité)',
+      'ETF et réduction des frais de gestion',
+      'Projection chiffrée de vos revenus futurs',
+      'Stratégie de sortie (capital, rente, mixte)',
+      'Bilan retraite personnalisé',
+    ],
+  },
+  {
+    num: '05',
+    title: 'Immobilier & Crédit',
+    subtitle: 'Investir dans la pierre intelligemment',
+    icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
+    description: 'L\'immobilier reste un pilier de la stratégie patrimoniale. Nous vous guidons vers les meilleures opportunités, en lien avec notre marque sœur Medemprunt pour le financement.',
+    features: [
+      'SCPI (sélection, arbitrage, optimisation)',
+      'Stratégies d\'investissement locatif',
+      'Démembrement de propriété',
+      'Lien direct avec Medemprunt pour le crédit',
+      'Analyse de rentabilité et simulations',
+    ],
+  },
+];
+---
+
+<Layout
+  title="Nos solutions patrimoniales — Patrimed"
+  description="Patrimoine, fiscalité, protection, retraite et immobilier. Solutions personnalisées pour les professionnels de santé."
+>
+  <HeroCompact
+    title="Nos solutions"
+    highlight="patrimoniales"
+    subtitle="5 domaines d'expertise pour une stratégie patrimoniale complète, personnalisée et adaptée aux professionnels de santé."
+  />
+
+  {services.map((service, i) => (
+    <Section bg={i % 2 === 0 ? 'white' : 'gray'}>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        <div class:list={['reveal', i % 2 !== 0 && 'lg:order-2']}>
+          <div class="flex items-center gap-4 mb-6">
+            <span class="text-5xl font-display font-extrabold gradient-text">{service.num}</span>
+            <div class="w-14 h-14 rounded-xl bg-primary-50 flex items-center justify-center">
+              <svg class="w-7 h-7 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d={service.icon} />
+              </svg>
+            </div>
+          </div>
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-dark mb-2">{service.title}</h2>
+          <p class="text-pat-plum font-semibold text-lg mb-4">{service.subtitle}</p>
+          <p class="text-gray-500 text-lg leading-relaxed">{service.description}</p>
+        </div>
+        <div class:list={['reveal', i % 2 !== 0 && 'lg:order-1']} style="transition-delay: 150ms">
+          <div class="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+            <h3 class="font-display text-lg font-bold text-dark mb-6">Ce que nous proposons</h3>
+            <ul class="space-y-4">
+              {service.features.map((feature) => (
+                <li class="flex items-start gap-3">
+                  <svg class="w-5 h-5 text-pat-plum mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span class="text-gray-600">{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </Section>
+  ))}
+
+  <!-- CTA -->
+  <Section bg="dark">
+    <div class="text-center max-w-2xl mx-auto">
+      <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-6">
+        Besoin d'un <span class="gradient-text">bilan patrimonial</span> ?
+      </h2>
+      <p class="text-gray-300 text-lg mb-8 leading-relaxed">
+        Prenez rendez-vous pour un premier échange gratuit et sans engagement. Nous analyserons votre situation et vous proposerons une stratégie sur mesure.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Button href="/rdv" variant="white" size="lg">
+          RDV VISIO GRATUIT
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </Button>
+        <Button href="/contact" variant="secondary" size="lg" class="border-white/30 text-white hover:bg-white/10 hover:text-white">
+          Nous contacter
+        </Button>
+      </div>
+    </div>
+  </Section>
+</Layout>

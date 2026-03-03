@@ -1,22 +1,22 @@
 ---
 const quickLinks = [
+  { label: 'Nos Solutions', href: '/gestion-patrimoine' },
   { label: 'Partenaires', href: '/partenaires' },
   { label: 'Parrainage', href: '/parrainage' },
-  { label: 'Nos tarifs', href: '/tarifs' },
-  { label: 'MedActu', href: '/medactu' },
+  { label: 'PatriActu', href: '/patriactu' },
 ];
 
 const usefulLinks = [
   { label: 'Prenez rendez-vous', href: '/rdv' },
-  { label: 'Contact', href: '/rdv' },
+  { label: 'Contact', href: '/contact' },
   { label: 'Mentions légales', href: '/mentions-legales' },
   { label: 'Données personnelles', href: '/donnees-personnelles' },
 ];
 
 const socials = [
-  { label: 'Facebook', href: 'https://www.facebook.com/medemprunt', icon: 'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z' },
-  { label: 'Instagram', href: 'https://www.instagram.com/medemprunt', icon: 'M16 4H8a4 4 0 00-4 4v8a4 4 0 004 4h8a4 4 0 004-4V8a4 4 0 00-4-4zm-4 11a3 3 0 110-6 3 3 0 010 6zm3.5-6.5a.75.75 0 110-1.5.75.75 0 010 1.5z' },
-  { label: 'LinkedIn', href: 'https://fr.linkedin.com/company/medemprunt', icon: 'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z' },
+  { label: 'Facebook', href: 'https://facebook.com/profile.php?id=100095108701526', icon: 'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z' },
+  { label: 'Instagram', href: 'https://instagram.com/patrimed.fr', icon: 'M16 4H8a4 4 0 00-4 4v8a4 4 0 004 4h8a4 4 0 004-4V8a4 4 0 00-4-4zm-4 11a3 3 0 110-6 3 3 0 010 6zm3.5-6.5a.75.75 0 110-1.5.75.75 0 010 1.5z' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/company/patrimed-fr/', icon: 'M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z' },
 ];
 ---
 
@@ -26,13 +26,13 @@ const socials = [
       <!-- Brand -->
       <div>
         <a href="/" class="flex items-center gap-2 mb-4">
-          <img src="/images/logo-medemprunt-white.svg" alt="MedEmprunt" class="h-8 w-auto" />
+          <img src="/images/logo-patrimed-white.svg" alt="Patrimed" class="h-8 w-auto" />
         </a>
         <p class="text-gray-400 text-sm leading-relaxed">
-          Courtier en crédit immobilier spécialisé pour les professions médicales.
+          Pour la santé de votre patrimoine.
         </p>
         <p class="text-gray-500 text-xs mt-4">
-          Medemprunt reverse chaque année 3% de son chiffre d'affaire aux associations de jeunes médecins.
+          Conseil patrimonial indépendant dédié aux professionnels de santé.
         </p>
       </div>
 
@@ -45,7 +45,7 @@ const socials = [
           {quickLinks.map((link) => (
             <li>
               <a href={link.href} class="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-2">
-                <svg class="w-3 h-3 text-med-blue" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-3 h-3 text-pat-plum" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
                 {link.label}
@@ -64,7 +64,7 @@ const socials = [
           {usefulLinks.map((link) => (
             <li>
               <a href={link.href} class="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-2">
-                <svg class="w-3 h-3 text-med-blue" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-3 h-3 text-pat-plum" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
                 {link.label}
@@ -81,16 +81,16 @@ const socials = [
         </h3>
         <div class="space-y-3">
           <a href="tel:0177624481" class="flex items-center gap-3 text-gray-400 text-sm hover:text-white transition-colors">
-            <svg class="w-4 h-4 text-med-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-4 h-4 text-pat-plum flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
             </svg>
             01 77 62 44 81
           </a>
-          <a href="mailto:contact@medemprunt.fr" class="flex items-center gap-3 text-gray-400 text-sm hover:text-white transition-colors">
-            <svg class="w-4 h-4 text-med-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <a href="mailto:contact@patrimed.fr" class="flex items-center gap-3 text-gray-400 text-sm hover:text-white transition-colors">
+            <svg class="w-4 h-4 text-pat-plum flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
             </svg>
-            contact@medemprunt.fr
+            contact@patrimed.fr
           </a>
         </div>
 
@@ -102,7 +102,7 @@ const socials = [
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.label}
-              class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-med-blue/20 transition-all duration-200"
+              class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-pat-plum/20 transition-all duration-200"
             >
               <svg class="w-4 h-4 text-gray-400 hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d={social.icon} />
@@ -115,8 +115,8 @@ const socials = [
 
     <!-- Bottom bar -->
     <div class="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-gray-500 text-xs">&copy; {new Date().getFullYear()} MedEmprunt. Tous droits réservés.</p>
-      <p class="text-gray-500 text-xs">Courtier en opérations de banque et services de paiement — ORIAS n° 22005252</p>
+      <p class="text-gray-500 text-xs">&copy; {new Date().getFullYear()} LPMED — Tous droits réservés.</p>
+      <p class="text-gray-500 text-xs text-center sm:text-right">Conseiller en Investissements Financiers (CIF) &bull; Courtier en Assurances (COA) &bull; ORIAS n° 23003677</p>
     </div>
   </div>
 </footer>

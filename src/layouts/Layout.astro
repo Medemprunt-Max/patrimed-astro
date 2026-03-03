@@ -8,18 +8,20 @@ interface Props {
   description?: string;
   canonicalPath?: string;
   ogImage?: string;
+  headerVariant?: 'light' | 'dark';
 }
 
 const {
   title,
-  description = "MedEmprunt - Courtier en crédit immobilier spécialisé pour les professions médicales",
+  description = "Patrimed — Conseil patrimonial indépendant dédié aux professionnels de santé. Assurance vie, PER, SCPI, fiscalité.",
   canonicalPath,
   ogImage = "/og-image.jpg",
+  headerVariant = 'dark',
 } = Astro.props;
 
-const siteUrl = "https://www.medemprunt.fr";
+const siteUrl = "https://www.patrimed.fr";
 const canonicalURL = canonicalPath ? `${siteUrl}${canonicalPath}` : new URL(Astro.url.pathname, siteUrl).href;
-const fullTitle = `${title} | MedEmprunt`;
+const fullTitle = title.includes('Patrimed') ? title : `${title} | Patrimed`;
 ---
 
 <!doctype html>
@@ -40,7 +42,7 @@ const fullTitle = `${title} | MedEmprunt`;
     <meta property="og:description" content={description} />
     <meta property="og:image" content={`${siteUrl}${ogImage}`} />
     <meta property="og:locale" content="fr_FR" />
-    <meta property="og:site_name" content="MedEmprunt" />
+    <meta property="og:site_name" content="Patrimed" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -48,15 +50,15 @@ const fullTitle = `${title} | MedEmprunt`;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
 
-    <!-- Schema.org LocalBusiness -->
+    <!-- Schema.org FinancialService -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "MedEmprunt",
-      "description": "Courtier en crédit immobilier spécialisé pour les professions médicales : médecins, pharmaciens, dentistes.",
-      "url": "https://www.medemprunt.fr",
+      "@type": "FinancialService",
+      "name": "Patrimed",
+      "description": "Conseil patrimonial indépendant dédié aux professionnels de santé : assurance vie, PER, SCPI, fiscalité, prévoyance.",
+      "url": "https://www.patrimed.fr",
       "telephone": "+33177624481",
-      "email": "contact@medemprunt.fr",
+      "email": "contact@patrimed.fr",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "131 boulevard Pereire",
@@ -67,18 +69,27 @@ const fullTitle = `${title} | MedEmprunt`;
       "image": `${siteUrl}/og-image.jpg`,
       "priceRange": "€€",
       "sameAs": [
-        "https://www.facebook.com/medemprunt",
-        "https://www.instagram.com/medemprunt",
-        "https://fr.linkedin.com/company/medemprunt"
+        "https://facebook.com/profile.php?id=100095108701526",
+        "https://instagram.com/patrimed.fr",
+        "https://linkedin.com/company/patrimed-fr/"
       ]
     })} />
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GT-NS49LX5"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GT-NS49LX5');
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body class="min-h-screen flex flex-col">
-    <Header />
+    <Header variant={headerVariant} />
     <main class="flex-1">
       <slot />
     </main>

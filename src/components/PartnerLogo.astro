@@ -1,0 +1,33 @@
+---
+interface Props {
+  name: string;
+  logo?: string;
+  category?: string;
+}
+
+const { name, logo, category } = Astro.props;
+
+const initials = name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+---
+
+<div class="group relative flex items-center justify-center p-4 rounded-xl bg-white border border-gray-100 hover:border-pat-plum/20 hover:shadow-soft transition-all duration-300" title={name}>
+  {logo ? (
+    <img
+      src={logo}
+      alt={name}
+      class="h-10 w-auto max-w-[120px] object-contain grayscale group-hover:grayscale-0 transition-all duration-300 opacity-60 group-hover:opacity-100"
+      loading="lazy"
+    />
+  ) : (
+    <div class="h-10 flex items-center justify-center">
+      <span class="text-lg font-display font-bold text-gray-300 group-hover:text-pat-plum transition-colors duration-300">
+        {initials}
+      </span>
+    </div>
+  )}
+
+  <!-- Tooltip -->
+  <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-dark text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
+    {name}
+  </div>
+</div>

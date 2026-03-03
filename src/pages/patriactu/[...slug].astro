@@ -1,0 +1,81 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/Section.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const allPosts = await getCollection('blog');
+const relatedPosts = allPosts
+  .filter(p => p.id !== post.id)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 2);
+
+const formattedDate = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(post.data.date);
+---
+
+<Layout
+  title={`${post.data.title} — PatriActu`}
+  description={post.data.excerpt}
+>
+  <!-- Hero article -->
+  <div class="gradient-bg pt-28 pb-16 md:pt-32 md:pb-20">
+    <div class="container-custom text-center">
+      {post.data.tag && (
+        <span class="inline-block px-4 py-1 bg-white/10 text-pat-plum text-sm font-semibold rounded-full mb-4">
+          {post.data.tag}
+        </span>
+      )}
+      <h1 class="font-display text-3xl md:text-5xl font-extrabold text-white max-w-4xl mx-auto leading-tight mb-4">
+        {post.data.title}
+      </h1>
+      <p class="text-gray-300 text-sm">
+        Publie le {formattedDate}
+      </p>
+    </div>
+  </div>
+
+  <!-- Article content -->
+  <Section>
+    <article class="max-w-3xl mx-auto prose prose-lg prose-gray prose-headings:font-display prose-headings:text-dark prose-a:text-pat-plum prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl">
+      <Content />
+    </article>
+  </Section>
+
+  <!-- Related articles -->
+  {relatedPosts.length > 0 && (
+    <Section bg="gray">
+      <div class="text-center mb-12">
+        <h2 class="font-display text-2xl md:text-3xl font-bold text-dark">
+          Articles <span class="gradient-text">connexes</span>
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
+        {relatedPosts.map((related) => (
+          <BlogCard
+            title={related.data.title}
+            excerpt={related.data.excerpt}
+            date={related.data.date}
+            slug={related.id}
+            image={related.data.image}
+            tag={related.data.tag}
+          />
+        ))}
+      </div>
+    </Section>
+  )}
+</Layout>

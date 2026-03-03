@@ -1,26 +1,46 @@
 ---
+interface Props {
+  variant?: 'light' | 'dark';
+}
+
+const { variant = 'dark' } = Astro.props;
+
 const navLinks = [
+  { label: 'Nos Solutions', href: '/gestion-patrimoine' },
   { label: 'Partenaires', href: '/partenaires' },
   { label: 'Parrainage', href: '/parrainage' },
-  { label: 'Nos tarifs', href: '/tarifs' },
-  { label: 'Espace client', href: '/espace-client' },
-  { label: 'À vos côtés', href: '/a-vos-cotes' },
+  { label: 'PatriActu', href: '/patriactu' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 const currentPath = Astro.url.pathname;
+const isLight = variant === 'light';
 ---
 
-<header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-  <div class="gradient-bg backdrop-blur-md bg-opacity-95">
+<header
+  id="main-header"
+  class:list={[
+    'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+    { 'header-light': isLight },
+  ]}
+>
+  <div
+    class:list={[
+      'transition-all duration-300',
+      isLight ? 'bg-transparent' : 'gradient-bg backdrop-blur-md bg-opacity-95',
+    ]}
+    id="header-bg"
+  >
     <div class="container-custom">
       <div class="flex items-center justify-between h-16 md:h-20">
         <!-- Logo -->
         <a href="/" class="flex items-center group">
-          <img
-            src="/images/logo-medemprunt-white.svg"
-            alt="MedEmprunt"
-            class="h-8 md:h-10 w-auto"
-          />
+          {isLight ? (
+            <img src="/images/logo-patrimed.svg" alt="Patrimed" class="h-8 md:h-10 w-auto header-logo-dark" />
+            <img src="/images/logo-patrimed-white.svg" alt="Patrimed" class="h-8 md:h-10 w-auto header-logo-white hidden" />
+          ) : (
+            <img src="/images/logo-patrimed-white.svg" alt="Patrimed" class="h-8 md:h-10 w-auto" />
+          )}
         </a>
 
         <!-- Desktop Nav -->
@@ -29,10 +49,10 @@ const currentPath = Astro.url.pathname;
             <a
               href={link.href}
               class:list={[
-                'px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200',
+                'nav-link px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200',
                 currentPath === link.href || currentPath === link.href + '/'
-                  ? 'text-white bg-white/15'
-                  : 'text-gray-300 hover:text-white hover:bg-white/10',
+                  ? isLight ? 'text-dark bg-gray-100' : 'text-white bg-white/15'
+                  : isLight ? 'text-gray-600 hover:text-dark hover:bg-gray-50' : 'text-gray-300 hover:text-white hover:bg-white/10',
               ]}
             >
               {link.label}
@@ -44,7 +64,7 @@ const currentPath = Astro.url.pathname;
         <div class="flex items-center gap-3">
           <a
             href="/rdv"
-            class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-med-blue text-white text-sm font-semibold rounded-xl transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/30"
+            class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-pat-plum text-white text-sm font-semibold rounded-xl transition-all duration-300 hover:bg-pat-burgundy hover:shadow-lg hover:shadow-pat-plum/30"
           >
             RDV VISIO GRATUIT
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -55,7 +75,10 @@ const currentPath = Astro.url.pathname;
           <!-- Mobile hamburger -->
           <button
             id="mobile-menu-btn"
-            class="lg:hidden p-2 text-white hover:bg-white/10 rounded-lg transition-colors"
+            class:list={[
+              'lg:hidden p-2 rounded-lg transition-colors',
+              isLight ? 'text-dark hover:bg-gray-100 mobile-btn-light' : 'text-white hover:bg-white/10',
+            ]}
             aria-label="Menu"
           >
             <svg id="hamburger-icon" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -88,7 +111,7 @@ const currentPath = Astro.url.pathname;
       ))}
       <a
         href="/rdv"
-        class="mt-4 flex items-center justify-center gap-2 px-5 py-3 bg-med-blue text-white text-sm font-semibold rounded-xl transition-all duration-300 hover:bg-blue-600"
+        class="mt-4 flex items-center justify-center gap-2 px-5 py-3 bg-pat-plum text-white text-sm font-semibold rounded-xl transition-all duration-300 hover:bg-pat-burgundy"
       >
         RDV VISIO GRATUIT
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -114,13 +137,50 @@ const currentPath = Astro.url.pathname;
     closeIcon?.classList.toggle('hidden');
   });
 
-  // Header background on scroll
   const header = document.getElementById('main-header');
+  const headerBg = document.getElementById('header-bg');
+  const isLightMode = header?.classList.contains('header-light');
+
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
-      header?.classList.add('shadow-xl');
+    const scrolled = window.scrollY > 20;
+    if (isLightMode) {
+      if (scrolled) {
+        header?.classList.add('header-scrolled');
+        headerBg?.classList.remove('bg-transparent');
+        headerBg?.classList.add('gradient-bg', 'backdrop-blur-md');
+        header?.classList.add('shadow-xl');
+        document.querySelectorAll('.header-logo-dark').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.header-logo-white').forEach(el => el.classList.remove('hidden'));
+        document.querySelectorAll('.nav-link').forEach(el => {
+          el.classList.remove('text-gray-600', 'hover:text-dark', 'hover:bg-gray-50', 'text-dark', 'bg-gray-100');
+          el.classList.add('text-gray-300', 'hover:text-white', 'hover:bg-white/10');
+        });
+        document.querySelectorAll('.mobile-btn-light').forEach(el => {
+          el.classList.remove('text-dark', 'hover:bg-gray-100');
+          el.classList.add('text-white', 'hover:bg-white/10');
+        });
+      } else {
+        header?.classList.remove('header-scrolled');
+        headerBg?.classList.add('bg-transparent');
+        headerBg?.classList.remove('gradient-bg', 'backdrop-blur-md');
+        header?.classList.remove('shadow-xl');
+        document.querySelectorAll('.header-logo-dark').forEach(el => el.classList.remove('hidden'));
+        document.querySelectorAll('.header-logo-white').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.nav-link').forEach(el => {
+          el.classList.add('text-gray-600', 'hover:text-dark', 'hover:bg-gray-50');
+          el.classList.remove('text-gray-300', 'hover:text-white', 'hover:bg-white/10');
+        });
+        document.querySelectorAll('.mobile-btn-light').forEach(el => {
+          el.classList.add('text-dark', 'hover:bg-gray-100');
+          el.classList.remove('text-white', 'hover:bg-white/10');
+        });
+      }
     } else {
-      header?.classList.remove('shadow-xl');
+      if (scrolled) {
+        header?.classList.add('shadow-xl');
+      } else {
+        header?.classList.remove('shadow-xl');
+      }
     }
   });
 </script>

@@ -8,27 +8,30 @@ import Button from '../components/Button.astro';
 const steps = [
   {
     num: '01',
-    title: 'Recommandez',
-    description: 'Parlez de MedEmprunt à un confrère qui a un projet immobilier et remplissez le formulaire ci-dessous.',
+    title: 'Invitez',
+    description: 'Parlez de Patrimed à un confrère et remplissez le formulaire ci-dessous avec ses coordonnées.',
   },
   {
     num: '02',
     title: 'Nous accompagnons',
-    description: 'Votre confrère bénéficie de notre expertise et obtient les meilleures conditions pour son financement.',
+    description: 'Votre confrère bénéficie d\'un RDV visio gratuit et de notre expertise en gestion de patrimoine.',
   },
   {
     num: '03',
     title: 'Vous gagnez',
-    description: 'Une fois le dossier finalisé, vous recevez une part de SCPI Eurion de Corum d\'une valeur de 215 € ou 100 € par virement.',
+    description: 'Dès l\'ouverture d\'une Assurance Vie ou d\'un PER, vous recevez 200 € en parts de SCPI ou 100 € en cash.',
   },
 ];
 ---
 
-<Layout title="Parrainage" description="Programme de parrainage MedEmprunt : gagnez 215 € en part SCPI pour chaque confrère recommandé.">
+<Layout
+  title="Programme de parrainage — Patrimed"
+  description="Parrainez un confrère et recevez 200 € en SCPI ou 100 € en cash."
+>
   <HeroCompact
-    title="Parrainage : Gagnez 215 €"
-    highlight="d'immobilier !"
-    subtitle="Nous vous offrons une part de SCPI (valeur 215 €) pour chaque confrère recommandé*"
+    title="Parrainage : Gagnez 200 €"
+    highlight="de SCPI !"
+    subtitle="Nous vous offrons 200 € en parts de SCPI pour chaque confrère parrainé*"
   />
 
   <!-- Comment ça marche -->
@@ -44,7 +47,7 @@ const steps = [
         <div class="reveal relative" style={`transition-delay: ${i * 150}ms`}>
           {/* Connector line */}
           {i < steps.length - 1 && (
-            <div class="hidden md:block absolute top-12 left-[60%] w-[80%] h-px bg-gradient-to-r from-med-blue/30 to-transparent"></div>
+            <div class="hidden md:block absolute top-12 left-[60%] w-[80%] h-px bg-gradient-to-r from-pat-plum/30 to-transparent"></div>
           )}
           <div class="bg-white rounded-2xl border border-gray-100 p-8 card-hover relative">
             <div class="flex items-center gap-4 mb-6">
@@ -64,9 +67,9 @@ const steps = [
       <div class="reveal bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-lg">
         <div class="grid grid-cols-1 md:grid-cols-2">
           <div class="gradient-bg p-8 md:p-12 flex flex-col justify-center">
-            <span class="text-med-blue text-sm font-semibold tracking-wider uppercase mb-3">Votre récompense</span>
-            <h3 class="font-display text-4xl md:text-5xl font-extrabold text-white mb-2">215 €</h3>
-            <p class="text-gray-300 text-lg">en part de SCPI Eurion de Corum</p>
+            <span class="text-pat-plum text-sm font-semibold tracking-wider uppercase mb-3">Votre récompense</span>
+            <h3 class="font-display text-4xl md:text-5xl font-extrabold text-white mb-2">200 €</h3>
+            <p class="text-gray-300 text-lg">en parts de SCPI</p>
             <div class="mt-6 pt-6 border-t border-white/10">
               <p class="text-gray-400 text-sm">ou</p>
               <h3 class="font-display text-3xl font-extrabold text-white mt-1">100 €</h3>
@@ -77,22 +80,22 @@ const steps = [
             <h3 class="font-display text-2xl font-bold text-dark mb-4">Pourquoi la SCPI ?</h3>
             <ul class="space-y-3">
               <li class="flex items-start gap-3">
-                <svg class="w-5 h-5 text-med-blue mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg class="w-5 h-5 text-pat-plum mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
                 <span class="text-gray-600">Un placement immobilier à forte performance</span>
               </li>
               <li class="flex items-start gap-3">
-                <svg class="w-5 h-5 text-med-blue mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg class="w-5 h-5 text-pat-plum mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
                 <span class="text-gray-600">Des revenus complémentaires réguliers</span>
               </li>
               <li class="flex items-start gap-3">
-                <svg class="w-5 h-5 text-med-blue mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <svg class="w-5 h-5 text-pat-plum mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
-                <span class="text-gray-600">215 € de valeur immédiate pour vous</span>
+                <span class="text-gray-600">200 € de valeur immédiate pour vous</span>
               </li>
             </ul>
           </div>
@@ -125,7 +128,7 @@ const steps = [
     </div>
 
     <p class="text-center text-gray-400 text-sm mt-6">
-      *Une part de SCPI Eurion de Corum d'une valeur de 215 € ou 100 € par virement.
+      *200 € en parts de SCPI ou 100 € par virement bancaire, après ouverture d'une Assurance Vie ou d'un PER par le filleul.
     </p>
   </Section>
 
