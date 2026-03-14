@@ -18,5 +18,8 @@ dist/
 *.swo
 .DS_Store
 
-# Claude worktrees
-.claude/worktrees/
+# Claude
+.claude/
+
+# Netlify
+.netlify/

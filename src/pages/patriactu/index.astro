@@ -14,12 +14,12 @@ const tags = [...new Set(posts.map(p => p.data.tag).filter(Boolean))];
 
 <Layout
   title="PatriActu — Blog Patrimed"
-  description="Actualites financieres et patrimoniales pour les professionnels de sante."
+  description="Actualités financières et patrimoniales pour les professionnels de santé."
 >
   <HeroCompact
     title="Patri"
     highlight="Actu"
-    subtitle="Actualites, analyses et conseils patrimoniaux pour les professionnels de sante."
+    subtitle="Actualités, analyses et conseils patrimoniaux pour les professionnels de santé."
   />
 
   <Section>
@@ -60,7 +60,7 @@ const tags = [...new Set(posts.map(p => p.data.tag).filter(Boolean))];
 
     {posts.length === 0 && (
       <div class="text-center py-16">
-        <p class="text-gray-400 text-lg">Aucun article pour le moment. Revenez bientot !</p>
+        <p class="text-gray-400 text-lg">Aucun article pour le moment. Revenez bientôt !</p>
       </div>
     )}
   </Section>
