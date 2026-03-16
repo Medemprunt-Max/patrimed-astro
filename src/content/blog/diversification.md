@@ -3,6 +3,7 @@ title: "La diversification : cle de voute d'un patrimoine solide"
 excerpt: "Pourquoi et comment diversifier vos investissements pour proteger et faire croitre votre patrimoine de professionnel de sante."
 date: 2025-09-05
 tag: "Patrimoine"
+image: "/images/blog/diversification.jpg"
 ---
 
 ## Pourquoi diversifier ?

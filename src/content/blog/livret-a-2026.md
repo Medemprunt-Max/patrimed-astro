@@ -3,6 +3,7 @@ title: "Le Livret A a baisse en 2026 : quelles alternatives pour votre epargne ?
 excerpt: "Le taux du Livret A est passe a 2,4 % en fevrier 2025. Decouvrez les alternatives plus performantes pour faire fructifier votre epargne."
 date: 2026-02-15
 tag: "Epargne"
+image: "/images/blog/livret-a.jpg"
 ---
 
 ## Un taux en baisse progressive

@@ -5,6 +5,6 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
     output: 'static',
     integrations: [tailwind(), sitemap()],
-    site: 'https://www.patrimed.fr',
+    site: 'https://patrimed.fr',
     trailingSlash: 'never',
 });

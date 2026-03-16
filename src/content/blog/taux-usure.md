@@ -3,6 +3,7 @@ title: "Taux d'usure et hausse des taux : quel impact sur vos investissements ?"
 excerpt: "Comprendre l'evolution des taux d'interet et du taux d'usure pour mieux orienter vos choix patrimoniaux en 2026."
 date: 2025-11-10
 tag: "Epargne"
+image: "/images/blog/taux-usure.jpg"
 ---
 
 ## Qu'est-ce que le taux d'usure ?

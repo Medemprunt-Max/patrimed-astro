@@ -3,6 +3,7 @@ title: "Loi Girardin : reduire ses impots en soutenant l'Outre-mer"
 excerpt: "Le dispositif Girardin industriel permet de reduire significativement votre impot sur le revenu. Explications et mise en garde pour les professionnels de sante."
 date: 2025-05-22
 tag: "Fiscalite"
+image: "/images/blog/girardin.jpg"
 ---
 
 ## Le principe du Girardin industriel

@@ -3,6 +3,7 @@ title: "SCPI : investir dans l'immobilier sans les contraintes"
 excerpt: "Decouvrez comment les SCPI permettent aux professionnels de sante d'investir dans l'immobilier avec des rendements attractifs et sans gestion locative."
 date: 2025-07-18
 tag: "SCPI"
+image: "/images/blog/scpi.jpg"
 ---
 
 ## Qu'est-ce qu'une SCPI ?

@@ -3,6 +3,7 @@ title: "Pourquoi faire appel a Patrimed pour votre patrimoine ?"
 excerpt: "Cabinet independant dedie aux professionnels de sante, Patrimed vous accompagne avec objectivite et expertise. Decouvrez ce qui nous differencie."
 date: 2026-01-20
 tag: "Patrimoine"
+image: "/images/blog/pourquoi-patrimed.jpg"
 ---
 
 ## Un cabinet ne pour les professionnels de sante

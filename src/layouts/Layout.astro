@@ -19,7 +19,7 @@ const {
   headerVariant = 'dark',
 } = Astro.props;
 
-const siteUrl = "https://www.patrimed.fr";
+const siteUrl = "https://patrimed.fr";
 const canonicalURL = canonicalPath ? `${siteUrl}${canonicalPath}` : new URL(Astro.url.pathname, siteUrl).href;
 const fullTitle = title.includes('Patrimed') ? title : `${title} | Patrimed`;
 ---
@@ -56,7 +56,7 @@ const fullTitle = title.includes('Patrimed') ? title : `${title} | Patrimed`;
       "@type": "FinancialService",
       "name": "Patrimed",
       "description": "Conseil patrimonial indépendant dédié aux professionnels de santé : assurance vie, PER, SCPI, fiscalité, prévoyance.",
-      "url": "https://www.patrimed.fr",
+      "url": "https://patrimed.fr",
       "telephone": "+33177624481",
       "email": "contact@patrimed.fr",
       "address": {
@@ -76,12 +76,12 @@ const fullTitle = title.includes('Patrimed') ? title : `${title} | Patrimed`;
     })} />
 
     <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GT-NS49LX5"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHR767P7QX"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'GT-NS49LX5');
+      gtag('config', 'G-RHR767P7QX');
     </script>
 
     <!-- Fonts -->
