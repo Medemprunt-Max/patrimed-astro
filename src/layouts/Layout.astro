@@ -87,6 +87,8 @@ const fullTitle = title.includes('Patrimed') ? title : `${title} | Patrimed`;
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <slot name="head" />
   </head>
   <body class="min-h-screen flex flex-col">
     <Header variant={headerVariant} />

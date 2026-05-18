@@ -39,6 +39,7 @@ const socials = [
 ---
 
 <Layout title="Contact — Patrimed" description="Contactez Patrimed. Disponible 6j/7 jusqu'à 23h en visio. 01 77 62 44 81, contact@patrimed.fr.">
+  <link rel="stylesheet" href="https://api.patrimed.fr/rdv/static/widget.css" slot="head" />
   <HeroCompact
     title="Nous"
     highlight="contacter"
@@ -116,21 +117,16 @@ const socials = [
           </div>
         </div>
 
-        <!-- SimplyBook.me Widget -->
+        <!-- Widget RDV Patrimed (api.patrimed.fr/rdv) -->
         <div class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm">
           <h3 class="font-display text-xl font-bold text-dark mb-2">Prendre rendez-vous</h3>
           <p class="text-gray-500 text-sm mb-6">Réservez un créneau de visioconférence gratuit avec l'un de nos conseillers.</p>
-          <div class="sb-wrapper rounded-xl overflow-hidden border border-gray-100">
-            <iframe
-              src="https://rdvlgmed.simplybook.it/v2/#book/service/8"
-              width="100%"
-              height="2000"
-              frameborder="0"
-              scrolling="no"
-              allow="payment"
-              title="Réserver un rendez-vous - SimplyBook.me"
-              class="sb-iframe"
-            ></iframe>
+          <div class="rounded-xl overflow-hidden border border-gray-100">
+            <div
+              data-rdv-widget
+              data-cabinet="patrimed"
+              data-base-url="https://api.patrimed.fr"
+            ></div>
           </div>
         </div>
       </div>
@@ -185,15 +181,4 @@ const socials = [
   }
 </script>
 
-<style>
-  .sb-wrapper {
-    height: 800px;
-    overflow: hidden;
-    position: relative;
-  }
-  .sb-iframe {
-    border: none;
-    margin-top: -615px;
-    position: relative;
-  }
-</style>
+<script src="https://api.patrimed.fr/rdv/static/widget.js" defer is:inline></script>
