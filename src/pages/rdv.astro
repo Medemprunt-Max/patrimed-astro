@@ -13,31 +13,15 @@ import Layout from '../layouts/Layout.astro';
       </p>
     </div>
     <div class="container-custom max-w-3xl">
-      <!-- Wrapper that clips the top part of the SimplyBook iframe (header/banner) -->
-      <div class="sb-wrapper rounded-2xl shadow-lg overflow-hidden bg-white">
-        <iframe
-          src="https://rdvlgmed.simplybook.it/v2/#book/service/8"
-          width="100%"
-          height="2000"
-          frameborder="0"
-          scrolling="no"
-          class="sb-iframe"
-          allow="payment"
-        ></iframe>
+      <div class="rounded-2xl shadow-lg overflow-hidden bg-white">
+        <div
+          data-rdv-widget
+          data-cabinet="patrimed"
+          data-base-url="https://api.patrimed.fr"
+        ></div>
       </div>
     </div>
   </section>
 </Layout>
 
-<style>
-  .sb-wrapper {
-    height: 1100px;
-    overflow: hidden;
-    position: relative;
-  }
-  .sb-iframe {
-    border: none;
-    margin-top: -615px;
-    position: relative;
-  }
-</style>
+<script src="https://api.patrimed.fr/rdv/static/widget.js" defer is:inline></script>
