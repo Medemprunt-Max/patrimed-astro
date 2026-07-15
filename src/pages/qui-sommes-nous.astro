@@ -5,21 +5,42 @@ import Section from '../components/Section.astro';
 import Button from '../components/Button.astro';
 import StatCounter from '../components/StatCounter.astro';
 
-const engagements = [
+const valeurs = [
+  {
+    icon: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z',
+    title: 'Spécialistes des professions médicales',
+    description:
+      "Interne, docteur junior, CCA, PH, MCU-PH, libéral en BNC, en SELARL ou en SELAS : votre statut détermine votre fiscalité, votre retraite et votre protection. Nous le connaissons avant que vous ayez à l'expliquer.",
+  },
   {
     icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
     title: 'Indépendance',
-    description: 'Nous ne sommes liés à aucune banque ni compagnie d\'assurance. Nos conseillers perçoivent la même rémunération quel que soit le produit recommandé : votre intérêt passe en premier.',
+    description:
+      "Aucun lien capitalistique avec une banque ou une compagnie d'assurance. Nous sélectionnons parmi plus de 25 partenaires financiers, sans jamais avoir de produit maison à placer.",
   },
   {
-    icon: 'M8 9l4-4 4 4m0 6l-4 4-4-4',
-    title: 'Transparence',
-    description: 'Pas de frais cachés ni de surprise. Nous vous expliquons clairement notre mode de rémunération et les coûts associés à chaque solution avant toute souscription.',
+    icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    title: 'Éthique',
+    description:
+      "Nos conseillers perçoivent la même rémunération quel que soit le produit recommandé. Rien ne peut donc orienter notre conseil — c'est la règle que nous appliquons déjà chez Medemprunt avec les banques.",
+  },
+  {
+    icon: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
+    title: 'Des supports à frais réduits',
+    description:
+      "Les frais courants des fonds, invisibles sur vos relevés, sont la première cause d'érosion du capital. Nous privilégions les supports indiciels peu chargés et vous montrons ce que chaque ligne vous coûte réellement.",
   },
   {
     icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
     title: 'Disponibilité',
-    description: 'Rendez-vous en visioconférence 6 jours sur 7, de 9h à 23h. Votre conseiller reste joignable par mail, téléphone ou SMS, au rythme de votre agenda.',
+    description:
+      "Rendez-vous en visioconférence 6 jours sur 7, de 9h à 23h. Votre conseiller reste joignable par mail, téléphone ou SMS entre les rendez-vous. Vos gardes ne s'arrêtent pas à 18h, nous non plus.",
+  },
+  {
+    icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z',
+    title: 'Offre globale',
+    description:
+      "Crédit immobilier et assurance emprunteur avec Medemprunt, patrimoine et retraite avec Patrimed. Deux métiers, une même maison, et un interlocuteur qui connaît déjà votre dossier.",
   },
 ];
 
@@ -40,7 +61,7 @@ const schema = {
     "name": "Patrimed",
     "legalName": "LPMED",
     "url": "https://patrimed.fr",
-    "description": "Cabinet de conseil en gestion de patrimoine indépendant dédié aux professionnels de santé : assurance vie, PER, SCPI, fiscalité, prévoyance, retraite.",
+    "description": "Cabinet de conseil en gestion de patrimoine indépendant dédié aux professionnels de santé, créé dans le prolongement du courtier en crédit médical Medemprunt : assurance vie, PER, SCPI, fiscalité, prévoyance, retraite.",
     "founder": {
       "@type": "Person",
       "name": "Maximilien Brami",
@@ -61,66 +82,52 @@ const schema = {
 ---
 
 <Layout
-  title="Qui sommes-nous — Patrimed, cabinet indépendant dédié aux soignants"
-  description="Découvrez Patrimed : cabinet de gestion de patrimoine indépendant (ORIAS n° 23003677, CIF, COA) fondé pour les médecins, pharmaciens, dentistes et professionnels de santé."
+  title="Qui sommes-nous — Patrimed, le patrimoine des médecins par Medemprunt"
+  description="Patrimed est né du constat de Medemprunt : après avoir financé les projets de milliers de médecins, nous les voyions mal conseillés sur leur patrimoine. Cabinet indépendant, ORIAS n° 23003677."
 >
   <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
 
   <HeroCompact
-    title="Qui"
-    highlight="sommes-nous"
-    subtitle="Un cabinet de conseil indépendant, créé pour répondre aux besoins patrimoniaux spécifiques des professionnels de santé."
+    title="Le prolongement de Medemprunt,"
+    highlight="côté patrimoine"
+    subtitle="Après avoir financé les projets de milliers de médecins, nous avons vu ce qu'on leur vendait ensuite. Patrimed est né de là."
   />
 
   <!-- Notre histoire -->
   <Section bg="white">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <div class="max-w-3xl mx-auto">
       <div class="reveal">
-        <h2 class="font-display text-3xl md:text-4xl font-bold text-dark mb-6">
-          Née d'un constat <span class="gradient-text">simple</span>
+        <p class="text-pat-plum font-semibold text-sm uppercase tracking-wide mb-3">Notre histoire</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-dark mb-8">
+          Ce que nous avons vu <span class="gradient-text">après la signature</span>
         </h2>
-        <p class="text-gray-500 text-lg leading-relaxed mb-4">
-          Les professionnels de santé ont des besoins patrimoniaux que les conseillers généralistes
-          maîtrisent rarement : fiscalité des BNC, exercice en SELARL, retraite CARMF ou CARPIMKO,
-          protection des revenus d'un libéral…
-        </p>
-        <p class="text-gray-500 text-lg leading-relaxed mb-4">
-          Patrimed est né pour combler ce manque, dans le prolongement de
-          <a href="https://medemprunt.fr" target="_blank" rel="noopener noreferrer" class="text-pat-plum font-semibold hover:underline">Medemprunt</a>,
-          notre marque sœur spécialisée dans le courtage en crédit pour les professions médicales.
-          Ensemble, les deux cabinets accompagnent les soignants sur toute leur vie financière :
-          le financement d'un côté, le patrimoine de l'autre.
-        </p>
-        <p class="text-gray-500 text-lg leading-relaxed">
-          Sans agences ni commerciaux terrain, nous concentrons nos moyens sur ce qui compte :
-          la qualité du conseil et des produits à frais réduits.
-        </p>
       </div>
-      <div class="reveal" style="transition-delay: 150ms">
-        <div class="bg-gray-50 rounded-2xl border border-gray-100 p-8">
-          <h3 class="font-display text-lg font-bold text-dark mb-6">Le fondateur</h3>
-          <!-- TODO(Maximilien) : ajouter une photo portrait ici (public/images/equipe/maximilien.jpg)
-               et enrichir la bio (parcours, diplômes, certifications) pour renforcer l'E-E-A-T. -->
-          <p class="font-display text-xl font-bold text-dark">Maximilien Brami</p>
-          <p class="text-pat-plum font-semibold text-sm mb-4">Fondateur de Medemprunt et de Patrimed</p>
-          <p class="text-gray-500 leading-relaxed text-sm">
-            Après avoir créé Medemprunt pour aider les soignants à financer leurs projets aux
-            meilleures conditions, Maximilien a fondé Patrimed avec une conviction : les
-            professionnels de santé méritent un conseil patrimonial réellement indépendant,
-            disponible à leurs horaires, et sans conflit d'intérêts.
-          </p>
-          <a
-            href="https://linkedin.com/company/patrimed-fr/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 text-sm font-semibold text-pat-plum mt-4 hover:underline"
-          >
-            Suivre Patrimed sur LinkedIn
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-        </div>
+
+      <div class="reveal space-y-5 text-gray-600 text-lg leading-relaxed" style="transition-delay: 100ms">
+        <p>
+          En 2018, deux internes en colocation rêvent chacun d'acheter leur appartement. Mêmes gardes,
+          mêmes banques, mêmes refus : un statut jugé précaire, des revenus « illisibles », des horaires
+          qui ne collent à aucun rendez-vous de bureau. Agacés, ils décident de faire eux-mêmes le travail
+          que personne ne voulait faire. <a href="https://medemprunt.fr" target="_blank" rel="noopener noreferrer" class="text-pat-plum font-semibold hover:underline">Medemprunt</a>
+          est né de là, et accompagne depuis plus de 6 000 médecins face aux banques.
+        </p>
+        <p>
+          Puis nous avons vu la suite. Quelques mois après le déblocage des fonds, les mêmes clients nous
+          montraient ce qu'on leur avait vendu entre-temps : une assurance vie souscrite au guichet et
+          garnie de fonds maison à 2 % de frais courants par an, un produit de défiscalisation inadapté à
+          leur tranche, une prévoyance calibrée pour un salarié plutôt que pour un libéral.
+        </p>
+        <p>
+          Rarement par malveillance. C'est le modèle qui veut ça : dans une banque ou une compagnie, le
+          conseiller est là pour placer les produits de la maison. En face, un médecin qui n'a ni le temps
+          ni les repères pour vérifier — et une addition invisible, qui se paie sur trente ans.
+        </p>
+        <p class="text-dark font-medium">
+          Nous avons créé Patrimed pour que les médecins que nous aidons à financer leurs projets ne se
+          fassent pas abîmer sur l'autre moitié de leur vie financière. Le financement d'un côté, le
+          patrimoine de l'autre. Mêmes clients, même exigence, et la même règle qu'avec les banques :
+          notre rémunération ne dépend jamais du produit recommandé.
+        </p>
       </div>
     </div>
   </Section>
@@ -136,30 +143,163 @@ const schema = {
     </div>
   </section>
 
-  <!-- Engagements -->
+  <!-- Une même maison, deux métiers -->
   <Section bg="gray">
-    <div class="text-center mb-16">
+    <div class="text-center mb-12 md:mb-16">
       <h2 class="reveal font-display text-3xl md:text-4xl font-bold text-dark">
-        Nos <span class="gradient-text">engagements</span>
+        Une même maison, <span class="gradient-text">deux métiers</span>
       </h2>
+      <p class="reveal mt-4 text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
+        Deux marques sœurs, la même équipe et la même culture : celle de gens qui connaissent
+        votre statut avant que vous ayez à l'expliquer.
+      </p>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {engagements.map((e, i) => (
-        <div class="reveal bg-white rounded-2xl border border-gray-100 p-8 card-hover" style={`transition-delay: ${i * 100}ms`}>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
+      <div class="reveal bg-white rounded-2xl border border-gray-100 p-8 card-hover">
+        <p class="font-display text-2xl font-bold text-dark mb-2">Medemprunt</p>
+        <p class="text-pat-plum font-semibold text-sm mb-4">Courtage en crédit</p>
+        <p class="text-gray-500 leading-relaxed mb-6">
+          Crédit immobilier, financement d'installation, rachat de parts, assurance emprunteur.
+          Medemprunt défend votre dossier auprès de ses banques partenaires et parle statuts,
+          gardes et astreintes à votre place.
+        </p>
+        <a href="https://medemprunt.fr" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-semibold text-pat-plum hover:underline">
+          Découvrir Medemprunt
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="reveal bg-white rounded-2xl border-2 border-pat-plum/30 p-8 card-hover" style="transition-delay: 100ms">
+        <p class="font-display text-2xl font-bold text-dark mb-2">Patrimed</p>
+        <p class="text-pat-plum font-semibold text-sm mb-4">Gestion de patrimoine</p>
+        <p class="text-gray-500 leading-relaxed mb-6">
+          Assurance vie, PER, SCPI, fiscalité, prévoyance et retraite. Patrimed construit ce que
+          le crédit ne couvre pas : votre épargne, votre protection et vos revenus futurs, avec des
+          supports choisis pour leurs frais réels.
+        </p>
+        <a href="/gestion-patrimoine" class="inline-flex items-center gap-2 text-sm font-semibold text-pat-plum hover:underline">
+          Nos solutions patrimoniales
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Le fondateur -->
+  <Section bg="white">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <p class="reveal text-pat-plum font-semibold text-sm uppercase tracking-wide mb-3">Le fondateur</p>
+        <h2 class="reveal font-display text-3xl md:text-4xl font-bold text-dark">
+          Maximilien <span class="gradient-text">Brami</span>
+        </h2>
+      </div>
+
+      <div class="reveal bg-gray-50 rounded-2xl border border-gray-100 p-8 md:p-10" style="transition-delay: 100ms">
+        <!-- TODO(Maximilien) : ajouter une photo portrait (public/images/equipe/maximilien.jpg)
+             et enrichir la bio (parcours, diplômes, certifications) pour renforcer l'E-E-A-T.
+             Voir la fiche « Notre président » de Medemprunt comme modèle. -->
+        <p class="font-display text-xl md:text-2xl font-bold text-dark leading-snug mb-6">
+          « Un médecin bien financé mais mal conseillé, on n'a fait que la moitié du travail. »
+        </p>
+        <p class="text-pat-plum font-semibold text-sm mb-4">Fondateur de Medemprunt et de Patrimed</p>
+        <p class="text-gray-500 leading-relaxed">
+          Après avoir créé Medemprunt pour aider les soignants à financer leurs projets aux meilleures
+          conditions, Maximilien a fondé Patrimed avec une conviction : les professionnels de santé
+          méritent un conseil patrimonial réellement indépendant, disponible à leurs horaires, et sans
+          conflit d'intérêts.
+        </p>
+        <a
+          href="https://linkedin.com/company/patrimed-fr/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 text-sm font-semibold text-pat-plum mt-6 hover:underline"
+        >
+          Suivre Patrimed sur LinkedIn
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Nos valeurs -->
+  <Section bg="gray">
+    <div class="text-center mb-12 md:mb-16">
+      <h2 class="reveal font-display text-3xl md:text-4xl font-bold text-dark">
+        Nos <span class="gradient-text">valeurs</span>
+      </h2>
+      <p class="reveal mt-4 text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
+        Six principes qui guident chacun de nos accompagnements, du premier rendez-vous
+        au suivi dans la durée.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      {valeurs.map((v, i) => (
+        <div class="reveal bg-white rounded-2xl border border-gray-100 p-8 card-hover" style={`transition-delay: ${(i % 3) * 100}ms`}>
           <div class="w-14 h-14 rounded-xl bg-primary-50 flex items-center justify-center mb-6">
             <svg class="w-7 h-7 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d={e.icon} />
+              <path stroke-linecap="round" stroke-linejoin="round" d={v.icon} />
             </svg>
           </div>
-          <h3 class="font-display text-xl font-bold text-dark mb-3">{e.title}</h3>
-          <p class="text-gray-500 leading-relaxed">{e.description}</p>
+          <h3 class="font-display text-lg font-bold text-dark mb-3">{v.title}</h3>
+          <p class="text-gray-500 leading-relaxed text-sm">{v.description}</p>
         </div>
       ))}
     </div>
   </Section>
 
-  <!-- Cadre réglementaire -->
+  <!-- Notre rémunération -->
   <Section bg="white">
+    <div class="max-w-3xl mx-auto">
+      <div class="reveal">
+        <p class="text-pat-plum font-semibold text-sm uppercase tracking-wide mb-3">Transparence</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-dark mb-8">
+          Notre rémunération, <span class="gradient-text">en clair</span>
+        </h2>
+      </div>
+      <!-- TODO(Maximilien) : cette section gagnerait beaucoup à afficher les chiffres réels,
+           comme le fait Medemprunt (« 1 % du capital emprunté, 1 500 € min, 5 900 € max »).
+           À compléter avec la grille exacte, une fois validée au regard des obligations CIF. -->
+      <div class="reveal space-y-5 text-gray-600 text-lg leading-relaxed" style="transition-delay: 100ms">
+        <p>
+          Chez beaucoup d'acteurs, la rémunération du conseiller dépend du produit placé : certains
+          contrats rapportent plus que d'autres, et le conseil s'en ressent sans que vous le sachiez.
+          C'est exactement le mécanisme que nous refusons chez Medemprunt avec les banques — nous ne
+          l'acceptons pas davantage ici.
+        </p>
+        <p>
+          <strong class="text-dark">Le premier rendez-vous et l'étude de votre situation sont gratuits</strong>,
+          sans engagement. Patrimed est ensuite rémunéré dans le cadre des solutions mises en place, et
+          ce mode de rémunération vous est présenté avant toute souscription, conformément à la
+          réglementation applicable aux Conseillers en Investissements Financiers.
+        </p>
+        <p>
+          <strong class="text-dark">Nos conseillers, eux, perçoivent la même rémunération quel que soit
+          le produit recommandé.</strong> La conséquence est simple : aucun contrat ne nous rapporte plus
+          qu'un autre, et rien ne nous retient de vous orienter vers les supports les moins chargés en
+          frais — y compris les fonds indiciels, que peu d'acteurs mettent spontanément en avant.
+        </p>
+      </div>
+      <div class="reveal mt-8">
+        <Button href="/faq" variant="secondary">
+          Consulter la FAQ
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </Button>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Cadre réglementaire -->
+  <Section bg="gray">
     <div class="max-w-3xl mx-auto text-center">
       <h2 class="reveal font-display text-3xl md:text-4xl font-bold text-dark mb-6">
         Un cadre <span class="gradient-text">réglementé</span>
@@ -173,10 +313,17 @@ const schema = {
         civile professionnelle.
       </p>
       <div class="reveal flex flex-wrap items-center justify-center gap-3">
-        <a href="https://www.orias.fr" target="_blank" rel="noopener noreferrer" class="badge bg-primary-50 text-pat-plum">Vérifier sur orias.fr</a>
-        <span class="badge bg-gray-100 text-gray-600">CIF — AMF</span>
-        <span class="badge bg-gray-100 text-gray-600">COA — ACPR</span>
-        <span class="badge bg-gray-100 text-gray-600">RC professionnelle</span>
+        <a
+          href="https://www.orias.fr"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-primary-50 text-pat-plum hover:bg-primary-100 transition-colors"
+        >
+          Vérifier sur orias.fr
+        </a>
+        <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 text-gray-600">CIF — AMF</span>
+        <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 text-gray-600">COA — ACPR</span>
+        <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 text-gray-600">RC professionnelle</span>
       </div>
     </div>
   </Section>
@@ -198,8 +345,8 @@ const schema = {
             <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </Button>
-        <Button href="/faq" variant="secondary" size="lg" class="border-white/30 text-white hover:bg-white/10 hover:text-white">
-          Consulter la FAQ
+        <Button href="/simulateurs" variant="secondary" size="lg" class="border-white/30 text-white hover:bg-white/10 hover:text-white">
+          Essayer nos simulateurs
         </Button>
       </div>
     </div>

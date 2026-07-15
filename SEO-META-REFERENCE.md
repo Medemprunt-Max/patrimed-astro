@@ -14,8 +14,9 @@ Le layout suffixe automatiquement « | Patrimed » quand le titre ne contient pa
 - **description** : Patrimoine, fiscalité, protection, retraite et immobilier. Solutions personnalisées pour les professionnels de santé.
 
 ## Qui sommes-nous (`/qui-sommes-nous`)
-- **title** : Qui sommes-nous — Patrimed, cabinet indépendant dédié aux soignants
-- **description** : Cabinet de gestion de patrimoine indépendant (ORIAS n° 23003677, CIF, COA) fondé pour les médecins, pharmaciens, dentistes et professionnels de santé.
+- **title** : Qui sommes-nous — Patrimed, le patrimoine des médecins par Medemprunt
+- **description** : Patrimed est né du constat de Medemprunt : après avoir financé les projets de milliers de médecins, nous les voyions mal conseillés sur leur patrimoine. Cabinet indépendant, ORIAS n° 23003677.
+- Angle éditorial voulu : Patrimed = prolongement de Medemprunt côté patrimoine, pour éviter que les mêmes médecins soient mal conseillés. Page calquée sur le « Qui sommes-nous » de Medemprunt (histoire, valeurs, rémunération en clair).
 
 ## FAQ (`/faq`)
 - **title** : FAQ — Questions fréquentes sur Patrimed et la gestion de patrimoine
