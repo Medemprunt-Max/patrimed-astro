@@ -1,0 +1,413 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HeroCompact from '../../components/HeroCompact.astro';
+import Section from '../../components/Section.astro';
+import Button from '../../components/Button.astro';
+
+const faqs = [
+  {
+    q: "Quels sont les frais d'une assurance vie ?",
+    a: "Quatre couches principales : les frais sur versement (0 % à 5 % prélevés à l'entrée), les frais de gestion annuels du contrat (souvent 0,5 % à 1 %), les frais courants des supports choisis — fonds actifs autour de 1,5 % à 2 % par an contre 0,1 % à 0,4 % pour des ETF — et les éventuels frais d'arbitrage. C'est le cumul de ces couches, prélevé chaque année sur tout le capital, qui fait la différence à long terme.",
+  },
+  {
+    q: "Qu'est-ce qu'un niveau de frais raisonnable en 2026 ?",
+    a: "Les bons contrats en ligne ou de gestion privée n'ont aucuns frais sur versement, des frais de gestion de 0,5 % à 0,75 % par an, et donnent accès à des supports indiciels peu chargés. Un cumul total inférieur à 1 % par an est atteignable ; les contrats bancaires traditionnels dépassent fréquemment 2 % à 2,5 % par an toutes couches confondues.",
+  },
+  {
+    q: "Mon contrat est chargé en frais : puis-je le transférer ?",
+    a: "L'assurance vie ne se transfère pas d'un assureur à l'autre. En revanche, rien n'oblige à clôturer : on peut conserver l'ancien contrat pour son antériorité fiscale et diriger les nouveaux versements vers un contrat mieux construit. L'arbitrage entre les deux se décide au cas par cas, selon l'ancienneté, les plus-values latentes et les frais réels — c'est typiquement ce que nous analysons lors d'un bilan.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((f) => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
+
+const appSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Comparateur d'impact des frais d'assurance vie",
+  "url": "https://patrimed.fr/simulateurs/frais-assurance-vie",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "provider": { "@type": "Organization", "name": "Patrimed", "url": "https://patrimed.fr" },
+  "description": "Comparez deux contrats d'assurance vie à frais différents et mesurez l'écart de capital sur 5 à 40 ans : frais sur versement, frais de gestion, effet des intérêts composés.",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://patrimed.fr" },
+    { "@type": "ListItem", "position": 2, "name": "Simulateurs", "item": "https://patrimed.fr/simulateurs" },
+    { "@type": "ListItem", "position": 3, "name": "Impact des frais d'assurance vie" },
+  ],
+};
+---
+
+<Layout
+  title="Frais d'assurance vie : combien vous coûtent-ils vraiment ?"
+  description="Simulateur gratuit : comparez deux contrats d'assurance vie à frais différents et visualisez l'écart de capital sur 10, 20 ou 30 ans. L'effet des frais composés, chiffré."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(appSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" />
+
+  <HeroCompact
+    title="L'impact des frais"
+    highlight="sur votre assurance vie"
+    subtitle="1 % de frais en plus par an paraît anodin. Sur 25 ans, c'est souvent une différence à cinq chiffres. Mesurez-la sur vos propres montants."
+  />
+
+  <Section bg="gray">
+    <nav class="text-sm text-gray-400 mb-8" aria-label="Fil d'Ariane">
+      <a href="/simulateurs" class="hover:text-pat-plum transition-colors">Simulateurs</a>
+      <span class="mx-2">/</span>
+      <span class="text-gray-600">Impact des frais d'assurance vie</span>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+      <!-- Formulaire -->
+      <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
+        <h2 class="font-display text-xl font-bold text-dark mb-6">Votre épargne</h2>
+
+        <div class="space-y-5">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="fr-initial" class="block text-sm font-semibold text-dark mb-2">Versement initial</label>
+              <div class="relative">
+                <input type="number" id="fr-initial" value="10000" min="0" step="1000"
+                  class="w-full px-4 py-3 pr-8 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold" />
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">€</span>
+              </div>
+            </div>
+            <div>
+              <label for="fr-mensuel" class="block text-sm font-semibold text-dark mb-2">Versement mensuel</label>
+              <div class="relative">
+                <input type="number" id="fr-mensuel" value="500" min="0" step="50"
+                  class="w-full px-4 py-3 pr-8 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold" />
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">€</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label for="fr-duree" class="text-sm font-semibold text-dark">Durée de placement</label>
+              <span id="fr-duree-display" class="text-pat-plum font-bold">25 ans</span>
+            </div>
+            <input type="range" id="fr-duree" min="5" max="40" step="1" value="25" class="w-full accent-pat-plum" />
+          </div>
+
+          <div>
+            <label for="fr-rendement" class="block text-sm font-semibold text-dark mb-2">Rendement annuel brut espéré</label>
+            <div class="relative">
+              <input type="number" id="fr-rendement" value="4.5" min="0" max="12" step="0.1"
+                class="w-full px-4 py-3 pr-8 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold" />
+              <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">%</span>
+            </div>
+            <p class="mt-1.5 text-xs text-gray-400">Avant frais. Le rendement dépend de votre allocation ; il n'est jamais garanti.</p>
+          </div>
+
+          <!-- Contrat A -->
+          <div class="rounded-xl border-2 border-pat-plum/30 bg-pat-pink/20 p-4">
+            <p class="text-sm font-bold text-pat-plum mb-3">Contrat A — frais réduits</p>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="fr-a-entree" class="block text-xs font-semibold text-dark mb-1.5">Frais sur versement</label>
+                <div class="relative">
+                  <input type="number" id="fr-a-entree" value="0" min="0" max="5" step="0.5"
+                    class="w-full px-3 py-2 pr-7 rounded-lg border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold text-sm" />
+                  <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-semibold">%</span>
+                </div>
+              </div>
+              <div>
+                <label for="fr-a-gestion" class="block text-xs font-semibold text-dark mb-1.5">Frais annuels totaux</label>
+                <div class="relative">
+                  <input type="number" id="fr-a-gestion" value="0.8" min="0" max="5" step="0.1"
+                    class="w-full px-3 py-2 pr-7 rounded-lg border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold text-sm" />
+                  <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-semibold">%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contrat B -->
+          <div class="rounded-xl border-2 border-gray-200 bg-gray-50 p-4">
+            <p class="text-sm font-bold text-gray-600 mb-3">Contrat B — chargé en frais</p>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="fr-b-entree" class="block text-xs font-semibold text-dark mb-1.5">Frais sur versement</label>
+                <div class="relative">
+                  <input type="number" id="fr-b-entree" value="3" min="0" max="5" step="0.5"
+                    class="w-full px-3 py-2 pr-7 rounded-lg border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold text-sm" />
+                  <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-semibold">%</span>
+                </div>
+              </div>
+              <div>
+                <label for="fr-b-gestion" class="block text-xs font-semibold text-dark mb-1.5">Frais annuels totaux</label>
+                <div class="relative">
+                  <input type="number" id="fr-b-gestion" value="2.2" min="0" max="5" step="0.1"
+                    class="w-full px-3 py-2 pr-7 rounded-lg border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold text-sm" />
+                  <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-semibold">%</span>
+                </div>
+              </div>
+            </div>
+            <p class="mt-2 text-xs text-gray-400">« Frais annuels totaux » = gestion du contrat + frais courants des supports.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Résultats -->
+      <div class="lg:col-span-3 space-y-6">
+        <div class="gradient-bg rounded-2xl p-6 md:p-8 text-white">
+          <p class="text-white/70 text-sm font-medium mb-1">Écart de capital au terme, à épargne identique</p>
+          <p id="fr-ecart" class="font-display text-4xl md:text-5xl font-bold">—</p>
+          <p class="mt-2 text-white/70 text-sm">
+            soit <strong id="fr-ecart-pct" class="text-primary-100">—</strong> de capital en plus avec le contrat à frais réduits
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-white rounded-2xl border-2 border-pat-plum/30 p-5">
+            <p class="text-xs text-pat-plum font-bold mb-1">Contrat A au terme</p>
+            <p id="fr-capital-a" class="font-display text-xl font-bold text-dark">—</p>
+          </div>
+          <div class="bg-white rounded-2xl border border-gray-100 p-5">
+            <p class="text-xs text-gray-400 font-medium mb-1">Contrat B au terme</p>
+            <p id="fr-capital-b" class="font-display text-xl font-bold text-dark">—</p>
+          </div>
+          <div class="bg-white rounded-2xl border border-gray-100 p-5">
+            <p class="text-xs text-gray-400 font-medium mb-1">Total épargné</p>
+            <p id="fr-verse" class="font-display text-xl font-bold text-dark">—</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-gray-100 p-6">
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mb-4 text-sm">
+            <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#81286b"></span> Contrat A — frais réduits</span>
+            <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#9ca3af"></span> Contrat B — chargé en frais</span>
+            <span class="flex items-center gap-2"><span class="w-6 h-0.5 border-t-2 border-dashed border-gray-300"></span> Épargne versée</span>
+          </div>
+          <div id="fr-chart"></div>
+        </div>
+
+        <!-- CTA -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+          <h3 class="font-display text-lg font-bold text-dark mb-2">Vos contrats actuels sont-ils bien construits ?</h3>
+          <p class="text-gray-500 text-sm leading-relaxed mb-5">
+            Notre indépendance nous permet de sélectionner, parmi plus de 25 partenaires, des contrats
+            sans frais sur versement et à frais de gestion compétitifs. Lors d'un bilan gratuit, nous
+            auditons aussi les frais réels de vos contrats existants.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <Button href="/rdv" variant="primary">
+              Faire auditer mes contrats
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Button>
+            <button id="fr-cta-email" class="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-pat-plum text-pat-plum font-semibold rounded-xl transition-all duration-300 hover:bg-pat-plum hover:text-white">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              Recevoir une étude personnalisée
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-8 text-xs text-gray-400 leading-relaxed max-w-4xl">
+      Simulation indicative et non contractuelle. Hypothèses : rendement brut constant, frais annuels prélevés sur
+      l'ensemble du capital, capitalisation mensuelle, fiscalité non prise en compte (identique pour les deux contrats
+      à rachat équivalent). Les performances passées ne préjugent pas des performances futures et les unités de compte
+      présentent un risque de perte en capital. Cette simulation ne constitue pas une recommandation d'investissement
+      personnalisée. Mise à jour : juillet 2026.
+    </p>
+  </Section>
+
+  <!-- Éditorial -->
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-dark mb-6">
+        Pourquoi les frais sont <span class="gradient-text">le premier critère</span>
+      </h2>
+      <div class="space-y-4 text-gray-600 leading-relaxed">
+        <p>
+          Les frais agissent comme des <strong>intérêts composés inversés</strong> : ils sont prélevés chaque année
+          sur la totalité de votre capital, y compris sur les gains des années précédentes. Un écart de 1,4 point de
+          frais annuels ne réduit pas votre capital de 1,4 % — il en absorbe une part qui grossit avec le temps, et
+          finit par représenter plusieurs années de versements.
+        </p>
+        <p>
+          C'est aussi le seul paramètre de votre épargne qui soit <strong>certain et contractuel</strong>. Le rendement
+          des marchés ne se contrôle pas ; les frais, si. À allocation identique, chaque euro de frais économisé se
+          retrouve mécaniquement dans votre poche au terme.
+        </p>
+        <p>
+          Pour un professionnel de santé qui épargne 500 € à 1 500 € par mois pendant 20 ou 30 ans — un profil que
+          nous connaissons bien —, le choix du contrat pèse souvent davantage que le choix du « meilleur fonds ».
+          C'est la raison pour laquelle notre sélection de contrats commence toujours par la grille de frais.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- FAQ -->
+  <Section bg="gray">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-dark mb-8 text-center">
+        Questions <span class="gradient-text">fréquentes</span>
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f) => (
+          <details class="faq-item group bg-white rounded-2xl border border-gray-100 hover:border-pat-plum/20 transition-colors">
+            <summary class="flex items-center justify-between gap-4 cursor-pointer list-none p-6">
+              <h3 class="font-display text-base md:text-lg font-bold text-dark">{f.q}</h3>
+              <svg class="w-5 h-5 text-pat-plum flex-shrink-0 transition-transform duration-300 group-open:rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+              </svg>
+            </summary>
+            <p class="px-6 pb-6 text-gray-500 leading-relaxed">{f.a}</p>
+          </details>
+        ))}
+      </div>
+
+      <div class="mt-12 text-center">
+        <Button href="/rdv" variant="primary" size="lg">
+          RDV visio gratuit avec un conseiller
+        </Button>
+      </div>
+    </div>
+  </Section>
+</Layout>
+
+<style>
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
+
+<script>
+  import { fmtEuro, fmtPercent, readNumber, debounce, trackEvent, drawLineChart } from '../../scripts/sim-utils.js';
+
+  const $ = (id) => document.getElementById(id);
+  const els = {
+    initial: $('fr-initial'),
+    mensuel: $('fr-mensuel'),
+    duree: $('fr-duree'),
+    dureeDisplay: $('fr-duree-display'),
+    rendement: $('fr-rendement'),
+    aEntree: $('fr-a-entree'),
+    aGestion: $('fr-a-gestion'),
+    bEntree: $('fr-b-entree'),
+    bGestion: $('fr-b-gestion'),
+    ecart: $('fr-ecart'),
+    ecartPct: $('fr-ecart-pct'),
+    capitalA: $('fr-capital-a'),
+    capitalB: $('fr-capital-b'),
+    verse: $('fr-verse'),
+    chart: $('fr-chart'),
+    ctaEmail: $('fr-cta-email'),
+  };
+
+  let tracked = false;
+  let last = null;
+
+  // Projection mensuelle avec frais d'entrée sur chaque versement et frais annuels
+  // prélevés sur l'encours (déduits du rendement).
+  function project({ initial, monthly, years, grossRate, entryFee, annualFee }) {
+    const netAnnual = grossRate - annualFee;
+    const monthlyRate = Math.pow(1 + Math.max(-0.99, netAnnual), 1 / 12) - 1;
+    const entry = 1 - entryFee;
+    let capital = initial * entry;
+    const byYear = [{ x: 0, y: capital }];
+    for (let m = 1; m <= years * 12; m++) {
+      capital = capital * (1 + monthlyRate) + monthly * entry;
+      if (m % 12 === 0) byYear.push({ x: m / 12, y: capital });
+    }
+    return { final: capital, byYear };
+  }
+
+  function compute() {
+    const initial = Math.max(0, readNumber(els.initial));
+    const monthly = Math.max(0, readNumber(els.mensuel));
+    const years = Math.max(1, readNumber(els.duree, 25));
+    const grossRate = Math.max(0, readNumber(els.rendement, 4.5)) / 100;
+    const aEntree = Math.max(0, readNumber(els.aEntree)) / 100;
+    const aGestion = Math.max(0, readNumber(els.aGestion)) / 100;
+    const bEntree = Math.max(0, readNumber(els.bEntree)) / 100;
+    const bGestion = Math.max(0, readNumber(els.bGestion)) / 100;
+
+    els.dureeDisplay.textContent = `${years} ans`;
+
+    const a = project({ initial, monthly, years, grossRate, entryFee: aEntree, annualFee: aGestion });
+    const b = project({ initial, monthly, years, grossRate, entryFee: bEntree, annualFee: bGestion });
+    const invested = initial + monthly * 12 * years;
+    const gap = a.final - b.final;
+
+    els.ecart.textContent = fmtEuro(Math.abs(gap));
+    els.ecartPct.textContent = b.final > 0 ? fmtPercent((gap / b.final) * 100, 1) : '—';
+    els.capitalA.textContent = fmtEuro(a.final);
+    els.capitalB.textContent = fmtEuro(b.final);
+    els.verse.textContent = fmtEuro(invested);
+
+    const investedLine = [];
+    for (let y = 0; y <= years; y++) investedLine.push({ x: y, y: initial + monthly * 12 * y });
+
+    drawLineChart(els.chart, [
+      { label: 'Contrat A', color: '#81286b', fill: true, points: a.byYear },
+      { label: 'Contrat B', color: '#9ca3af', points: b.byYear },
+      { label: 'Épargne versée', color: '#d1d5db', dash: '6 6', points: investedLine },
+    ], { xLabel: 'Années', ariaLabel: 'Comparaison de la croissance du capital selon les frais' });
+
+    last = { initial, monthly, years, grossRate, aEntree, aGestion, bEntree, bGestion, finalA: a.final, finalB: b.final, gap };
+  }
+
+  const recompute = debounce(compute, 120);
+  [els.initial, els.mensuel, els.duree, els.rendement, els.aEntree, els.aGestion, els.bEntree, els.bGestion].forEach((el) => {
+    el.addEventListener('input', () => {
+      if (!tracked) {
+        tracked = true;
+        trackEvent('simulateur_calcul', { simulateur: 'frais_assurance_vie' });
+      }
+      recompute();
+    });
+    el.addEventListener('change', compute);
+  });
+
+  els.ctaEmail.addEventListener('click', () => {
+    if (!last) return;
+    trackEvent('simulateur_cta_email', { simulateur: 'frais_assurance_vie' });
+    const lignes = [
+      'Bonjour,',
+      '',
+      "Je viens d'utiliser le comparateur de frais d'assurance vie sur patrimed.fr et j'aimerais recevoir une étude personnalisée (audit de mes contrats existants).",
+      '',
+      `Versement initial : ${fmtEuro(last.initial)} — versements mensuels : ${fmtEuro(last.monthly)}`,
+      `Durée : ${last.years} ans — rendement brut supposé : ${(last.grossRate * 100).toLocaleString('fr-FR')} %`,
+      `Capital simulé à frais réduits : ${fmtEuro(last.finalA)}`,
+      `Capital simulé chargé en frais : ${fmtEuro(last.finalB)}`,
+      `Écart : ${fmtEuro(Math.abs(last.gap))}`,
+      '',
+      'Voici mes coordonnées pour être recontacté(e) :',
+      'Nom :',
+      'Téléphone :',
+      '',
+      'Merci !',
+    ];
+    const subject = encodeURIComponent('Ma simulation frais d’assurance vie — demande d’étude');
+    const body = encodeURIComponent(lignes.join('\n'));
+    window.location.href = `mailto:contact@patrimed.fr?subject=${subject}&body=${body}`;
+  });
+
+  compute();
+</script>

@@ -19,6 +19,13 @@ Points clés :
 - [Parrainage](https://patrimed.fr/parrainage) : programme de parrainage entre confrères
 - [Prendre rendez-vous](https://patrimed.fr/rdv) : réservation d'une visioconférence gratuite
 
+## Simulateurs gratuits
+
+- [Simulateurs](https://patrimed.fr/simulateurs) : outils de calcul gratuits, sans inscription, avec les chiffres fiscaux 2026
+- [Économie d'impôt PER](https://patrimed.fr/simulateurs/economie-impot-per) : économie d'impôt d'un versement PER selon le barème 2026, avec plafonds de déduction TNS (BNC, SELARL) et salarié
+- [Impact des frais d'assurance vie](https://patrimed.fr/simulateurs/frais-assurance-vie) : comparaison de deux contrats à frais différents sur 5 à 40 ans
+- [Intérêts composés](https://patrimed.fr/simulateurs/interets-composes) : projection d'épargne avec versements mensuels, graphique et détail annuel
+
 ## Blog (PatriActu)
 
 - [PatriActu](https://patrimed.fr/patriactu) : actualités et conseils patrimoniaux pour les soignants

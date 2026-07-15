@@ -1,0 +1,152 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HeroCompact from '../../components/HeroCompact.astro';
+import Section from '../../components/Section.astro';
+import Button from '../../components/Button.astro';
+
+const simulateurs = [
+  {
+    href: '/simulateurs/economie-impot-per',
+    title: "Économie d'impôt PER",
+    tag: 'Fiscalité',
+    description:
+      "Combien d'impôt un versement PER vous fait-il économiser ? Calcul exact avec le barème 2026, votre tranche marginale et votre plafond de déduction TNS ou salarié.",
+    points: ['Barème 2026 en vigueur', 'Plafonds BNC / SELARL / salarié', 'Effort d’épargne réel'],
+    icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+  },
+  {
+    href: '/simulateurs/frais-assurance-vie',
+    title: "Impact des frais d'assurance vie",
+    tag: 'Épargne',
+    description:
+      "1 % de frais en plus par an paraît anodin — sur 25 ans, c'est souvent une différence à cinq chiffres. Comparez deux contrats sur vos propres montants.",
+    points: ['Deux contrats comparés', 'Graphique sur 5 à 40 ans', 'Écart chiffré en euros'],
+    icon: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
+  },
+  {
+    href: '/simulateurs/interets-composes',
+    title: 'Intérêts composés',
+    tag: 'Épargne',
+    description:
+      "Le grand classique : capital de départ, versements mensuels, taux, durée. Visualisez la courbe qui s'accélère et la part des intérêts dans votre capital final.",
+    points: ['Graphique de croissance', 'Détail année par année', 'Part des intérêts'],
+    icon: 'M4 4v16h16M8 16l3-6 3 3 4-8',
+  },
+];
+
+const collectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Simulateurs patrimoniaux Patrimed",
+  "url": "https://patrimed.fr/simulateurs",
+  "description": "Simulateurs financiers gratuits pour professionnels de santé : économie d'impôt PER, impact des frais d'assurance vie, intérêts composés.",
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": simulateurs.map((s, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "name": s.title,
+      "url": `https://patrimed.fr${s.href}`,
+    })),
+  },
+};
+---
+
+<Layout
+  title="Simulateurs patrimoniaux gratuits pour professionnels de santé"
+  description="PER, frais d'assurance vie, intérêts composés : des simulateurs gratuits, sans inscription, avec les chiffres fiscaux 2026, pensés pour les médecins et soignants."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} slot="head" />
+
+  <HeroCompact
+    title="Nos"
+    highlight="simulateurs"
+    subtitle="Des outils gratuits, sans inscription, avec les chiffres fiscaux 2026 — pour mettre des ordres de grandeur sur vos décisions patrimoniales avant d'en parler à un conseiller."
+  />
+
+  <Section bg="gray">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {simulateurs.map((s) => (
+        <a href={s.href} class="group bg-white rounded-2xl border border-gray-100 p-6 md:p-8 card-hover flex flex-col">
+          <div class="flex items-center justify-between mb-5">
+            <div class="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d={s.icon} />
+              </svg>
+            </div>
+            <span class="bento-tag bg-pat-pink/60 text-pat-burgundy">{s.tag}</span>
+          </div>
+          <h2 class="font-display text-xl font-bold text-dark mb-3 group-hover:text-pat-plum transition-colors">{s.title}</h2>
+          <p class="text-gray-500 text-sm leading-relaxed mb-5 flex-1">{s.description}</p>
+          <ul class="space-y-1.5 mb-6">
+            {s.points.map((p) => (
+              <li class="flex items-center gap-2 text-xs text-gray-500">
+                <svg class="w-3.5 h-3.5 text-pat-plum flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                {p}
+              </li>
+            ))}
+          </ul>
+          <span class="inline-flex items-center gap-2 text-pat-plum font-semibold text-sm">
+            Lancer le simulateur
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </span>
+        </a>
+      ))}
+
+      <!-- Teaser retraite -->
+      <div class="bg-white/60 rounded-2xl border-2 border-dashed border-gray-200 p-6 md:p-8 flex flex-col">
+        <div class="flex items-center justify-between mb-5">
+          <div class="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center">
+            <svg class="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <span class="bento-tag bg-gray-100 text-gray-500">Bientôt</span>
+        </div>
+        <h2 class="font-display text-xl font-bold text-gray-400 mb-3">Retraite du médecin libéral</h2>
+        <p class="text-gray-400 text-sm leading-relaxed flex-1">
+          Estimation de votre future pension CARMF face à votre revenu actuel, et du complément à
+          construire. En préparation — en attendant, ce calcul fait partie de notre bilan retraite
+          personnalisé, gratuit lors d'un premier rendez-vous.
+        </p>
+        <a href="/rdv" class="mt-6 inline-flex items-center gap-2 text-gray-500 hover:text-pat-plum font-semibold text-sm transition-colors">
+          Demander mon bilan retraite
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </Section>
+
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-dark mb-6 text-center">
+        Des outils <span class="gradient-text">honnêtes</span>, pas des gadgets
+      </h2>
+      <div class="space-y-4 text-gray-600 leading-relaxed">
+        <p>
+          Ces simulateurs utilisent les <strong>paramètres fiscaux réellement en vigueur</strong> — barème de
+          l'impôt sur le revenu issu de la loi de finances pour 2026, PASS 2026, plafonds de déduction PER — et
+          chaque page précise ses hypothèses et ses limites. Ils vous donnent des ordres de grandeur fiables,
+          sans inscription ni collecte de données : tout se calcule dans votre navigateur.
+        </p>
+        <p>
+          Un simulateur ne remplace pas une stratégie : votre statut d'exercice, votre fiscalité réelle, vos projets
+          et votre protection sociale s'articulent ensemble. C'est le travail que nous faisons lors d'un
+          <a href="/rdv" class="text-pat-plum font-medium hover:underline">premier rendez-vous gratuit</a>,
+          en visioconférence, 6j/7 de 9h à 23h.
+        </p>
+      </div>
+      <div class="mt-10 text-center">
+        <Button href="/rdv" variant="primary" size="lg">
+          RDV visio gratuit
+        </Button>
+      </div>
+    </div>
+  </Section>
+</Layout>

@@ -7,12 +7,16 @@ const { variant = 'dark' } = Astro.props;
 
 const navLinks = [
   { label: 'Nos Solutions', href: '/gestion-patrimoine' },
+  { label: 'Simulateurs', href: '/simulateurs' },
   { label: 'Qui sommes-nous', href: '/qui-sommes-nous' },
   { label: 'Partenaires', href: '/partenaires' },
   { label: 'Parrainage', href: '/parrainage' },
   { label: 'PatriActu', href: '/patriactu' },
   { label: 'Contact', href: '/contact' },
 ];
+
+const isActive = (href: string) =>
+  currentPath === href || currentPath === href + '/' || currentPath.startsWith(href + '/');
 
 const currentPath = Astro.url.pathname;
 const isLight = variant === 'light';
@@ -51,7 +55,7 @@ const isLight = variant === 'light';
               href={link.href}
               class:list={[
                 'nav-link px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200',
-                currentPath === link.href || currentPath === link.href + '/'
+                isActive(link.href)
                   ? isLight ? 'text-dark bg-gray-100' : 'text-white bg-white/15'
                   : isLight ? 'text-gray-600 hover:text-dark hover:bg-gray-50' : 'text-gray-300 hover:text-white hover:bg-white/10',
               ]}
@@ -102,7 +106,7 @@ const isLight = variant === 'light';
           href={link.href}
           class:list={[
             'block px-4 py-3 text-sm font-medium rounded-lg transition-colors',
-            currentPath === link.href || currentPath === link.href + '/'
+            isActive(link.href)
               ? 'text-white bg-white/15'
               : 'text-gray-300 hover:text-white hover:bg-white/10',
           ]}

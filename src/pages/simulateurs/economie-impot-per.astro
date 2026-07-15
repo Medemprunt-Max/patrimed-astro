@@ -1,0 +1,582 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HeroCompact from '../../components/HeroCompact.astro';
+import Section from '../../components/Section.astro';
+import Button from '../../components/Button.astro';
+
+const faqs = [
+  {
+    q: "Combien puis-je déduire avec un PER en 2026 ?",
+    a: "En 2026, un travailleur non salarié (libéral en BNC, gérant majoritaire de SELARL) peut déduire jusqu'à 10 % de son bénéfice imposable (plafonné à 8 PASS) plus 15 % de la fraction du bénéfice comprise entre 1 et 8 PASS, soit un maximum de 88 911 €. Un salarié peut déduire jusqu'à 10 % de ses revenus professionnels de l'année précédente, dans la limite de 37 680 €. Les plafonds non utilisés des années précédentes peuvent s'y ajouter, et le plafond du conjoint peut être mutualisé.",
+  },
+  {
+    q: "Le PER est-il intéressant si ma tranche marginale est de 11 % ?",
+    a: "L'avantage fiscal à l'entrée est proportionnel à votre tranche marginale d'imposition : à 11 %, il est faible, et les sommes restent bloquées jusqu'à la retraite. Le PER prend tout son sens à partir d'une TMI de 30 %, et devient très puissant à 41 % ou 45 % — situation fréquente chez les médecins libéraux. En dessous, d'autres enveloppes comme l'assurance vie sont souvent plus adaptées.",
+  },
+  {
+    q: "Que se passe-t-il à la sortie du PER ?",
+    a: "À la retraite, vous récupérez votre épargne en capital, en rente, ou un mix des deux. En sortie en capital, la part correspondant aux versements déduits est imposée au barème de l'impôt sur le revenu (sans prélèvements sociaux), et les gains au prélèvement forfaitaire unique de 30 %. L'intérêt du dispositif vient du différentiel : vous déduisez pendant votre activité à une TMI élevée, et vous êtes imposé à la retraite à une TMI généralement plus faible.",
+  },
+  {
+    q: "Puis-je récupérer mon argent avant la retraite ?",
+    a: "L'épargne d'un PER est en principe bloquée jusqu'à la retraite. La loi prévoit des cas de déblocage anticipé : achat de la résidence principale, invalidité, décès du conjoint, expiration des droits au chômage, surendettement, ou cessation d'activité non salariée suite à une liquidation judiciaire.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((f) => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
+
+const appSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Simulateur d'économie d'impôt PER 2026",
+  "url": "https://patrimed.fr/simulateurs/economie-impot-per",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "provider": { "@type": "Organization", "name": "Patrimed", "url": "https://patrimed.fr" },
+  "description": "Calculez l'économie d'impôt d'un versement sur un Plan d'Épargne Retraite en 2026 : barème en vigueur, plafonds de déduction TNS et salarié, calcul différentiel exact.",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://patrimed.fr" },
+    { "@type": "ListItem", "position": 2, "name": "Simulateurs", "item": "https://patrimed.fr/simulateurs" },
+    { "@type": "ListItem", "position": 3, "name": "Économie d'impôt PER" },
+  ],
+};
+
+// Barème 2026 affiché dans l'éditorial (source : loi de finances pour 2026).
+const bareme = [
+  { tranche: "Jusqu'à 11 600 €", taux: "0 %" },
+  { tranche: "11 601 € à 29 579 €", taux: "11 %" },
+  { tranche: "29 580 € à 84 577 €", taux: "30 %" },
+  { tranche: "84 578 € à 181 917 €", taux: "41 %" },
+  { tranche: "Au-delà de 181 917 €", taux: "45 %" },
+];
+---
+
+<Layout
+  title="Simulateur PER 2026 — Calculez votre économie d'impôt"
+  description="Combien d'impôt un versement PER vous fait-il économiser en 2026 ? Simulateur gratuit pour professionnels de santé : barème en vigueur, plafonds TNS (BNC, SELARL) et salarié."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(appSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" />
+
+  <HeroCompact
+    title="Simulateur PER :"
+    highlight="votre économie d'impôt"
+    subtitle="Estimez en 30 secondes l'impôt que vous fait économiser un versement sur un Plan d'Épargne Retraite, avec le barème 2026 et votre plafond de déduction."
+  />
+
+  <Section bg="gray">
+    <nav class="text-sm text-gray-400 mb-8" aria-label="Fil d'Ariane">
+      <a href="/simulateurs" class="hover:text-pat-plum transition-colors">Simulateurs</a>
+      <span class="mx-2">/</span>
+      <span class="text-gray-600">Économie d'impôt PER</span>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+      <!-- Formulaire -->
+      <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
+        <h2 class="font-display text-xl font-bold text-dark mb-6">Votre situation</h2>
+
+        <div class="space-y-5">
+          <div>
+            <label for="per-statut" class="block text-sm font-semibold text-dark mb-2">Statut professionnel</label>
+            <select id="per-statut" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none bg-white text-dark">
+              <option value="tns" selected>Libéral en BNC (TNS)</option>
+              <option value="tns-selarl">Gérant majoritaire de SELARL (TNS)</option>
+              <option value="salarie">Salarié ou assimilé (praticien hospitalier, SELAS…)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="per-revenu" class="block text-sm font-semibold text-dark mb-2">
+              <span id="per-revenu-label">Bénéfice imposable annuel (BNC)</span>
+            </label>
+            <div class="relative">
+              <input type="number" id="per-revenu" value="90000" min="0" max="2000000" step="1000"
+                class="w-full px-4 py-3 pr-10 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold" />
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">€</span>
+            </div>
+            <p id="per-revenu-help" class="mt-1.5 text-xs text-gray-400">Votre bénéfice net imposable (ligne « résultat fiscal » de la 2035).</p>
+          </div>
+
+          <div>
+            <label for="per-situation" class="block text-sm font-semibold text-dark mb-2">Situation familiale</label>
+            <select id="per-situation" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none bg-white text-dark">
+              <option value="1" selected>Célibataire, divorcé·e ou veuf·ve</option>
+              <option value="2">Marié·e ou pacsé·e (imposition commune)</option>
+            </select>
+          </div>
+
+          <div id="per-conjoint-wrap" class="hidden">
+            <label for="per-conjoint" class="block text-sm font-semibold text-dark mb-2">Revenu imposable du conjoint</label>
+            <div class="relative">
+              <input type="number" id="per-conjoint" value="0" min="0" max="2000000" step="1000"
+                class="w-full px-4 py-3 pr-10 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold" />
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">€</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="per-enfants" class="block text-sm font-semibold text-dark mb-2">Enfants à charge</label>
+            <select id="per-enfants" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none bg-white text-dark">
+              <option value="0" selected>Aucun</option>
+              <option value="1">1 enfant</option>
+              <option value="2">2 enfants</option>
+              <option value="3">3 enfants</option>
+              <option value="4">4 enfants</option>
+              <option value="5">5 enfants</option>
+            </select>
+          </div>
+
+          <div class="pt-2 border-t border-gray-100">
+            <div class="flex items-center justify-between mb-2">
+              <label for="per-versement" class="text-sm font-semibold text-dark">Versement PER envisagé</label>
+              <span id="per-versement-display" class="text-pat-plum font-bold"></span>
+            </div>
+            <input type="range" id="per-versement-slider" min="0" max="30000" step="500" value="9000" class="w-full accent-pat-plum" />
+            <div class="relative mt-3">
+              <input type="number" id="per-versement" value="9000" min="0" step="500"
+                class="w-full px-4 py-3 pr-10 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold" />
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">€</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Résultats -->
+      <div class="lg:col-span-3 space-y-6">
+        <div class="gradient-bg rounded-2xl p-6 md:p-8 text-white">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p class="text-white/70 text-sm font-medium mb-1">Votre économie d'impôt estimée</p>
+              <p id="per-eco" class="font-display text-4xl md:text-5xl font-bold">—</p>
+            </div>
+            <div class="text-right">
+              <p class="text-white/70 text-sm font-medium mb-1">Tranche marginale</p>
+              <p id="per-tmi" class="font-display text-2xl md:text-3xl font-bold text-primary-100">—</p>
+            </div>
+          </div>
+
+          <!-- Répartition du versement -->
+          <div class="mt-6">
+            <div class="flex h-4 rounded-full overflow-hidden bg-white/15">
+              <div id="per-bar-eco" class="bg-primary-100 transition-all duration-500" style="width:0%"></div>
+            </div>
+            <div class="flex justify-between mt-2 text-xs text-white/70">
+              <span>Payé par le fisc : <strong id="per-part-eco" class="text-primary-100">—</strong></span>
+              <span>Effort d'épargne réel : <strong id="per-part-effort" class="text-white">—</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-white rounded-2xl border border-gray-100 p-5">
+            <p class="text-xs text-gray-400 font-medium mb-1">Impôt sans versement</p>
+            <p id="per-impot-avant" class="font-display text-xl font-bold text-dark">—</p>
+          </div>
+          <div class="bg-white rounded-2xl border border-gray-100 p-5">
+            <p class="text-xs text-gray-400 font-medium mb-1">Impôt avec versement</p>
+            <p id="per-impot-apres" class="font-display text-xl font-bold text-pat-plum">—</p>
+          </div>
+          <div class="bg-white rounded-2xl border border-gray-100 p-5">
+            <p class="text-xs text-gray-400 font-medium mb-1">Gain fiscal / versement</p>
+            <p id="per-taux-gain" class="font-display text-xl font-bold text-dark">—</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-gray-100 p-5">
+          <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-pat-plum flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div class="text-sm text-gray-500 leading-relaxed">
+              <p>Votre plafond de déduction 2026 estimé : <strong id="per-plafond" class="text-dark">—</strong>.</p>
+              <p id="per-plafond-warn" class="hidden mt-1 text-amber-600 font-medium">
+                Votre versement dépasse ce plafond : l'économie est calculée sur la part déductible.
+                Les plafonds non utilisés des années précédentes et celui de votre conjoint peuvent toutefois s'y ajouter.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+          <h3 class="font-display text-lg font-bold text-dark mb-2">Et maintenant ?</h3>
+          <p class="text-gray-500 text-sm leading-relaxed mb-5">
+            Cette estimation est un point de départ. Le bon montant de versement, le choix du contrat
+            (frais, supports) et l'articulation avec vos autres enveloppes se décident au regard de
+            votre situation globale — c'est précisément notre métier.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <Button href="/rdv" variant="primary">
+              En parler à un conseiller
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Button>
+            <button id="per-cta-email" class="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-pat-plum text-pat-plum font-semibold rounded-xl transition-all duration-300 hover:bg-pat-plum hover:text-white">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              Recevoir une étude personnalisée
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-8 text-xs text-gray-400 leading-relaxed max-w-4xl">
+      Simulation indicative et non contractuelle, fondée sur le barème de l'impôt sur le revenu issu de la loi de finances
+      pour 2026 (loi n° 2026-103 du 19 février 2026), applicable aux revenus 2025 : plafonnement du quotient familial à
+      1 807 € par demi-part supplémentaire et décote inclus. Ne sont pas pris en compte : réductions et crédits d'impôt,
+      contribution exceptionnelle sur les hauts revenus, majorations de parts spécifiques (parent isolé, invalidité),
+      revenus exceptionnels. Cette simulation ne constitue ni un conseil fiscal ni une recommandation d'investissement
+      personnalisée. Chiffres à jour en juillet 2026.
+    </p>
+  </Section>
+
+  <!-- Éditorial -->
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto prose-custom">
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-dark mb-6">
+        Comment le PER réduit-il <span class="gradient-text">votre impôt</span> ?
+      </h2>
+      <div class="space-y-4 text-gray-600 leading-relaxed">
+        <p>
+          Les versements volontaires effectués sur un Plan d'Épargne Retraite sont <strong>déductibles de votre
+          revenu imposable</strong>, dans la limite d'un plafond annuel. Concrètement, chaque euro versé vient réduire
+          la base sur laquelle votre impôt est calculé : l'économie correspond environ à votre tranche marginale
+          d'imposition (TMI) multipliée par le versement.
+        </p>
+        <p>
+          C'est pourquoi le PER est particulièrement puissant pour les professionnels de santé fortement imposés :
+          à 41 % de TMI, un versement de 10 000 € ne vous « coûte » réellement qu'environ 5 900 €, le reste étant
+          financé par l'économie d'impôt. Notre simulateur va plus loin qu'une simple multiplication : il recalcule
+          votre impôt avec et sans versement, ce qui tient compte des changements de tranche en cours de route.
+        </p>
+      </div>
+
+      <h3 class="font-display text-xl font-bold text-dark mt-10 mb-4">Le barème 2026 de l'impôt sur le revenu</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-gray-50">
+              <th class="text-left px-4 py-3 font-semibold text-dark rounded-l-xl">Fraction du revenu (par part)</th>
+              <th class="text-right px-4 py-3 font-semibold text-dark rounded-r-xl">Taux</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bareme.map((b) => (
+              <tr class="border-b border-gray-100">
+                <td class="px-4 py-3 text-gray-600">{b.tranche}</td>
+                <td class="px-4 py-3 text-right font-semibold text-pat-plum">{b.taux}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-3 text-xs text-gray-400">Barème applicable en 2026 aux revenus 2025 — loi de finances pour 2026.</p>
+
+      <h3 class="font-display text-xl font-bold text-dark mt-10 mb-4">Vos plafonds de déduction en 2026</h3>
+      <div class="space-y-4 text-gray-600 leading-relaxed">
+        <p>
+          <strong>Libéral en BNC ou gérant majoritaire de SELARL (TNS)</strong> : 10 % du bénéfice imposable
+          (retenu dans la limite de 8 PASS, soit 384 480 €) <em>plus</em> 15 % de la fraction du bénéfice comprise
+          entre 1 et 8 PASS. Le plafond atteint ainsi <strong>88 911 € maximum</strong> en 2026, avec un minimum
+          de 4 806 € même en cas de bénéfice faible (PASS 2026 : 48 060 €).
+        </p>
+        <p>
+          <strong>Salarié ou assimilé</strong> : 10 % des revenus professionnels de l'année précédente, dans la
+          limite de <strong>37 680 €</strong>, avec un minimum de 4 710 €. Votre plafond exact figure sur votre
+          dernier avis d'imposition, rubrique « Plafond Épargne Retraite ».
+        </p>
+        <p>
+          Deux leviers permettent souvent d'aller plus loin : le <strong>report des plafonds non utilisés</strong>
+          des années précédentes, et la <strong>mutualisation du plafond entre conjoints</strong> soumis à imposition
+          commune.
+        </p>
+      </div>
+
+      <h3 class="font-display text-xl font-bold text-dark mt-10 mb-4">À savoir avant de verser</h3>
+      <ul class="space-y-3 text-gray-600 leading-relaxed list-none pl-0">
+        <li class="flex gap-3">
+          <svg class="w-5 h-5 text-pat-plum flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          <span><strong>L'épargne est bloquée jusqu'à la retraite</strong>, sauf cas de déblocage anticipé (dont l'achat de la résidence principale). Le PER se construit donc en complément d'une épargne disponible.</span>
+        </li>
+        <li class="flex gap-3">
+          <svg class="w-5 h-5 text-pat-plum flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          <span><strong>La déduction n'est pas une exonération</strong> : la part des versements déduits est imposée à la sortie. Le gain vient du différentiel entre votre TMI d'activité (souvent 41 %) et votre TMI de retraité, généralement plus faible.</span>
+        </li>
+        <li class="flex gap-3">
+          <svg class="w-5 h-5 text-pat-plum flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          <span><strong>Le contrat compte autant que l'enveloppe</strong> : les frais (versement, gestion, arbitrage) et la qualité des supports font des écarts considérables sur 20 ou 30 ans. <a href="/simulateurs/frais-assurance-vie" class="text-pat-plum font-medium hover:underline">Mesurez l'impact des frais</a>.</span>
+        </li>
+        <li class="flex gap-3">
+          <svg class="w-5 h-5 text-pat-plum flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+          <span><strong>Pour les soignants, l'enjeu retraite est réel</strong> : les pensions CARMF ou CARPIMKO remplacent une fraction limitée des revenus d'activité d'un libéral. Le PER est l'un des principaux outils pour combler cet écart tout en réduisant l'impôt pendant la carrière.</span>
+        </li>
+      </ul>
+    </div>
+  </Section>
+
+  <!-- FAQ -->
+  <Section bg="gray">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-dark mb-8 text-center">
+        Questions <span class="gradient-text">fréquentes</span>
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f) => (
+          <details class="faq-item group bg-white rounded-2xl border border-gray-100 hover:border-pat-plum/20 transition-colors">
+            <summary class="flex items-center justify-between gap-4 cursor-pointer list-none p-6">
+              <h3 class="font-display text-base md:text-lg font-bold text-dark">{f.q}</h3>
+              <svg class="w-5 h-5 text-pat-plum flex-shrink-0 transition-transform duration-300 group-open:rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+              </svg>
+            </summary>
+            <p class="px-6 pb-6 text-gray-500 leading-relaxed">{f.a}</p>
+          </details>
+        ))}
+      </div>
+
+      <div class="mt-12 text-center">
+        <Button href="/rdv" variant="primary" size="lg">
+          RDV visio gratuit avec un conseiller
+        </Button>
+      </div>
+    </div>
+  </Section>
+</Layout>
+
+<style>
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
+
+<script>
+  import { fmtEuro, fmtPercent, clamp, readNumber, debounce, trackEvent } from '../../scripts/sim-utils.js';
+
+  // ——— Paramètres fiscaux 2026 (revenus 2025, loi de finances pour 2026) ———
+  const BRACKETS = [
+    { upTo: 11600, rate: 0 },
+    { upTo: 29579, rate: 0.11 },
+    { upTo: 84577, rate: 0.30 },
+    { upTo: 181917, rate: 0.41 },
+    { upTo: Infinity, rate: 0.45 },
+  ];
+  const QF_CAP_PER_HALF = 1807; // plafonnement de l'avantage par demi-part supplémentaire
+  const DECOTE = { single: 897, couple: 1483, taper: 0.4525 };
+  const PASS_2026 = 48060;
+  const PASS_2025 = 47100;
+
+  // Impôt au barème pour une part.
+  function baremeTax(q) {
+    let tax = 0;
+    let prev = 0;
+    for (const b of BRACKETS) {
+      tax += Math.max(0, Math.min(q, b.upTo) - prev) * b.rate;
+      prev = b.upTo;
+      if (q <= b.upTo) break;
+    }
+    return tax;
+  }
+
+  // TMI effective : taux constaté sur les 100 derniers euros de revenu, ramené à la
+  // tranche officielle la plus proche (le plafonnement du QF peut faire imposer le
+  // foyer à un taux marginal supérieur à celui du quotient théorique).
+  function effectiveTMI(taxable, adultParts, children) {
+    const delta = 100;
+    const m = (householdTax(taxable, adultParts, children) - householdTax(Math.max(0, taxable - delta), adultParts, children)) / delta;
+    let best = 0;
+    for (const r of [0, 0.11, 0.30, 0.41, 0.45]) {
+      if (Math.abs(m - r) < Math.abs(m - best)) best = r;
+    }
+    return best;
+  }
+
+  // Demi-parts supplémentaires liées aux enfants (1 par enfant, 2 à partir du 3e).
+  function childHalfParts(children) {
+    return Math.min(children, 2) + Math.max(0, children - 2) * 2;
+  }
+
+  // Impôt du foyer : barème + plafonnement du quotient familial + décote.
+  function householdTax(taxable, adultParts, children) {
+    const halves = childHalfParts(children);
+    const partsTotal = adultParts + halves * 0.5;
+    const taxBase = baremeTax(taxable / adultParts) * adultParts;
+    const taxFull = baremeTax(taxable / partsTotal) * partsTotal;
+    const advantage = Math.min(taxBase - taxFull, halves * QF_CAP_PER_HALF);
+    let tax = taxBase - advantage;
+    const decoteMax = adultParts === 1 ? DECOTE.single : DECOTE.couple;
+    tax = Math.max(0, tax - Math.max(0, decoteMax - DECOTE.taper * tax));
+    return tax;
+  }
+
+  // Plafond de déduction PER 2026.
+  function perCeiling(statut, proIncome) {
+    if (statut === 'salarie') {
+      return Math.max(4710, Math.min(0.10 * proIncome, 0.10 * 8 * PASS_2025));
+    }
+    const capped = Math.min(proIncome, 8 * PASS_2026);
+    return Math.max(4806, 0.10 * capped + 0.15 * Math.max(0, capped - PASS_2026));
+  }
+
+  // ——— Wiring UI ———
+  const $ = (id) => document.getElementById(id);
+  const els = {
+    statut: $('per-statut'),
+    revenu: $('per-revenu'),
+    revenuLabel: $('per-revenu-label'),
+    revenuHelp: $('per-revenu-help'),
+    situation: $('per-situation'),
+    conjointWrap: $('per-conjoint-wrap'),
+    conjoint: $('per-conjoint'),
+    enfants: $('per-enfants'),
+    versement: $('per-versement'),
+    slider: $('per-versement-slider'),
+    versementDisplay: $('per-versement-display'),
+    eco: $('per-eco'),
+    tmi: $('per-tmi'),
+    barEco: $('per-bar-eco'),
+    partEco: $('per-part-eco'),
+    partEffort: $('per-part-effort'),
+    impotAvant: $('per-impot-avant'),
+    impotApres: $('per-impot-apres'),
+    tauxGain: $('per-taux-gain'),
+    plafond: $('per-plafond'),
+    plafondWarn: $('per-plafond-warn'),
+    ctaEmail: $('per-cta-email'),
+  };
+
+  let tracked = false;
+  let last = null;
+
+  function markUse() {
+    if (tracked) return;
+    tracked = true;
+    trackEvent('simulateur_calcul', { simulateur: 'per' });
+  }
+
+  const statusLabels = {
+    tns: {
+      label: 'Bénéfice imposable annuel (BNC)',
+      help: 'Votre bénéfice net imposable (ligne « résultat fiscal » de la 2035).',
+    },
+    'tns-selarl': {
+      label: 'Rémunération de gérance imposable',
+      help: 'Rémunération nette imposable au titre de l’article 62 (hors dividendes).',
+    },
+    salarie: {
+      label: 'Rémunération nette imposable',
+      help: 'Salaire net imposable après abattement de 10 % pour frais professionnels.',
+    },
+  };
+
+  function compute() {
+    const statut = els.statut.value;
+    const proIncome = Math.max(0, readNumber(els.revenu));
+    const adultParts = parseInt(els.situation.value, 10);
+    const conjoint = adultParts === 2 ? Math.max(0, readNumber(els.conjoint)) : 0;
+    const children = parseInt(els.enfants.value, 10);
+    const versement = Math.max(0, readNumber(els.versement));
+
+    const taxable = proIncome + conjoint;
+    const ceiling = Math.round(perCeiling(statut, proIncome));
+    const deductible = Math.min(versement, ceiling);
+
+    const taxBefore = householdTax(taxable, adultParts, children);
+    const taxAfter = householdTax(Math.max(0, taxable - deductible), adultParts, children);
+    const saving = taxBefore - taxAfter;
+    const effort = versement - saving;
+
+    const tmi = effectiveTMI(taxable, adultParts, children);
+
+    // Affichage
+    els.eco.textContent = fmtEuro(saving);
+    els.tmi.textContent = fmtPercent(tmi * 100, 0);
+    els.impotAvant.textContent = fmtEuro(taxBefore);
+    els.impotApres.textContent = fmtEuro(taxAfter);
+    els.tauxGain.textContent = versement > 0 ? fmtPercent((saving / versement) * 100, 1) : '—';
+    els.plafond.textContent = fmtEuro(ceiling);
+    els.versementDisplay.textContent = fmtEuro(versement);
+    els.partEco.textContent = fmtEuro(saving);
+    els.partEffort.textContent = fmtEuro(Math.max(0, effort));
+    els.barEco.style.width = versement > 0 ? `${clamp((saving / versement) * 100, 0, 100)}%` : '0%';
+    els.plafondWarn.classList.toggle('hidden', versement <= ceiling);
+
+    // Le slider suit le plafond (arrondi au millier supérieur).
+    const sliderMax = Math.max(10000, Math.ceil(ceiling / 1000) * 1000);
+    if (parseInt(els.slider.max, 10) !== sliderMax) els.slider.max = String(sliderMax);
+    els.slider.value = String(clamp(versement, 0, sliderMax));
+
+    last = { statut, proIncome, adultParts, conjoint, children, versement, taxBefore, taxAfter, saving, ceiling, tmi };
+  }
+
+  const recompute = debounce(compute, 120);
+
+  els.statut.addEventListener('change', () => {
+    const meta = statusLabels[els.statut.value];
+    els.revenuLabel.textContent = meta.label;
+    els.revenuHelp.textContent = meta.help;
+    compute();
+  });
+
+  els.situation.addEventListener('change', () => {
+    els.conjointWrap.classList.toggle('hidden', els.situation.value !== '2');
+    compute();
+  });
+
+  els.slider.addEventListener('input', () => {
+    markUse();
+    els.versement.value = els.slider.value;
+    compute();
+  });
+
+  [els.revenu, els.conjoint, els.enfants, els.versement].forEach((el) => {
+    el.addEventListener('input', () => { markUse(); recompute(); });
+    el.addEventListener('change', compute);
+  });
+
+  els.ctaEmail.addEventListener('click', () => {
+    if (!last) return;
+    trackEvent('simulateur_cta_email', { simulateur: 'per' });
+    const statutLabel = els.statut.options[els.statut.selectedIndex].text;
+    const lignes = [
+      'Bonjour,',
+      '',
+      "Je viens d'utiliser le simulateur PER sur patrimed.fr et j'aimerais recevoir une étude personnalisée.",
+      '',
+      `Statut : ${statutLabel}`,
+      `Revenu professionnel imposable : ${fmtEuro(last.proIncome)}`,
+      `Situation : ${last.adultParts === 2 ? 'couple' : 'célibataire'}${last.children ? `, ${last.children} enfant(s)` : ''}`,
+      `Versement PER envisagé : ${fmtEuro(last.versement)}`,
+      `Économie d'impôt estimée : ${fmtEuro(last.saving)}`,
+      '',
+      'Voici mes coordonnées pour être recontacté(e) :',
+      'Nom :',
+      'Téléphone :',
+      '',
+      'Merci !',
+    ];
+    const subject = encodeURIComponent('Ma simulation PER — demande d’étude personnalisée');
+    const body = encodeURIComponent(lignes.join('\n'));
+    window.location.href = `mailto:contact@patrimed.fr?subject=${subject}&body=${body}`;
+  });
+
+  compute();
+</script>

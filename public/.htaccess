@@ -33,12 +33,13 @@ RewriteRule ^\d{4}/\d{2}/\d{2}/pourquoi-faire-appel-a-patrimed-le-livret-a-a-bai
 # Pages
 RewriteRule ^gestion-de-patrimoine-pour-les-professionnels-de-sante/?$ /gestion-patrimoine [R=301,L]
 RewriteRule ^services/?$ /gestion-patrimoine [R=301,L]
-RewriteRule ^per/?$ /gestion-patrimoine [R=301,L]
+RewriteRule ^per/?$ /simulateurs/economie-impot-per [R=301,L]
 RewriteRule ^about/?$ /qui-sommes-nous [R=301,L]
 RewriteRule ^faq/?$ /faq [R=301,L]
 RewriteRule ^parrainer/?$ /parrainage [R=301,L]
 RewriteRule ^dp/?$ /donnees-personnelles [R=301,L]
-RewriteRule ^(simulation|simulateur|prendre-rendez-vous)/?$ /rdv [R=301,L]
+RewriteRule ^(simulation|simulateur)/?$ /simulateurs [R=301,L]
+RewriteRule ^prendre-rendez-vous/?$ /rdv [R=301,L]
 
 # Archives / taxonomies WordPress -> blog
 RewriteRule ^blog/?$ /patriactu [R=301,L]
