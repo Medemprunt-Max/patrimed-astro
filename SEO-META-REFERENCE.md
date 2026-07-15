@@ -40,10 +40,11 @@ Le layout suffixe automatiquement « | Patrimed » quand le titre ne contient pa
 - Schema : WebApplication + FAQPage + BreadcrumbList.
 - Chiffres embarqués (à réviser à chaque loi de finances) : barème IR 2026, plafonnement QF 1 807 €, décote 897/1 483 €, PASS 2026 48 060 €, PASS 2025 47 100 €.
 
-## Simulateur frais assurance vie (`/simulateurs/frais-assurance-vie`)
-- **title** : Frais d'assurance vie : combien vous coûtent-ils vraiment ?
-- **description** : Simulateur gratuit : comparez deux contrats d'assurance vie à frais différents et visualisez l'écart de capital sur 10, 20 ou 30 ans. L'effet des frais composés, chiffré.
+## Simulateur ETF vs fonds actifs (`/simulateurs/etf-vs-fonds-actifs`)
+- **title** : ETF ou fonds actifs : l'impact réel des frais de vos fonds
+- **description** : Un fonds classique prélève 1,5 à 2 % de frais invisibles par an, un ETF moins de 0,4 %. Simulateur gratuit : mesurez l'écart de capital sur 10, 20 ou 30 ans.
 - Schema : WebApplication + FAQPage + BreadcrumbList.
+- Angle éditorial voulu : diriger l'attention vers les frais courants des fonds (pas les frais du contrat) et le choix ETF/indiciel.
 
 ## Calculatrice intérêts composés (`/simulateurs/interets-composes`)
 - **title** : Calculatrice d'intérêts composés — Projetez votre épargne
