@@ -1,0 +1,207 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroCompact from '../components/HeroCompact.astro';
+import Section from '../components/Section.astro';
+import Button from '../components/Button.astro';
+import StatCounter from '../components/StatCounter.astro';
+
+const engagements = [
+  {
+    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+    title: 'Indépendance',
+    description: 'Nous ne sommes liés à aucune banque ni compagnie d\'assurance. Nos conseillers perçoivent la même rémunération quel que soit le produit recommandé : votre intérêt passe en premier.',
+  },
+  {
+    icon: 'M8 9l4-4 4 4m0 6l-4 4-4-4',
+    title: 'Transparence',
+    description: 'Pas de frais cachés ni de surprise. Nous vous expliquons clairement notre mode de rémunération et les coûts associés à chaque solution avant toute souscription.',
+  },
+  {
+    icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+    title: 'Disponibilité',
+    description: 'Rendez-vous en visioconférence 6 jours sur 7, de 9h à 23h. Votre conseiller reste joignable par mail, téléphone ou SMS, au rythme de votre agenda.',
+  },
+];
+
+const stats = [
+  { value: '500', suffix: '+', label: 'Clients accompagnés' },
+  { value: '25', suffix: '+', label: 'Partenaires financiers' },
+  { value: '98', suffix: '%', label: 'Taux de satisfaction' },
+  { value: '6', suffix: 'j/7', label: 'Disponibilité' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "Qui sommes-nous — Patrimed",
+  "url": "https://patrimed.fr/qui-sommes-nous",
+  "mainEntity": {
+    "@type": "FinancialService",
+    "name": "Patrimed",
+    "legalName": "LPMED",
+    "url": "https://patrimed.fr",
+    "description": "Cabinet de conseil en gestion de patrimoine indépendant dédié aux professionnels de santé : assurance vie, PER, SCPI, fiscalité, prévoyance, retraite.",
+    "founder": {
+      "@type": "Person",
+      "name": "Maximilien Brami",
+      "jobTitle": "Fondateur",
+      "worksFor": { "@type": "Organization", "name": "Patrimed" },
+      "sameAs": ["https://linkedin.com/company/patrimed-fr/"]
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "131 boulevard Pereire",
+      "addressLocality": "Paris",
+      "postalCode": "75017",
+      "addressCountry": "FR"
+    },
+    "identifier": { "@type": "PropertyValue", "propertyID": "ORIAS", "value": "23003677" }
+  }
+};
+---
+
+<Layout
+  title="Qui sommes-nous — Patrimed, cabinet indépendant dédié aux soignants"
+  description="Découvrez Patrimed : cabinet de gestion de patrimoine indépendant (ORIAS n° 23003677, CIF, COA) fondé pour les médecins, pharmaciens, dentistes et professionnels de santé."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+
+  <HeroCompact
+    title="Qui"
+    highlight="sommes-nous"
+    subtitle="Un cabinet de conseil indépendant, créé pour répondre aux besoins patrimoniaux spécifiques des professionnels de santé."
+  />
+
+  <!-- Notre histoire -->
+  <Section bg="white">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div class="reveal">
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-dark mb-6">
+          Née d'un constat <span class="gradient-text">simple</span>
+        </h2>
+        <p class="text-gray-500 text-lg leading-relaxed mb-4">
+          Les professionnels de santé ont des besoins patrimoniaux que les conseillers généralistes
+          maîtrisent rarement : fiscalité des BNC, exercice en SELARL, retraite CARMF ou CARPIMKO,
+          protection des revenus d'un libéral…
+        </p>
+        <p class="text-gray-500 text-lg leading-relaxed mb-4">
+          Patrimed est né pour combler ce manque, dans le prolongement de
+          <a href="https://medemprunt.fr" target="_blank" rel="noopener noreferrer" class="text-pat-plum font-semibold hover:underline">Medemprunt</a>,
+          notre marque sœur spécialisée dans le courtage en crédit pour les professions médicales.
+          Ensemble, les deux cabinets accompagnent les soignants sur toute leur vie financière :
+          le financement d'un côté, le patrimoine de l'autre.
+        </p>
+        <p class="text-gray-500 text-lg leading-relaxed">
+          Sans agences ni commerciaux terrain, nous concentrons nos moyens sur ce qui compte :
+          la qualité du conseil et des produits à frais réduits.
+        </p>
+      </div>
+      <div class="reveal" style="transition-delay: 150ms">
+        <div class="bg-gray-50 rounded-2xl border border-gray-100 p-8">
+          <h3 class="font-display text-lg font-bold text-dark mb-6">Le fondateur</h3>
+          <!-- TODO(Maximilien) : ajouter une photo portrait ici (public/images/equipe/maximilien.jpg)
+               et enrichir la bio (parcours, diplômes, certifications) pour renforcer l'E-E-A-T. -->
+          <p class="font-display text-xl font-bold text-dark">Maximilien Brami</p>
+          <p class="text-pat-plum font-semibold text-sm mb-4">Fondateur de Medemprunt et de Patrimed</p>
+          <p class="text-gray-500 leading-relaxed text-sm">
+            Après avoir créé Medemprunt pour aider les soignants à financer leurs projets aux
+            meilleures conditions, Maximilien a fondé Patrimed avec une conviction : les
+            professionnels de santé méritent un conseil patrimonial réellement indépendant,
+            disponible à leurs horaires, et sans conflit d'intérêts.
+          </p>
+          <a
+            href="https://linkedin.com/company/patrimed-fr/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-sm font-semibold text-pat-plum mt-4 hover:underline"
+          >
+            Suivre Patrimed sur LinkedIn
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Stats -->
+  <section class="stats-banner py-16">
+    <div class="container-custom">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        {stats.map((stat) => (
+          <StatCounter value={stat.value} suffix={stat.suffix} label={stat.label} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Engagements -->
+  <Section bg="gray">
+    <div class="text-center mb-16">
+      <h2 class="reveal font-display text-3xl md:text-4xl font-bold text-dark">
+        Nos <span class="gradient-text">engagements</span>
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {engagements.map((e, i) => (
+        <div class="reveal bg-white rounded-2xl border border-gray-100 p-8 card-hover" style={`transition-delay: ${i * 100}ms`}>
+          <div class="w-14 h-14 rounded-xl bg-primary-50 flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d={e.icon} />
+            </svg>
+          </div>
+          <h3 class="font-display text-xl font-bold text-dark mb-3">{e.title}</h3>
+          <p class="text-gray-500 leading-relaxed">{e.description}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Cadre réglementaire -->
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="reveal font-display text-3xl md:text-4xl font-bold text-dark mb-6">
+        Un cadre <span class="gradient-text">réglementé</span>
+      </h2>
+      <p class="reveal text-gray-500 text-lg leading-relaxed mb-8">
+        Patrimed (LPMED) est immatriculé à l'ORIAS sous le numéro
+        <strong class="text-dark">23 003 677</strong> en qualité de
+        <strong class="text-dark">Conseiller en Investissements Financiers (CIF)</strong> et de
+        <strong class="text-dark">Courtier en Assurance (COA)</strong>. Nos activités sont
+        contrôlées par l'AMF et l'ACPR, et couvertes par une assurance de responsabilité
+        civile professionnelle.
+      </p>
+      <div class="reveal flex flex-wrap items-center justify-center gap-3">
+        <a href="https://www.orias.fr" target="_blank" rel="noopener noreferrer" class="badge bg-primary-50 text-pat-plum">Vérifier sur orias.fr</a>
+        <span class="badge bg-gray-100 text-gray-600">CIF — AMF</span>
+        <span class="badge bg-gray-100 text-gray-600">COA — ACPR</span>
+        <span class="badge bg-gray-100 text-gray-600">RC professionnelle</span>
+      </div>
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <section class="gradient-bg py-20 md:py-28">
+    <div class="container-custom text-center max-w-3xl mx-auto">
+      <h2 class="reveal font-display text-3xl md:text-4xl font-bold text-white mb-6">
+        Faisons <span class="gradient-text-light">connaissance</span>
+      </h2>
+      <p class="reveal text-gray-300 text-lg mb-10 leading-relaxed">
+        Le premier rendez-vous est gratuit, en visioconférence, et sans engagement.
+        Parlons de votre situation et de vos objectifs.
+      </p>
+      <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Button href="/rdv" variant="white" size="lg">
+          Prendre rendez-vous
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </Button>
+        <Button href="/faq" variant="secondary" size="lg" class="border-white/30 text-white hover:bg-white/10 hover:text-white">
+          Consulter la FAQ
+        </Button>
+      </div>
+    </div>
+  </section>
+</Layout>

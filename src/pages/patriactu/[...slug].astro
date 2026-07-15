@@ -26,12 +26,35 @@ const formattedDate = new Intl.DateTimeFormat('fr-FR', {
   month: 'long',
   year: 'numeric',
 }).format(post.data.date);
+
+const articleUrl = `https://patrimed.fr/patriactu/${post.id}`;
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.data.title,
+  "description": post.data.excerpt,
+  "datePublished": post.data.date.toISOString(),
+  "dateModified": post.data.date.toISOString(),
+  "image": post.data.image ? `https://patrimed.fr${post.data.image}` : "https://patrimed.fr/og-image.jpg",
+  "url": articleUrl,
+  "mainEntityOfPage": articleUrl,
+  "inLanguage": "fr-FR",
+  "author": { "@type": "Organization", "name": "Patrimed", "url": "https://patrimed.fr" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Patrimed",
+    "url": "https://patrimed.fr",
+    "logo": { "@type": "ImageObject", "url": "https://patrimed.fr/images/logo-patrimed.svg" }
+  }
+};
 ---
 
 <Layout
   title={`${post.data.title} — PatriActu`}
   description={post.data.excerpt}
+  ogImage={post.data.image}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} slot="head" />
   <!-- Hero article -->
   <div class="gradient-bg pt-28 pb-16 md:pt-32 md:pb-20">
     <div class="container-custom text-center">
@@ -44,7 +67,7 @@ const formattedDate = new Intl.DateTimeFormat('fr-FR', {
         {post.data.title}
       </h1>
       <p class="text-gray-300 text-sm">
-        Publie le {formattedDate}
+        Publié le {formattedDate} par l'équipe Patrimed
       </p>
     </div>
   </div>

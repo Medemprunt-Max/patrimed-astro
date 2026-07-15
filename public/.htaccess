@@ -1,0 +1,83 @@
+# ------------------------------------------------------------------
+# patrimed.fr — configuration Apache (O2Switch)
+# Remplace public/_redirects (convention Netlify, inopérante ici).
+# Les anciennes URLs WordPress proviennent des archives Wayback Machine.
+# ------------------------------------------------------------------
+
+AddDefaultCharset UTF-8
+Options -Indexes -MultiViews
+DirectorySlash Off
+
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Ne jamais réécrire les challenges Let's Encrypt
+RewriteRule ^\.well-known/ - [L]
+
+# --- HTTPS + domaine canonique (www -> apex) ---
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^(.*)$ https://patrimed.fr/$1 [R=301,L]
+
+# --- Anciennes URLs WordPress -> nouvelles pages (301) ---
+# Articles (avec ou sans préfixe date /AAAA/MM/JJ/)
+RewriteRule ^(\d{4}/\d{2}/\d{2}/)?la-diversification-de-linvestissement-pour-minimiser-les-risques/?$ /patriactu/diversification [R=301,L]
+RewriteRule ^(\d{4}/\d{2}/\d{2}/)?la-loi-girardin-solution-de-defiscalisation-en-outre-mer/?$ /patriactu/loi-girardin [R=301,L]
+RewriteRule ^(\d{4}/\d{2}/\d{2}/)?pourquoi-faire-appel-a?-?patrimed/?$ /patriactu/pourquoi-patrimed [R=301,L]
+RewriteRule ^(\d{4}/\d{2}/\d{2}/)?scpi/?$ /patriactu/scpi [R=301,L]
+RewriteRule ^(\d{4}/\d{2}/\d{2}/)?(taux-dusure-hausse-des-taux|second-articlestaux-usure-hausse-taux)/?$ /patriactu/taux-usure [R=301,L]
+RewriteRule ^\d{4}/\d{2}/\d{2}/pourquoi-faire-appel-a-patrimed-le-livret-a-a-baisse- /patriactu/livret-a-2026 [R=301,L]
+
+# Pages
+RewriteRule ^gestion-de-patrimoine-pour-les-professionnels-de-sante/?$ /gestion-patrimoine [R=301,L]
+RewriteRule ^services/?$ /gestion-patrimoine [R=301,L]
+RewriteRule ^per/?$ /gestion-patrimoine [R=301,L]
+RewriteRule ^about/?$ /qui-sommes-nous [R=301,L]
+RewriteRule ^faq/?$ /faq [R=301,L]
+RewriteRule ^parrainer/?$ /parrainage [R=301,L]
+RewriteRule ^dp/?$ /donnees-personnelles [R=301,L]
+RewriteRule ^(simulation|simulateur|prendre-rendez-vous)/?$ /rdv [R=301,L]
+
+# Archives / taxonomies WordPress -> blog
+RewriteRule ^blog/?$ /patriactu [R=301,L]
+RewriteRule ^category/.*$ /patriactu [R=301,L]
+RewriteRule ^author/.*$ /patriactu [R=301,L]
+RewriteRule ^\d{4}/\d{2}(/\d{2})?/?$ /patriactu [R=301,L]
+# Tout article daté restant, non mappé ci-dessus
+RewriteRule ^\d{4}/\d{2}/\d{2}/.+$ /patriactu [R=301,L]
+
+# Reliquats du thème WordPress
+RewriteRule ^(gallery|portfolio|le-petit|elementor-\d+)/?$ / [R=301,L]
+RewriteRule ^sitemap([a-z0-9-]*)\.html$ /sitemap-index.xml [R=301,L]
+
+# --- Slash final -> URL canonique sans slash (301) ---
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} ^(.+)/$
+RewriteRule ^ %1 [R=301,L]
+
+# --- Servir les pages Astro (format répertoire) sans slash final ---
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.html -f
+RewriteRule ^(.*)$ $1/index.html [L]
+</IfModule>
+
+# --- Cache navigateur ---
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  # Assets Astro avec hash dans le nom : cache long
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# --- Compression ---
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>

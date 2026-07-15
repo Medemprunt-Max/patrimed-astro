@@ -1,4 +1,8 @@
+# patrimed.fr — tous les robots sont les bienvenus, y compris les crawlers IA
+# (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, etc.)
 User-agent: *
 Allow: /
 
 Sitemap: https://patrimed.fr/sitemap-index.xml
+
+# Présentation du site pour les LLM : https://patrimed.fr/llms.txt

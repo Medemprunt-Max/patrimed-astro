@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroCompact from '../components/HeroCompact.astro';
+import Section from '../components/Section.astro';
+import Button from '../components/Button.astro';
+
+const faqs = [
+  {
+    q: "Qui peut faire appel à Patrimed ?",
+    a: "Patrimed accompagne l'ensemble des professionnels de santé : médecins libéraux ou salariés, internes, pharmaciens, chirurgiens-dentistes, kinésithérapeutes, infirmiers et autres soignants. Notre spécialisation nous permet de maîtriser les particularités de votre exercice : fiscalité des BNC, exercice en SELARL, retraite CARMF ou CARPIMKO, protection sociale des libéraux.",
+  },
+  {
+    q: "Combien coûte un premier rendez-vous ?",
+    a: "Le premier rendez-vous est entièrement gratuit et sans engagement. Il se déroule en visioconférence, à l'horaire de votre choix, 6 jours sur 7 de 9h à 23h. Il nous permet d'analyser votre situation patrimoniale globale et de vous dire concrètement ce que nous pouvons vous apporter.",
+  },
+  {
+    q: "Comment se déroule l'accompagnement ?",
+    a: "En quatre étapes : un premier rendez-vous gratuit pour analyser votre situation ; une recommandation personnalisée avec des solutions concrètes et chiffrées ; la mise en œuvre, où nous gérons l'ensemble des démarches administratives auprès des partenaires sélectionnés ; puis un suivi régulier dans le temps, car votre patrimoine et votre situation évoluent.",
+  },
+  {
+    q: "Patrimed est-il vraiment indépendant ?",
+    a: "Oui. Patrimed (LPMED) est immatriculé à l'ORIAS sous le numéro 23 003 677 en tant que Conseiller en Investissements Financiers (CIF) et Courtier en Assurance (COA), sans lien capitalistique avec une banque ou une compagnie d'assurance. Nous sélectionnons les solutions parmi plus de 25 partenaires financiers, et nos conseillers perçoivent la même rémunération quel que soit le produit recommandé : il n'y a donc aucun conflit d'intérêts.",
+  },
+  {
+    q: "Comment Patrimed se rémunère-t-il ?",
+    a: "Le premier rendez-vous et l'étude de votre situation sont gratuits. Patrimed est ensuite rémunéré dans le cadre des solutions mises en place. Ce mode de rémunération vous est présenté en toute transparence avant toute souscription, conformément à la réglementation applicable aux CIF, et nos conseillers sont rémunérés de façon identique quel que soit le produit.",
+  },
+  {
+    q: "Quelles solutions proposez-vous ?",
+    a: "Cinq domaines d'expertise : le patrimoine financier (assurance vie, PER, SCPI, compte-titres, PEA), la fiscalité (Girardin industriel, Malraux, stratégies sur mesure), la protection (prévoyance, capital décès, rente éducation), la retraite (optimisation PER, ETF, projections chiffrées) et l'immobilier (SCPI, investissement locatif, démembrement), en lien avec notre marque sœur Medemprunt pour le financement.",
+  },
+  {
+    q: "Quelle est la différence entre Patrimed et Medemprunt ?",
+    a: "Ce sont deux marques sœurs dédiées aux professionnels de santé. Medemprunt est un cabinet de courtage en crédit : il négocie vos financements (immobilier, installation, rachat de parts). Patrimed est un cabinet de gestion de patrimoine : il s'occupe de vos placements, de votre fiscalité, de votre protection et de votre retraite. Les deux travaillent ensemble lorsque votre projet le nécessite.",
+  },
+  {
+    q: "Faut-il déjà avoir un patrimoine important pour être accompagné ?",
+    a: "Non. Beaucoup de nos clients commencent leur accompagnement en début de carrière, dès l'internat ou l'installation. C'est même souvent le meilleur moment : mettre en place tôt une stratégie d'épargne, de protection et d'optimisation fiscale démultiplie les résultats sur le long terme.",
+  },
+  {
+    q: "Comment se passent les rendez-vous si je n'ai pas le temps en journée ?",
+    a: "Tous nos rendez-vous se font en visioconférence, du lundi au samedi, de 9h à 23h. Votre conseiller reste également joignable par e-mail, téléphone ou SMS entre les rendez-vous. Notre organisation est pensée pour les emplois du temps des soignants.",
+  },
+  {
+    q: "Existe-t-il un programme de parrainage ?",
+    a: "Oui. Si vous êtes client et que vous recommandez Patrimed à un confrère ou une consœur, notre programme de parrainage vous en remercie concrètement. Les détails sont présentés sur notre page Parrainage.",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((f) => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
+---
+
+<Layout
+  title="FAQ — Questions fréquentes sur Patrimed et la gestion de patrimoine"
+  description="Premier RDV gratuit, indépendance, rémunération, solutions proposées, horaires : les réponses aux questions les plus fréquentes des professionnels de santé."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+
+  <HeroCompact
+    title="Questions"
+    highlight="fréquentes"
+    subtitle="Tout ce que vous devez savoir avant de nous confier votre patrimoine."
+  />
+
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto space-y-4">
+      {faqs.map((f) => (
+        <details class="faq-item group bg-white rounded-2xl border border-gray-100 hover:border-pat-plum/20 transition-colors">
+          <summary class="flex items-center justify-between gap-4 cursor-pointer list-none p-6">
+            <h2 class="font-display text-base md:text-lg font-bold text-dark">{f.q}</h2>
+            <svg
+              class="w-5 h-5 text-pat-plum flex-shrink-0 transition-transform duration-300 group-open:rotate-45"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+          </summary>
+          <p class="px-6 pb-6 text-gray-500 leading-relaxed">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <Section bg="gray">
+    <div class="text-center max-w-2xl mx-auto">
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-dark mb-4">
+        Une autre <span class="gradient-text">question</span> ?
+      </h2>
+      <p class="text-gray-500 text-lg mb-8">
+        Posez-la directement à un conseiller lors d'un premier échange gratuit, ou écrivez-nous.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Button href="/rdv" variant="primary" size="lg">
+          RDV visio gratuit
+        </Button>
+        <Button href="/contact" variant="secondary" size="lg">
+          Nous contacter
+        </Button>
+      </div>
+    </div>
+  </Section>
+</Layout>
+
+<style>
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
