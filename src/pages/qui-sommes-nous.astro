@@ -4,6 +4,8 @@ import HeroCompact from '../components/HeroCompact.astro';
 import Section from '../components/Section.astro';
 import Button from '../components/Button.astro';
 import StatCounter from '../components/StatCounter.astro';
+import SchemaCarriere from '../components/SchemaCarriere.astro';
+import SchemaFrais from '../components/SchemaFrais.astro';
 
 const valeurs = [
   {
@@ -117,18 +119,34 @@ const schema = {
           garnie de fonds maison à 2 % de frais courants par an, un produit de défiscalisation inadapté à
           leur tranche, une prévoyance calibrée pour un salarié plutôt que pour un libéral.
         </p>
+      </div>
+    </div>
+
+    <!-- Schéma : les frais visibles et invisibles -->
+    <div class="reveal max-w-3xl mx-auto mt-10">
+      <SchemaFrais withCta />
+    </div>
+
+    <div class="max-w-3xl mx-auto">
+      <div class="reveal space-y-5 text-gray-600 text-lg leading-relaxed mt-10">
         <p>
           Rarement par malveillance. C'est le modèle qui veut ça : dans une banque ou une compagnie, le
           conseiller est là pour placer les produits de la maison. En face, un médecin qui n'a ni le temps
           ni les repères pour vérifier — et une addition invisible, qui se paie sur trente ans.
         </p>
-        <p class="text-dark font-medium">
-          Nous avons créé Patrimed pour que les médecins que nous aidons à financer leurs projets ne se
-          fassent pas abîmer sur l'autre moitié de leur vie financière. Le financement d'un côté, le
-          patrimoine de l'autre. Mêmes clients, même exigence, et la même règle qu'avec les banques :
-          notre rémunération ne dépend jamais du produit recommandé.
-        </p>
       </div>
+
+      <!-- Exergue -->
+      <figure class="reveal mt-10 border-l-4 border-pat-plum pl-6 md:pl-8">
+        <blockquote class="font-display text-xl md:text-2xl font-bold text-dark leading-snug">
+          Nous avons créé Patrimed pour que les médecins que nous aidons à financer leurs projets ne se
+          fassent pas abîmer sur l'autre moitié de leur vie financière.
+        </blockquote>
+        <figcaption class="text-gray-500 leading-relaxed mt-4">
+          Le financement d'un côté, le patrimoine de l'autre. Mêmes clients, même exigence, et la même
+          règle qu'avec les banques : notre rémunération ne dépend jamais du produit recommandé.
+        </figcaption>
+      </figure>
     </div>
   </Section>
 
@@ -155,38 +173,24 @@ const schema = {
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
-      <div class="reveal bg-white rounded-2xl border border-gray-100 p-8 card-hover">
-        <p class="font-display text-2xl font-bold text-dark mb-2">Medemprunt</p>
-        <p class="text-pat-plum font-semibold text-sm mb-4">Courtage en crédit</p>
-        <p class="text-gray-500 leading-relaxed mb-6">
-          Crédit immobilier, financement d'installation, rachat de parts, assurance emprunteur.
-          Medemprunt défend votre dossier auprès de ses banques partenaires et parle statuts,
-          gardes et astreintes à votre place.
-        </p>
-        <a href="https://medemprunt.fr" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-semibold text-pat-plum hover:underline">
-          Découvrir Medemprunt
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </a>
-      </div>
+    <div class="reveal max-w-4xl mx-auto">
+      <SchemaCarriere />
+    </div>
 
-      <div class="reveal bg-white rounded-2xl border-2 border-pat-plum/30 p-8 card-hover" style="transition-delay: 100ms">
-        <p class="font-display text-2xl font-bold text-dark mb-2">Patrimed</p>
-        <p class="text-pat-plum font-semibold text-sm mb-4">Gestion de patrimoine</p>
-        <p class="text-gray-500 leading-relaxed mb-6">
-          Assurance vie, PER, SCPI, fiscalité, prévoyance et retraite. Patrimed construit ce que
-          le crédit ne couvre pas : votre épargne, votre protection et vos revenus futurs, avec des
-          supports choisis pour leurs frais réels.
-        </p>
-        <a href="/gestion-patrimoine" class="inline-flex items-center gap-2 text-sm font-semibold text-pat-plum hover:underline">
-          Nos solutions patrimoniales
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </a>
-      </div>
+    <div class="reveal max-w-4xl mx-auto mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="https://medemprunt.fr" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-semibold text-pat-plum hover:underline">
+        Découvrir Medemprunt
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+      <span class="hidden sm:block text-gray-300">·</span>
+      <a href="/gestion-patrimoine" class="inline-flex items-center gap-2 text-sm font-semibold text-pat-plum hover:underline">
+        Nos solutions patrimoniales
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
     </div>
   </Section>
 
@@ -200,30 +204,52 @@ const schema = {
         </h2>
       </div>
 
-      <div class="reveal bg-gray-50 rounded-2xl border border-gray-100 p-8 md:p-10" style="transition-delay: 100ms">
-        <!-- TODO(Maximilien) : ajouter une photo portrait (public/images/equipe/guillaume.jpg)
-             pour renforcer l'E-E-A-T, comme sur la fiche Medemprunt. -->
-        <p class="font-display text-xl md:text-2xl font-bold text-dark leading-snug mb-6">
-          « Avoir un impact sur le soin. »
-        </p>
-        <p class="text-pat-plum font-semibold text-sm mb-4">Cofondateur de Medemprunt et de Patrimed, médecin de santé publique</p>
-        <p class="text-gray-500 leading-relaxed">
-          Médecin de santé publique, Guillaume soigne le système de santé plutôt que les patients un par
-          un. Il a cofondé Medemprunt au milieu de son internat, après avoir dû faire le tour des courtiers
-          pour financer son premier appartement. Patrimed prolonge la même intuition : bien financer un
-          médecin sans veiller à ce qu'on lui vend ensuite, c'est ne faire que la moitié du chemin.
-        </p>
-        <a
-          href="https://medemprunt.fr/qui-sommes-nous"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 text-sm font-semibold text-pat-plum mt-6 hover:underline"
-        >
-          Découvrir son parcours sur Medemprunt
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      <div class="reveal grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-10 items-center" style="transition-delay: 100ms">
+        <!-- Portrait -->
+        <div class="md:col-span-2">
+          <div class="relative max-w-[280px] mx-auto md:max-w-none">
+            <div class="absolute -inset-3 gradient-bg rounded-3xl opacity-10 blur-xl" aria-hidden="true"></div>
+            <img
+              src="/images/equipe/guillaume-ah-ting.jpg"
+              alt="Portrait de Guillaume Ah-Ting, cofondateur de Patrimed et de Medemprunt, médecin de santé publique"
+              width="800"
+              height="800"
+              loading="lazy"
+              decoding="async"
+              class="relative w-full aspect-square object-cover rounded-2xl shadow-lg"
+            />
+          </div>
+        </div>
+
+        <!-- Citation + bio -->
+        <div class="md:col-span-3">
+          <svg class="w-10 h-10 text-pat-plum/20 mb-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z" />
           </svg>
-        </a>
+          <p class="font-display text-2xl md:text-3xl font-bold text-dark leading-snug mb-6">
+            Avoir un impact sur le soin.
+          </p>
+          <p class="text-pat-plum font-semibold text-sm mb-4">
+            Cofondateur de Medemprunt et de Patrimed, médecin de santé publique
+          </p>
+          <p class="text-gray-500 leading-relaxed">
+            Médecin de santé publique, Guillaume soigne le système de santé plutôt que les patients un par
+            un. Il a cofondé Medemprunt au milieu de son internat, après avoir dû faire le tour des courtiers
+            pour financer son premier appartement. Patrimed prolonge la même intuition : bien financer un
+            médecin sans veiller à ce qu'on lui vend ensuite, c'est ne faire que la moitié du chemin.
+          </p>
+          <a
+            href="https://medemprunt.fr/qui-sommes-nous"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-sm font-semibold text-pat-plum mt-6 hover:underline"
+          >
+            Découvrir son parcours sur Medemprunt
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
   </Section>
@@ -279,13 +305,29 @@ const schema = {
           ce mode de rémunération vous est présenté avant toute souscription, conformément à la
           réglementation applicable aux Conseillers en Investissements Financiers.
         </p>
-        <p>
-          <strong class="text-dark">Nos conseillers, eux, perçoivent la même rémunération quel que soit
-          le produit recommandé.</strong> La conséquence est simple : aucun contrat ne nous rapporte plus
-          qu'un autre, et rien ne nous retient de vous orienter vers les supports les moins chargés en
-          frais — y compris les fonds indiciels, que peu d'acteurs mettent spontanément en avant.
-        </p>
       </div>
+
+      <!-- Le principe, en encadré -->
+      <div class="reveal mt-8 rounded-2xl bg-pat-pink/30 border border-pat-plum/15 p-6 md:p-8">
+        <div class="flex items-start gap-5">
+          <div class="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971z" />
+            </svg>
+          </div>
+          <div>
+            <p class="font-display text-lg md:text-xl font-bold text-dark leading-snug mb-2">
+              Nos conseillers perçoivent la même rémunération quel que soit le produit recommandé.
+            </p>
+            <p class="text-gray-600 leading-relaxed">
+              La conséquence est simple : aucun contrat ne nous rapporte plus qu'un autre, et rien ne
+              nous retient de vous orienter vers les supports les moins chargés en frais — y compris les
+              fonds indiciels, que peu d'acteurs mettent spontanément en avant.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div class="reveal mt-8">
         <Button href="/faq" variant="secondary">
           Consulter la FAQ

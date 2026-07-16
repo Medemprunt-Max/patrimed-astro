@@ -1,0 +1,100 @@
+---
+// Schéma « les frais que vous voyez, ceux que vous ne voyez pas ».
+// Porte le positionnement Patrimed : l'attention doit aller aux frais courants
+// des fonds (prélevés dans la valeur liquidative), pas aux frais du contrat.
+// Réutilisé sur /qui-sommes-nous et /simulateurs/etf-vs-fonds-actifs.
+interface Props {
+  withCta?: boolean;
+}
+const { withCta = false } = Astro.props;
+
+// Largeurs de barres proportionnelles au haut de fourchette (2 % = 100 %).
+const fonds = [
+  { label: 'Fonds géré activement', range: '1,5 à 2 % par an', width: 100, active: true },
+  { label: 'Fonds indiciel (ETF)', range: '0,05 à 0,4 % par an', width: 20, active: false },
+];
+---
+
+<div class="rounded-2xl border border-gray-100 bg-white overflow-hidden">
+  <!-- Ce que vous voyez -->
+  <div class="p-6 md:p-8">
+    <div class="flex items-start gap-4">
+      <div class="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0">
+        <svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>
+      </div>
+      <div>
+        <p class="text-[11px] font-bold uppercase tracking-wide text-gray-400 mb-1">Ce que vous voyez</p>
+        <p class="font-display font-bold text-dark">Les frais du contrat</p>
+        <p class="text-gray-500 text-sm leading-relaxed mt-1">
+          Affichés, contractuels, faciles à comparer. C'est ce dont tout le monde parle.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ligne de flottaison = votre relevé -->
+  <div class="relative">
+    <div class="border-t-2 border-dashed border-gray-200"></div>
+    <span class="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-[10px] font-semibold uppercase tracking-wide text-gray-400 whitespace-nowrap">
+      Limite de votre relevé
+    </span>
+  </div>
+
+  <!-- Ce que vous ne voyez pas -->
+  <div class="gradient-bg p-6 md:p-8 text-white">
+    <div class="flex items-start gap-4">
+      <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center flex-shrink-0">
+        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+        </svg>
+      </div>
+      <div class="min-w-0 flex-1">
+        <p class="text-[11px] font-bold uppercase tracking-wide text-primary-100 mb-1">Ce que vous ne voyez pas</p>
+        <p class="font-display font-bold text-white">Les frais courants des fonds</p>
+        <p class="text-white/70 text-sm leading-relaxed mt-1">
+          Prélevés directement dans la valeur du fonds, chaque année, sur tout votre capital.
+          Ils n'apparaissent sur aucun relevé — seulement dans le document d'informations clés.
+        </p>
+
+        <!-- Barres comparatives -->
+        <div class="mt-6 space-y-4">
+          {fonds.map((f) => (
+            <div>
+              <div class="flex items-baseline justify-between gap-3 mb-1.5">
+                <span class:list={['text-sm font-semibold', f.active ? 'text-white' : 'text-primary-100']}>
+                  {f.label}
+                </span>
+                <span class="text-xs text-white/60 whitespace-nowrap">{f.range}</span>
+              </div>
+              <div class="h-2.5 rounded-full bg-white/10 overflow-hidden">
+                <div
+                  class:list={['h-full rounded-full', f.active ? 'bg-white/80' : 'bg-primary-200']}
+                  style={`width: ${f.width}%`}
+                ></div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p class="text-white/60 text-xs leading-relaxed mt-5">
+          Sur 25 ans, cet écart représente couramment plusieurs années de versements.
+        </p>
+
+        {withCta && (
+          <a
+            href="/simulateurs/etf-vs-fonds-actifs"
+            class="inline-flex items-center gap-2 text-sm font-semibold text-white mt-5 hover:underline"
+          >
+            Mesurer l'écart sur mes montants
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</div>

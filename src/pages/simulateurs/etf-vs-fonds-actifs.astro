@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import HeroCompact from '../../components/HeroCompact.astro';
 import Section from '../../components/Section.astro';
 import Button from '../../components/Button.astro';
+import SchemaFrais from '../../components/SchemaFrais.astro';
 
 const faqs = [
   {
@@ -222,6 +223,11 @@ const breadcrumbSchema = {
       <h2 class="font-display text-2xl md:text-3xl font-bold text-dark mb-6">
         Les frais des fonds : <span class="gradient-text">la couche invisible</span>
       </h2>
+
+      <div class="mb-8">
+        <SchemaFrais />
+      </div>
+
       <div class="space-y-4 text-gray-600 leading-relaxed">
         <p>
           Quand on parle des frais d'une assurance vie ou d'un PER, on pense aux frais du contrat. C'est pourtant
