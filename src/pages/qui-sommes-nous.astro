@@ -122,20 +122,72 @@ const schema = {
       </div>
     </div>
 
-    <!-- Schéma : les frais visibles et invisibles -->
-    <div class="reveal max-w-3xl mx-auto mt-10">
-      <SchemaFrais withCta />
+    <!-- Le cofondateur -->
+    <div class="max-w-4xl mx-auto mt-14 md:mt-16">
+      <div class="reveal grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-10 items-center">
+        <!-- Portrait -->
+        <div class="md:col-span-2">
+          <div class="relative max-w-[280px] mx-auto md:max-w-none">
+            <div class="absolute -inset-3 gradient-bg rounded-3xl opacity-10 blur-xl" aria-hidden="true"></div>
+            <img
+              src="/images/equipe/guillaume-ah-ting.jpg"
+              alt="Portrait de Guillaume Ah-Ting, cofondateur de Patrimed et de Medemprunt, médecin de santé publique"
+              width="800"
+              height="800"
+              loading="lazy"
+              decoding="async"
+              class="relative w-full aspect-square object-cover rounded-2xl shadow-lg"
+            />
+          </div>
+        </div>
+
+        <!-- Nom + citation + bio -->
+        <div class="md:col-span-3">
+          <p class="text-pat-plum font-semibold text-sm uppercase tracking-wide mb-2">Notre cofondateur</p>
+          <h3 class="font-display text-2xl md:text-3xl font-bold text-dark mb-1">
+            Guillaume <span class="gradient-text">Ah-Ting</span>
+          </h3>
+          <p class="text-gray-400 text-sm mb-5">Médecin de santé publique</p>
+          <blockquote class="border-l-2 border-pat-plum/40 pl-4 font-display text-lg md:text-xl font-bold text-dark leading-snug mb-5">
+            Avoir un impact sur le soin.
+          </blockquote>
+          <p class="text-gray-500 leading-relaxed">
+            Guillaume soigne le système de santé plutôt que les patients un par un. Il a cofondé Medemprunt
+            au milieu de son internat, après avoir dû faire le tour des courtiers pour financer son premier
+            appartement. Patrimed prolonge la même intuition : bien financer un médecin sans veiller à ce
+            qu'on lui vend ensuite, c'est ne faire que la moitié du chemin.
+          </p>
+          <a
+            href="https://medemprunt.fr/qui-sommes-nous"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 text-sm font-semibold text-pat-plum mt-6 hover:underline"
+          >
+            Découvrir son parcours sur Medemprunt
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
     </div>
 
     <div class="max-w-3xl mx-auto">
-      <div class="reveal space-y-5 text-gray-600 text-lg leading-relaxed mt-10">
+      <div class="reveal space-y-5 text-gray-600 text-lg leading-relaxed mt-14 md:mt-16">
         <p>
           Rarement par malveillance. C'est le modèle qui veut ça : dans une banque ou une compagnie, le
           conseiller est là pour placer les produits de la maison. En face, un médecin qui n'a ni le temps
           ni les repères pour vérifier — et une addition invisible, qui se paie sur trente ans.
         </p>
       </div>
+    </div>
 
+    <!-- Schéma : les frais visibles et invisibles -->
+    <div class="reveal max-w-3xl mx-auto mt-10">
+      <SchemaFrais withCta />
+    </div>
+
+    <div class="max-w-3xl mx-auto">
       <!-- Exergue -->
       <figure class="reveal mt-10 border-l-4 border-pat-plum pl-6 md:pl-8">
         <blockquote class="font-display text-xl md:text-2xl font-bold text-dark leading-snug">
@@ -162,7 +214,7 @@ const schema = {
   </section>
 
   <!-- Une même maison, deux métiers -->
-  <Section bg="gray">
+  <Section bg="white">
     <div class="text-center mb-12 md:mb-16">
       <h2 class="reveal font-display text-3xl md:text-4xl font-bold text-dark">
         Une même maison, <span class="gradient-text">deux métiers</span>
@@ -191,66 +243,6 @@ const schema = {
           <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
       </a>
-    </div>
-  </Section>
-
-  <!-- Le cofondateur -->
-  <Section bg="white">
-    <div class="max-w-4xl mx-auto">
-      <div class="text-center mb-12">
-        <p class="reveal text-pat-plum font-semibold text-sm uppercase tracking-wide mb-3">Notre cofondateur</p>
-        <h2 class="reveal font-display text-3xl md:text-4xl font-bold text-dark">
-          Guillaume <span class="gradient-text">Ah-Ting</span>
-        </h2>
-      </div>
-
-      <div class="reveal grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-10 items-center" style="transition-delay: 100ms">
-        <!-- Portrait -->
-        <div class="md:col-span-2">
-          <div class="relative max-w-[280px] mx-auto md:max-w-none">
-            <div class="absolute -inset-3 gradient-bg rounded-3xl opacity-10 blur-xl" aria-hidden="true"></div>
-            <img
-              src="/images/equipe/guillaume-ah-ting.jpg"
-              alt="Portrait de Guillaume Ah-Ting, cofondateur de Patrimed et de Medemprunt, médecin de santé publique"
-              width="800"
-              height="800"
-              loading="lazy"
-              decoding="async"
-              class="relative w-full aspect-square object-cover rounded-2xl shadow-lg"
-            />
-          </div>
-        </div>
-
-        <!-- Citation + bio -->
-        <div class="md:col-span-3">
-          <svg class="w-10 h-10 text-pat-plum/20 mb-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z" />
-          </svg>
-          <p class="font-display text-2xl md:text-3xl font-bold text-dark leading-snug mb-6">
-            Avoir un impact sur le soin.
-          </p>
-          <p class="text-pat-plum font-semibold text-sm mb-4">
-            Cofondateur de Medemprunt et de Patrimed, médecin de santé publique
-          </p>
-          <p class="text-gray-500 leading-relaxed">
-            Médecin de santé publique, Guillaume soigne le système de santé plutôt que les patients un par
-            un. Il a cofondé Medemprunt au milieu de son internat, après avoir dû faire le tour des courtiers
-            pour financer son premier appartement. Patrimed prolonge la même intuition : bien financer un
-            médecin sans veiller à ce qu'on lui vend ensuite, c'est ne faire que la moitié du chemin.
-          </p>
-          <a
-            href="https://medemprunt.fr/qui-sommes-nous"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 text-sm font-semibold text-pat-plum mt-6 hover:underline"
-          >
-            Découvrir son parcours sur Medemprunt
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-        </div>
-      </div>
     </div>
   </Section>
 
