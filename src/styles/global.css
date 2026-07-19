@@ -69,11 +69,6 @@
   background: #ffffff;
 }
 
-/* Stats banner */
-.stats-banner {
-  background: linear-gradient(135deg, #3D1434 0%, #591d4c 50%, #81286b 100%);
-}
-
 /* Bento grid service cards */
 .bento-item-accent {
   background: linear-gradient(135deg, #81286b 0%, #591d4c 100%);

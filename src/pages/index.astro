@@ -158,13 +158,16 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
     </div>
   </section>
 
-  <!-- Stats banner -->
-  <section class="stats-banner py-16">
+  <!-- Stats : carte posée sur fond clair (pas de bande pleine largeur,
+       qui donnerait l'impression que la page s'arrête là) -->
+  <section class="bg-gray-50 py-12 md:py-16">
     <div class="container-custom">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-        {stats.map((stat) => (
-          <StatCounter value={stat.value} suffix={stat.suffix} label={stat.label} />
-        ))}
+      <div class="reveal gradient-bg rounded-2xl md:rounded-3xl px-6 py-10 md:p-12 max-w-5xl mx-auto shadow-lg">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {stats.map((stat) => (
+            <StatCounter value={stat.value} suffix={stat.suffix} label={stat.label} />
+          ))}
+        </div>
       </div>
     </div>
   </section>
