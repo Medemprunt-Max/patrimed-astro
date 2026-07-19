@@ -147,8 +147,8 @@ const schema = {
             Guillaume <span class="gradient-text">Ah-Ting</span>
           </h3>
           <p class="text-gray-400 text-sm mb-5">Médecin de santé publique</p>
-          <blockquote class="border-l-2 border-pat-plum/40 pl-4 font-display text-lg md:text-xl font-bold text-dark leading-snug mb-5">
-            Avoir un impact sur le soin.
+          <blockquote class="border-l-2 border-pat-plum/40 pl-4 font-serif text-xl md:text-2xl italic text-dark leading-snug mb-5">
+            « Avoir un impact sur le soin. »
           </blockquote>
           <p class="text-gray-500 leading-relaxed">
             Guillaume soigne le système de santé plutôt que les patients un par un. Il a cofondé Medemprunt
@@ -184,7 +184,7 @@ const schema = {
     <div class="max-w-3xl mx-auto">
       <!-- Exergue -->
       <figure class="reveal mt-10 border-l-4 border-pat-plum pl-6 md:pl-8">
-        <blockquote class="font-display text-xl md:text-2xl font-bold text-dark leading-snug">
+        <blockquote class="font-serif text-xl md:text-2xl italic text-dark leading-snug">
           Nous avons créé Patrimed pour que les médecins que nous aidons à financer leurs projets ne se
           fassent pas abîmer sur l'autre moitié de leur vie financière.
         </blockquote>
@@ -257,7 +257,7 @@ const schema = {
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
       {valeurs.map((v, i) => (
         <div class="reveal bg-white rounded-2xl border border-gray-100 p-8 card-hover" style={`transition-delay: ${(i % 3) * 100}ms`}>
-          <div class="w-14 h-14 rounded-xl bg-primary-50 flex items-center justify-center mb-6">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-pat-pink to-primary-100 flex items-center justify-center mb-6">
             <svg class="w-7 h-7 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d={v.icon} />
             </svg>
@@ -329,7 +329,7 @@ const schema = {
   </Section>
 
   <!-- Engagement communauté -->
-  <Section bg="gray">
+  <Section bg="pink">
     <div class="max-w-4xl mx-auto">
       <div class="reveal bg-white rounded-2xl border border-gray-100 p-8 md:p-12">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">

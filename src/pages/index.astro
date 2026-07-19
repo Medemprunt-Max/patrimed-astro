@@ -127,7 +127,7 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
       <div class="reveal mt-14 md:mt-20 pt-8 border-t border-gray-200/60">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-3xl mx-auto">
           <div class="flex flex-col items-center gap-2.5">
-            <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-primary-50">
+            <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-pat-pink to-primary-100">
               <svg class="w-5 h-5 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
@@ -136,7 +136,7 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
             <span class="text-xs text-gray-400">Zéro conflit d'intérêts</span>
           </div>
           <div class="flex flex-col items-center gap-2.5">
-            <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-primary-50">
+            <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-pat-pink to-primary-100">
               <svg class="w-5 h-5 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
@@ -145,7 +145,7 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
             <span class="text-xs text-gray-400">Premier échange offert</span>
           </div>
           <div class="flex flex-col items-center gap-2.5">
-            <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-primary-50">
+            <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-pat-pink to-primary-100">
               <svg class="w-5 h-5 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -179,13 +179,14 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
         Pourquoi choisir <span class="gradient-text">Patrimed</span> ?
       </h2>
       <p class="reveal mt-4 text-gray-500 text-lg max-w-2xl mx-auto">
-        Un accompagnement sur-mesure pour les professionnels de santé qui veulent faire fructifier leur patrimoine.
+        Parce qu'entre deux gardes, vous n'avez ni le temps de comparer quarante contrats,
+        ni l'envie qu'on vous vende le produit maison d'une banque.
       </p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {valueProps.map((vp, i) => (
         <div class="reveal bg-white rounded-2xl border border-gray-100 p-8 card-hover" style={`transition-delay: ${i * 100}ms`}>
-          <div class="w-14 h-14 rounded-xl bg-primary-50 flex items-center justify-center mb-6">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-pat-pink to-primary-100 flex items-center justify-center mb-6">
             <svg class="w-7 h-7 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
               <path stroke-linecap="round" stroke-linejoin="round" d={vp.icon} />
             </svg>
@@ -197,6 +198,56 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
     </div>
   </Section>
 
+  <!-- Le mot de Guillaume — une voix incarnée entre les arguments et l'offre -->
+  <section class="relative bg-pat-pink/25 py-16 md:py-24 overflow-hidden">
+    <div class="absolute -top-40 -right-40 w-[480px] h-[480px] bg-pat-plum/[0.05] rounded-full blur-[110px] pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute -bottom-32 -left-32 w-[360px] h-[360px] bg-accent/[0.04] rounded-full blur-[90px] pointer-events-none" aria-hidden="true"></div>
+    <div class="container-custom relative">
+      <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-7 gap-10 md:gap-14 items-center">
+        <!-- Portrait -->
+        <div class="reveal md:col-span-2">
+          <div class="relative max-w-[220px] mx-auto md:max-w-none">
+            <div class="absolute -inset-3 gradient-bg rounded-3xl opacity-15 blur-xl" aria-hidden="true"></div>
+            <img
+              src="/images/equipe/guillaume-ah-ting.jpg"
+              alt="Portrait de Guillaume Ah-Ting, cofondateur de Patrimed et de Medemprunt, médecin de santé publique"
+              width="800"
+              height="800"
+              loading="lazy"
+              decoding="async"
+              class="relative w-full aspect-square object-cover rounded-2xl shadow-lg"
+            />
+          </div>
+        </div>
+
+        <!-- Citation signée -->
+        <div class="reveal md:col-span-5" style="transition-delay: 100ms">
+          <p class="text-pat-plum font-semibold text-sm uppercase tracking-wide mb-4">Le mot du cofondateur</p>
+          <blockquote class="font-serif text-xl md:text-2xl italic text-dark leading-relaxed">
+            « J'ai cofondé Medemprunt pendant mon internat, parce que personne ne voulait
+            financer les internes. Six mille médecins plus tard, nous avons vu ce qu'on
+            leur vendait après la signature : des contrats garnis de fonds chargés en
+            frais, des produits inadaptés à leur statut. Patrimed existe pour que ça
+            s'arrête — nous vous recommandons ce que nous ferions à votre place, rien
+            d'autre. »
+          </blockquote>
+          <div class="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <p class="font-display font-bold text-dark">Guillaume Ah-Ting</p>
+              <p class="text-gray-500 text-sm">Cofondateur — médecin de santé publique</p>
+            </div>
+            <a href="/qui-sommes-nous" class="inline-flex items-center gap-2 text-sm font-semibold text-pat-plum hover:underline">
+              Lire notre histoire
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Solutions patrimoniales -->
   <Section bg="gray">
     <div class="text-center mb-16">
@@ -204,7 +255,8 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
         Nos <span class="gradient-text">solutions</span> patrimoniales
       </h2>
       <p class="reveal mt-4 text-gray-500 text-lg max-w-2xl mx-auto">
-        5 domaines d'expertise pour une stratégie patrimoniale complète et personnalisée.
+        Cinq domaines d'expertise, une seule porte d'entrée : votre situation,
+        votre statut, vos projets.
       </p>
     </div>
 
@@ -218,7 +270,7 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
         >
           <div class="absolute top-0 left-0 w-1 h-full bg-pat-plum/0 group-hover:bg-pat-plum transition-all duration-300 rounded-r"></div>
           <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center flex-shrink-0">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pat-pink to-primary-100 flex items-center justify-center flex-shrink-0">
               <svg class="w-5 h-5 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d={s.icon} />
               </svg>
@@ -246,7 +298,7 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
         >
           <div class="absolute top-0 left-0 w-1 h-full bg-pat-plum/0 group-hover:bg-pat-plum transition-all duration-300 rounded-r"></div>
           <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center flex-shrink-0">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pat-pink to-primary-100 flex items-center justify-center flex-shrink-0">
               <svg class="w-5 h-5 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d={s.icon} />
               </svg>
@@ -327,10 +379,11 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
   <section class="gradient-bg py-20 md:py-28">
     <div class="container-custom text-center max-w-3xl mx-auto">
       <h2 class="reveal font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
-        Prêt à optimiser votre <span class="gradient-text-light">patrimoine</span> ?
+        On regarde votre situation <span class="gradient-text-light">ensemble</span> ?
       </h2>
       <p class="reveal text-gray-300 text-lg md:text-xl mb-10 leading-relaxed">
-        Prenez rendez-vous pour un premier échange gratuit et sans engagement avec un conseiller spécialisé.
+        Premier rendez-vous gratuit, en visio, sans engagement — et sans jargon.
+        Venez avec vos questions et vos relevés, repartez avec un avis honnête.
       </p>
       <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4">
         <Button href="/rdv" variant="white" size="lg">

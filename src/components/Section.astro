@@ -1,7 +1,7 @@
 ---
 interface Props {
   class?: string;
-  bg?: 'white' | 'gray' | 'dark';
+  bg?: 'white' | 'gray' | 'pink' | 'dark';
   id?: string;
 }
 
@@ -10,6 +10,7 @@ const { class: className = '', bg = 'white', id } = Astro.props;
 const bgClasses = {
   white: 'bg-white',
   gray: 'bg-gray-50',
+  pink: 'bg-pat-pink/25',
   dark: 'gradient-bg text-white',
 };
 ---

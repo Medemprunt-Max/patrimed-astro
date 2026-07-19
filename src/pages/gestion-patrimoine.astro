@@ -85,7 +85,7 @@ const services = [
   <HeroCompact
     title="Nos solutions"
     highlight="patrimoniales"
-    subtitle="5 domaines d'expertise pour une stratégie patrimoniale complète, personnalisée et adaptée aux professionnels de santé."
+    subtitle="Cinq domaines d'expertise, et une seule question pour commencer : où en êtes-vous, et où voulez-vous aller ? On part de votre situation, jamais d'un produit."
   />
 
   {services.map((service, i) => (
@@ -94,7 +94,7 @@ const services = [
         <div class:list={['reveal', i % 2 !== 0 && 'lg:order-2']}>
           <div class="flex items-center gap-4 mb-6">
             <span class="text-5xl font-display font-extrabold gradient-text">{service.num}</span>
-            <div class="w-14 h-14 rounded-xl bg-primary-50 flex items-center justify-center">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-pat-pink to-primary-100 flex items-center justify-center">
               <svg class="w-7 h-7 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d={service.icon} />
               </svg>
