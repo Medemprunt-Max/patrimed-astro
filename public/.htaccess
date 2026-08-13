@@ -62,6 +62,11 @@ RewriteRule ^ %1 [R=301,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.html -f
 RewriteRule ^(.*)$ $1/index.html [L]
+
+# --- Servir les pages Astro (format fichier, build.format 'file') ---
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}.html -f
+RewriteRule ^(.*)$ $1.html [L]
 </IfModule>
 
 # --- Cache navigateur ---

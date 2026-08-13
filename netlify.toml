@@ -5,7 +5,233 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# ------------------------------------------------------------------
+# Redirections 301 — portées depuis public/.htaccess (Apache O2Switch).
+# Netlify ne supporte pas les regex : les motifs datés WordPress utilisent
+# des placeholders (:y/:m/:d) ou l'énumération des années (2018-2026).
+# Premier match gagnant : règles spécifiques AVANT les génériques.
+# HTTPS et www→apex sont gérés par Netlify (domaine primaire = patrimed.fr).
+# Non porté (introuvable sans regex, retombe en 404 ou /patriactu) :
+#   - /elementor-<n>       (reliquats de thème, sans valeur SEO)
+#   - l'article « livret A » à slug tronqué (capté par /:année/* → /patriactu)
+# ------------------------------------------------------------------
+
+# --- Anciens articles WordPress, forme datée /AAAA/MM/JJ/slug ---
+[[redirects]]
+  from = "/:y/:m/:d/la-diversification-de-linvestissement-pour-minimiser-les-risques"
+  to = "/patriactu/diversification"
+  status = 301
+
+[[redirects]]
+  from = "/:y/:m/:d/la-loi-girardin-solution-de-defiscalisation-en-outre-mer"
+  to = "/patriactu/loi-girardin"
+  status = 301
+
+[[redirects]]
+  from = "/:y/:m/:d/pourquoi-faire-appel-a-patrimed"
+  to = "/patriactu/pourquoi-patrimed"
+  status = 301
+
+[[redirects]]
+  from = "/:y/:m/:d/pourquoi-faire-appel-patrimed"
+  to = "/patriactu/pourquoi-patrimed"
+  status = 301
+
+[[redirects]]
+  from = "/:y/:m/:d/scpi"
+  to = "/patriactu/scpi"
+  status = 301
+
+[[redirects]]
+  from = "/:y/:m/:d/taux-dusure-hausse-des-taux"
+  to = "/patriactu/taux-usure"
+  status = 301
+
+[[redirects]]
+  from = "/:y/:m/:d/second-articlestaux-usure-hausse-taux"
+  to = "/patriactu/taux-usure"
+  status = 301
+
+# --- Mêmes articles, forme sans date ---
+[[redirects]]
+  from = "/la-diversification-de-linvestissement-pour-minimiser-les-risques"
+  to = "/patriactu/diversification"
+  status = 301
+
+[[redirects]]
+  from = "/la-loi-girardin-solution-de-defiscalisation-en-outre-mer"
+  to = "/patriactu/loi-girardin"
+  status = 301
+
+[[redirects]]
+  from = "/pourquoi-faire-appel-a-patrimed"
+  to = "/patriactu/pourquoi-patrimed"
+  status = 301
+
+[[redirects]]
+  from = "/pourquoi-faire-appel-patrimed"
+  to = "/patriactu/pourquoi-patrimed"
+  status = 301
+
+[[redirects]]
+  from = "/scpi"
+  to = "/patriactu/scpi"
+  status = 301
+
+[[redirects]]
+  from = "/taux-dusure-hausse-des-taux"
+  to = "/patriactu/taux-usure"
+  status = 301
+
+[[redirects]]
+  from = "/second-articlestaux-usure-hausse-taux"
+  to = "/patriactu/taux-usure"
+  status = 301
+
+# --- Anciennes pages WordPress ---
+[[redirects]]
+  from = "/gestion-de-patrimoine-pour-les-professionnels-de-sante"
+  to = "/gestion-patrimoine"
+  status = 301
+
+[[redirects]]
+  from = "/services"
+  to = "/gestion-patrimoine"
+  status = 301
+
+[[redirects]]
+  from = "/per"
+  to = "/simulateurs/economie-impot-per"
+  status = 301
+
+[[redirects]]
+  from = "/about"
+  to = "/qui-sommes-nous"
+  status = 301
+
+[[redirects]]
+  from = "/parrainer"
+  to = "/parrainage"
+  status = 301
+
+[[redirects]]
+  from = "/dp"
+  to = "/donnees-personnelles"
+  status = 301
+
+[[redirects]]
+  from = "/simulation"
+  to = "/simulateurs"
+  status = 301
+
+[[redirects]]
+  from = "/simulateur"
+  to = "/simulateurs"
+  status = 301
+
+[[redirects]]
+  from = "/prendre-rendez-vous"
+  to = "/rdv"
+  status = 301
+
+# --- Archives / taxonomies WordPress → blog ---
+[[redirects]]
+  from = "/blog"
+  to = "/patriactu"
+  status = 301
+
+[[redirects]]
+  from = "/category/*"
+  to = "/patriactu"
+  status = 301
+
+[[redirects]]
+  from = "/author/*"
+  to = "/patriactu"
+  status = 301
+
+# Archives datées /AAAA/MM(/JJ)… et articles datés non mappés ci-dessus
+[[redirects]]
+  from = "/2018/*"
+  to = "/patriactu"
+  status = 301
+
+[[redirects]]
+  from = "/2019/*"
+  to = "/patriactu"
+  status = 301
+
+[[redirects]]
+  from = "/2020/*"
+  to = "/patriactu"
+  status = 301
+
+[[redirects]]
+  from = "/2021/*"
+  to = "/patriactu"
+  status = 301
+
+[[redirects]]
+  from = "/2022/*"
+  to = "/patriactu"
+  status = 301
+
+[[redirects]]
+  from = "/2023/*"
+  to = "/patriactu"
+  status = 301
+
+[[redirects]]
+  from = "/2024/*"
+  to = "/patriactu"
+  status = 301
+
+[[redirects]]
+  from = "/2025/*"
+  to = "/patriactu"
+  status = 301
+
+[[redirects]]
+  from = "/2026/*"
+  to = "/patriactu"
+  status = 301
+
+# --- Reliquats du thème WordPress ---
+[[redirects]]
+  from = "/gallery"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/portfolio"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/le-petit"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/sitemap.html"
+  to = "/sitemap-index.xml"
+  status = 301
+
+# --- 404 explicite (Netlify le fait déjà, gardé par clarté) ---
 [[redirects]]
   from = "/*"
   to = "/404.html"
   status = 404
+
+# ------------------------------------------------------------------
+# En-têtes de cache (équivalent du bloc mod_expires du .htaccess)
+# ------------------------------------------------------------------
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"

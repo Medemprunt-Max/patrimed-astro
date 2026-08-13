@@ -7,4 +7,7 @@ export default defineConfig({
     integrations: [tailwind(), sitemap()],
     site: 'https://patrimed.fr',
     trailingSlash: 'never',
+    // format 'file' (page.html) : Netlify sert alors /page sans slash ni
+    // redirection, en cohérence avec trailingSlash 'never' et les canonicals.
+    build: { format: 'file' },
 });
