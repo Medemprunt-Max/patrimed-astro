@@ -105,11 +105,6 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
         <span class="gradient-text">pour les professionnels de santé</span>
       </h1>
 
-      <!-- Baseline — serif for contrast -->
-      <p class="reveal mt-6 md:mt-8 font-serif text-gray-500 text-lg md:text-xl lg:text-2xl leading-relaxed max-w-2xl mx-auto italic">
-        Pour la santé de votre patrimoine
-      </p>
-
       <!-- Simulateurs : l'action principale du hero (modèle Medemprunt, validé 13/08/2026).
            Entrées par OBJECTIF, jamais par produit ; la promesse tourne, le choix reste stable.
            La phrase d'appel est figée sur sa propre ligne : seul l'objectif défile en dessous,
@@ -121,10 +116,10 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
         <p class="mt-1 mb-6 font-display font-extrabold">
           <span class="sr-only">réduire vos impôts, percevoir des loyers sans gestion, faire fructifier votre épargne ou préparer votre retraite</span>
           <span class="hero-rotate-track" aria-hidden="true">
-            <span class="hero-rotate-word is-active gradient-text">réduire vos impôts</span>
-            <span class="hero-rotate-word gradient-text">percevoir des loyers sans gestion</span>
-            <span class="hero-rotate-word gradient-text">faire fructifier votre épargne</span>
-            <span class="hero-rotate-word gradient-text">préparer votre retraite</span>
+            <span class="hero-rotate-word is-active gradient-text" data-objectif="impots">réduire vos impôts</span>
+            <span class="hero-rotate-word gradient-text" data-objectif="loyers">percevoir des loyers sans gestion</span>
+            <span class="hero-rotate-word gradient-text" data-objectif="epargne">faire fructifier votre épargne</span>
+            <span class="hero-rotate-word gradient-text" data-objectif="impots">préparer votre retraite</span>
           </span>
         </p>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
@@ -159,10 +154,6 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
             <p class="text-xs text-gray-400 font-medium mt-0.5">intérêts composés</p>
           </a>
         </div>
-        <p class="mt-4 text-xs text-gray-400">
-          Gratuit · résultat à l'écran · étude détaillée par email —
-          <a href="/simulateurs" class="underline hover:text-pat-plum transition-colors">tous nos simulateurs</a>
-        </p>
         <p class="mt-6 text-sm text-gray-500">
           Vous préférez en parler de vive voix ?
           <a href="/rdv" class="text-pat-plum font-semibold hover:underline">Prenez directement rendez-vous</a>
@@ -456,6 +447,14 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (track && !reduced) {
     const words = Array.from(track.children);
+    const simCards = document.querySelectorAll('.hero-sim-card');
+    // La carte correspondant à l'objectif affiché s'illumine subtilement
+    const hintCard = (objectif) => {
+      simCards.forEach((card) => {
+        card.classList.toggle('is-hinted', !!objectif && card.dataset.objectif === objectif);
+      });
+    };
+    hintCard(words[0].dataset.objectif);
     let i = 0;
     setInterval(() => {
       const leaving = words[i];
@@ -463,6 +462,7 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
       const entering = words[i];
       leaving.classList.replace('is-active', 'is-leaving');
       entering.classList.add('is-active');
+      hintCard(entering.dataset.objectif);
       // une fois sorti par le haut, le mot est replacé sous le slot sans
       // transition (sinon il retraverserait la zone visible)
       setTimeout(() => {
@@ -518,5 +518,12 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
     .hero-rotate-word {
       transition: none;
     }
+  }
+
+  /* Carte synchronisée avec l'objectif affiché — halo discret, plus léger
+     que l'état hover pour ne pas entrer en concurrence avec lui. */
+  .hero-sim-card.is-hinted {
+    border-color: rgba(129, 40, 107, 0.3);
+    box-shadow: 0 10px 25px -5px rgba(129, 40, 107, 0.12);
   }
 </style>
