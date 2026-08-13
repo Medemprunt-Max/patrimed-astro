@@ -111,11 +111,21 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
       </p>
 
       <!-- Simulateurs : l'action principale du hero (modèle Medemprunt, validé 13/08/2026).
-           Entrées par OBJECTIF, jamais par produit ; la promesse tourne, le choix reste stable. -->
+           Entrées par OBJECTIF, jamais par produit ; la promesse tourne, le choix reste stable.
+           La phrase d'appel est figée sur sa propre ligne : seul l'objectif défile en dessous,
+           dans un slot dont la taille est fixée par le mot le plus long (aucun décalage). -->
       <div class="reveal mt-10 md:mt-14 max-w-3xl mx-auto">
-        <p class="font-display text-lg md:text-xl font-bold text-dark mb-5">
-          Chiffrez votre projet en 2 minutes&nbsp;:
-          <span id="hero-rotate" class="gradient-text transition-opacity duration-200">réduire vos impôts</span>
+        <p class="font-display text-lg md:text-xl font-bold text-dark">
+          Chiffrez votre projet en 2&nbsp;minutes&nbsp;:
+        </p>
+        <p class="mt-1 mb-6 font-display font-extrabold">
+          <span class="sr-only">réduire vos impôts, percevoir des loyers sans gestion, faire fructifier votre épargne ou préparer votre retraite</span>
+          <span class="hero-rotate-track" aria-hidden="true">
+            <span class="hero-rotate-word is-active gradient-text">réduire vos impôts</span>
+            <span class="hero-rotate-word gradient-text">percevoir des loyers sans gestion</span>
+            <span class="hero-rotate-word gradient-text">faire fructifier votre épargne</span>
+            <span class="hero-rotate-word gradient-text">préparer votre retraite</span>
+          </span>
         </p>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
           <a href="/simulateurs/economie-impot-per" data-objectif="impots"
@@ -439,26 +449,28 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
 <script>
   import { trackEvent } from '../scripts/sim-utils.js';
 
-  // Promesse tournante du hero : le texte tourne, le choix reste stable
-  // (pas de carrousel — arbitrage validé). Immobile si l'utilisateur
-  // préfère réduire les animations.
-  const rotate = document.getElementById('hero-rotate');
+  // Promesse tournante du hero : la phrase d'appel est figée, seul l'objectif
+  // défile en roulette verticale (pas de carrousel — arbitrage validé).
+  // Immobile si l'utilisateur préfère réduire les animations.
+  const track = document.querySelector('.hero-rotate-track');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (rotate && !reduced) {
-    const words = [
-      'réduire vos impôts',
-      'percevoir des loyers sans gestion',
-      'faire fructifier votre épargne',
-      'préparer votre retraite',
-    ];
+  if (track && !reduced) {
+    const words = Array.from(track.children);
     let i = 0;
     setInterval(() => {
+      const leaving = words[i];
       i = (i + 1) % words.length;
-      rotate.style.opacity = '0';
+      const entering = words[i];
+      leaving.classList.replace('is-active', 'is-leaving');
+      entering.classList.add('is-active');
+      // une fois sorti par le haut, le mot est replacé sous le slot sans
+      // transition (sinon il retraverserait la zone visible)
       setTimeout(() => {
-        rotate.textContent = words[i];
-        rotate.style.opacity = '1';
-      }, 200);
+        leaving.classList.add('no-anim');
+        leaving.classList.remove('is-leaving');
+        void leaving.getBoundingClientRect();
+        leaving.classList.remove('no-anim');
+      }, 700);
     }, 3200);
   }
 
@@ -468,3 +480,43 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
     });
   });
 </script>
+
+<style>
+  /* Roulette verticale du hero : les mots partagent la même cellule de
+     grille, le slot garde donc en permanence la largeur du mot le plus
+     long — la phrase au-dessus ne bouge jamais. */
+  .hero-rotate-track {
+    display: inline-grid;
+    justify-items: center;
+    overflow: hidden;
+    vertical-align: bottom;
+  }
+  .hero-rotate-word {
+    grid-area: 1 / 1;
+    white-space: nowrap;
+    font-size: clamp(1.125rem, 4.2vw, 1.75rem);
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(115%);
+    transition:
+      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.45s ease;
+    will-change: transform;
+  }
+  .hero-rotate-word.is-active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .hero-rotate-word.is-leaving {
+    opacity: 0;
+    transform: translateY(-115%);
+  }
+  .hero-rotate-word.no-anim {
+    transition: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-rotate-word {
+      transition: none;
+    }
+  }
+</style>
