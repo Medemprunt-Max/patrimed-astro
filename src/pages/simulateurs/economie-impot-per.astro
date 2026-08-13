@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import HeroCompact from '../../components/HeroCompact.astro';
 import Section from '../../components/Section.astro';
 import Button from '../../components/Button.astro';
+import LeadGate from '../../components/LeadGate.astro';
 
 const faqs = [
   {
@@ -157,8 +158,29 @@ const bareme = [
         </div>
       </div>
 
-      <!-- Résultats -->
+      <!-- Teaser + coordonnées (avant déblocage) -->
       <div class="lg:col-span-3 space-y-6">
+        <LeadGate sim="per">
+          <div slot="teaser">
+            <div class="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p class="text-white/70 text-sm font-medium mb-1">Votre économie d'impôt estimée</p>
+                <p class="font-display text-4xl md:text-5xl font-bold tracking-wider select-none" aria-hidden="true">•• ••• €</p>
+              </div>
+              <div class="text-right">
+                <p class="text-white/70 text-sm font-medium mb-1">Tranche marginale</p>
+                <p id="per-teaser-tmi" class="font-display text-2xl md:text-3xl font-bold text-primary-100">—</p>
+              </div>
+            </div>
+            <p class="mt-4 text-sm text-white/80">
+              Votre calcul est terminé : impôt avant/après versement, plafond de déduction et effort
+              d'épargne réel vous attendent ci-dessous.
+            </p>
+          </div>
+        </LeadGate>
+
+        <!-- Résultats (débloqués après envoi des coordonnées) -->
+        <div id="per-results" class="hidden space-y-6">
         <div class="gradient-bg rounded-2xl p-6 md:p-8 text-white">
           <div class="flex flex-wrap items-center justify-between gap-4">
             <div>
@@ -217,24 +239,18 @@ const bareme = [
         <div class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
           <h3 class="font-display text-lg font-bold text-dark mb-2">Et maintenant ?</h3>
           <p class="text-gray-500 text-sm leading-relaxed mb-5">
-            Cette estimation est un point de départ. Le bon montant de versement, le choix du contrat
-            (frais, supports) et l'articulation avec vos autres enveloppes se décident au regard de
-            votre situation globale — c'est précisément notre métier.
+            Votre étude détaillée arrive par email. Cette estimation est un point de départ :
+            le bon montant de versement, le choix du contrat (frais, supports) et l'articulation
+            avec vos autres enveloppes se décident au regard de votre situation globale — c'est
+            précisément notre métier.
           </p>
-          <div class="flex flex-col sm:flex-row gap-3">
-            <Button href="/rdv" variant="primary">
-              En parler à un conseiller
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Button>
-            <button id="per-cta-email" class="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-pat-plum text-pat-plum font-semibold rounded-xl transition-all duration-300 hover:bg-pat-plum hover:text-white">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              Recevoir une étude personnalisée
-            </button>
-          </div>
+          <Button href="/rdv" variant="primary">
+            En parler à un conseiller
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Button>
+        </div>
         </div>
       </div>
     </div>
@@ -370,6 +386,7 @@ const bareme = [
 
 <script>
   import { fmtEuro, fmtPercent, clamp, readNumber, debounce, trackEvent } from '../../scripts/sim-utils.js';
+  import { initLeadGate } from '../../scripts/lead-gate.js';
 
   // ——— Paramètres fiscaux 2026 (revenus 2025, loi de finances pour 2026) ———
   const BRACKETS = [
@@ -460,7 +477,7 @@ const bareme = [
     tauxGain: $('per-taux-gain'),
     plafond: $('per-plafond'),
     plafondWarn: $('per-plafond-warn'),
-    ctaEmail: $('per-cta-email'),
+    teaserTmi: $('per-teaser-tmi'),
   };
 
   let tracked = false;
@@ -509,6 +526,7 @@ const bareme = [
     // Affichage
     els.eco.textContent = fmtEuro(saving);
     els.tmi.textContent = fmtPercent(tmi * 100, 0);
+    els.teaserTmi.textContent = fmtPercent(tmi * 100, 0);
     els.impotAvant.textContent = fmtEuro(taxBefore);
     els.impotApres.textContent = fmtEuro(taxAfter);
     els.tauxGain.textContent = versement > 0 ? fmtPercent((saving / versement) * 100, 1) : '—';
@@ -552,31 +570,32 @@ const bareme = [
     el.addEventListener('change', compute);
   });
 
-  els.ctaEmail.addEventListener('click', () => {
-    if (!last) return;
-    trackEvent('simulateur_cta_email', { simulateur: 'per' });
+  compute();
+
+  // ——— Gate de capture (modèle validé : coordonnées avant le résultat) ———
+  function buildRecap() {
+    if (!last) compute();
     const statutLabel = els.statut.options[els.statut.selectedIndex].text;
-    const lignes = [
-      'Bonjour,',
-      '',
-      "Je viens d'utiliser le simulateur PER sur patrimed.fr et j'aimerais recevoir une étude personnalisée.",
-      '',
+    const lines = [
+      "Simulateur : économie d'impôt PER",
       `Statut : ${statutLabel}`,
       `Revenu professionnel imposable : ${fmtEuro(last.proIncome)}`,
-      `Situation : ${last.adultParts === 2 ? 'couple' : 'célibataire'}${last.children ? `, ${last.children} enfant(s)` : ''}`,
-      `Versement PER envisagé : ${fmtEuro(last.versement)}`,
-      `Économie d'impôt estimée : ${fmtEuro(last.saving)}`,
-      '',
-      'Voici mes coordonnées pour être recontacté(e) :',
-      'Nom :',
-      'Téléphone :',
-      '',
-      'Merci !',
+      `Foyer : ${last.adultParts === 2 ? 'couple (imposition commune)' : 'célibataire'}${last.children ? `, ${last.children} enfant(s)` : ''}`,
     ];
-    const subject = encodeURIComponent('Ma simulation PER — demande d’étude personnalisée');
-    const body = encodeURIComponent(lignes.join('\n'));
-    window.location.href = `mailto:contact@patrimed.fr?subject=${subject}&body=${body}`;
-  });
+    if (last.adultParts === 2) lines.push(`Revenu imposable du conjoint : ${fmtEuro(last.conjoint)}`);
+    lines.push(
+      `Versement PER envisagé : ${fmtEuro(last.versement)}`,
+      `Plafond de déduction estimé : ${fmtEuro(last.ceiling)}`,
+      `Tranche marginale : ${fmtPercent(last.tmi * 100, 0)}`,
+      `Impôt sans versement : ${fmtEuro(last.taxBefore)} — avec versement : ${fmtEuro(last.taxAfter)}`,
+      `Économie d'impôt estimée : ${fmtEuro(last.saving)}`,
+    );
+    return lines;
+  }
 
-  compute();
+  initLeadGate({
+    sim: 'per',
+    buildRecap,
+    headline: () => (last ? `Économie d'impôt estimée : ${fmtEuro(last.saving)}` : ''),
+  });
 </script>

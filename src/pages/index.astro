@@ -110,17 +110,54 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
         Pour la santé de votre patrimoine
       </p>
 
-      <!-- CTAs — dominant primary, subtle secondary -->
-      <div class="reveal mt-10 md:mt-14 flex flex-col sm:flex-row items-center justify-center gap-4">
-        <Button href="/rdv" variant="primary" size="lg" class="text-base md:text-lg px-8 py-4 md:px-10 md:py-5 rounded-2xl shadow-lg shadow-pat-plum/20">
-          Prendre rendez-vous
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </Button>
-        <Button href="/gestion-patrimoine" variant="secondary" size="lg" class="rounded-2xl">
-          Découvrir nos services
-        </Button>
+      <!-- Simulateurs : l'action principale du hero (modèle Medemprunt, validé 13/08/2026).
+           Entrées par OBJECTIF, jamais par produit ; la promesse tourne, le choix reste stable. -->
+      <div class="reveal mt-10 md:mt-14 max-w-3xl mx-auto">
+        <p class="font-display text-lg md:text-xl font-bold text-dark mb-5">
+          Chiffrez votre projet en 2 minutes&nbsp;:
+          <span id="hero-rotate" class="gradient-text transition-opacity duration-200">réduire vos impôts</span>
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+          <a href="/simulateurs/economie-impot-per" data-objectif="impots"
+            class="hero-sim-card group bg-white rounded-2xl border border-gray-100 shadow-sm p-5 card-hover">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-pat-pink to-primary-100 flex items-center justify-center mb-3">
+              <svg class="w-5 h-5 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z" />
+              </svg>
+            </div>
+            <p class="font-display font-bold text-dark group-hover:text-pat-plum transition-colors">Réduire mes impôts</p>
+            <p class="text-xs text-gray-400 font-medium mt-0.5">avec le PER</p>
+          </a>
+          <a href="/simulateurs/investissement-scpi" data-objectif="loyers"
+            class="hero-sim-card group bg-white rounded-2xl border border-gray-100 shadow-sm p-5 card-hover">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-pat-pink to-primary-100 flex items-center justify-center mb-3">
+              <svg class="w-5 h-5 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+            </div>
+            <p class="font-display font-bold text-dark group-hover:text-pat-plum transition-colors">Percevoir des loyers</p>
+            <p class="text-xs text-gray-400 font-medium mt-0.5">avec les SCPI</p>
+          </a>
+          <a href="/simulateurs/interets-composes" data-objectif="epargne"
+            class="hero-sim-card group bg-white rounded-2xl border border-gray-100 shadow-sm p-5 card-hover">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-pat-pink to-primary-100 flex items-center justify-center mb-3">
+              <svg class="w-5 h-5 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v16h16M8 16l3-6 3 3 4-8" />
+              </svg>
+            </div>
+            <p class="font-display font-bold text-dark group-hover:text-pat-plum transition-colors">Faire fructifier mon épargne</p>
+            <p class="text-xs text-gray-400 font-medium mt-0.5">intérêts composés</p>
+          </a>
+        </div>
+        <p class="mt-4 text-xs text-gray-400">
+          Gratuit · résultat à l'écran · étude détaillée par email —
+          <a href="/simulateurs" class="underline hover:text-pat-plum transition-colors">tous nos simulateurs</a>
+        </p>
+        <p class="mt-6 text-sm text-gray-500">
+          Vous préférez en parler de vive voix ?
+          <a href="/rdv" class="text-pat-plum font-semibold hover:underline">Prenez directement rendez-vous</a>
+          — visio gratuite, 6j/7 jusqu'à 23h.
+        </p>
       </div>
 
       <!-- Trust indicators — repositioned below CTAs with separator -->
@@ -398,3 +435,36 @@ const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
     </div>
   </section>
 </Layout>
+
+<script>
+  import { trackEvent } from '../scripts/sim-utils.js';
+
+  // Promesse tournante du hero : le texte tourne, le choix reste stable
+  // (pas de carrousel — arbitrage validé). Immobile si l'utilisateur
+  // préfère réduire les animations.
+  const rotate = document.getElementById('hero-rotate');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (rotate && !reduced) {
+    const words = [
+      'réduire vos impôts',
+      'percevoir des loyers sans gestion',
+      'faire fructifier votre épargne',
+      'préparer votre retraite',
+    ];
+    let i = 0;
+    setInterval(() => {
+      i = (i + 1) % words.length;
+      rotate.style.opacity = '0';
+      setTimeout(() => {
+        rotate.textContent = words[i];
+        rotate.style.opacity = '1';
+      }, 200);
+    }, 3200);
+  }
+
+  document.querySelectorAll('.hero-sim-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      trackEvent('hero_sim_click', { objectif: card.dataset.objectif });
+    });
+  });
+</script>

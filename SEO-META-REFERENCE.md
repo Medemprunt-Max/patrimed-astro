@@ -32,8 +32,14 @@ Le layout suffixe automatiquement « | Patrimed » quand le titre ne contient pa
 
 ## Simulateurs (`/simulateurs`)
 - **title** : Simulateurs patrimoniaux gratuits pour professionnels de santé
-- **description** : PER, frais d'assurance vie, intérêts composés : des simulateurs gratuits, sans inscription, avec les chiffres fiscaux 2026, pensés pour les médecins et soignants.
+- **description** : PER, SCPI, intérêts composés : chiffrez votre projet en 2 minutes avec les paramètres fiscaux 2026, et recevez votre étude détaillée. Pensé pour les médecins et soignants.
 - Schema : CollectionPage + ItemList.
+- Funnel (validé 13/08/2026) : 3 entrées par OBJECTIF (impôts/PER, loyers/SCPI, épargne/intérêts
+  composés) gated — coordonnées avant le résultat, teaser sans le chiffre clé, lead envoyé au
+  service VPS 8101 via `/api/patrimed-lead` (proxy netlify.toml + repli direct, `src/scripts/lead-api.js`).
+  ETF vs fonds actifs reste en libre accès (vitrine transparence). Gate partagé :
+  `src/components/LeadGate.astro` + `src/scripts/lead-gate.js` (anti-faux mobile/email, GA4 funnel :
+  lead_gate_view, lead_submit, lead_submit_error, sim_result_view, hero_sim_click).
 
 ## Simulateur PER (`/simulateurs/economie-impot-per`)
 - **title** : Simulateur PER 2026 — Calculez votre économie d'impôt
@@ -51,6 +57,17 @@ Le layout suffixe automatiquement « | Patrimed » quand le titre ne contient pa
 - **title** : Calculatrice d'intérêts composés — Projetez votre épargne
 - **description** : Calculatrice d'intérêts composés gratuite : capital initial, versements mensuels, taux et durée. Visualisez la croissance de votre épargne et la part des intérêts, année par année.
 - Schema : WebApplication + BreadcrumbList.
+
+## Simulateur SCPI (`/simulateurs/investissement-scpi`)
+- **title** : Simulateur SCPI — Vos revenus réels, au comptant ou à crédit
+- **description** : Combien rapporte vraiment un investissement en SCPI ? Simulateur gratuit : revenus nets de fiscalité (TMI + 17,2 %), frais de souscription intégrés, mode à crédit avec effort d'épargne réel.
+- Schema : WebApplication + FAQPage + BreadcrumbList.
+- Chiffres embarqués (à réviser) : prélèvements sociaux 17,2 %, TD moyen marché 2025 ≈ 4,7 %
+  (mention éditoriale), frais de souscription par défaut 9 %.
+- Angle éditorial validé par Maximilien (13/08/2026) : frais de souscription AFFICHÉS et intégrés
+  au calcul, fiscalité revenus fonciers assumée, mode à crédit = pont vers Medemprunt.
+- Hypothèses : pas de revalorisation part/loyers, régime réel, intérêts déductibles à crédit ;
+  non pris en compte : délai de jouissance, SCPI européennes, IFI. Disclaimer à valider (CIF).
 
 ## PatriActu (`/patriactu`)
 - **title** : PatriActu — Blog Patrimed

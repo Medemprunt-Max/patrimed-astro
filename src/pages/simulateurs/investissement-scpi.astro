@@ -1,0 +1,646 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HeroCompact from '../../components/HeroCompact.astro';
+import Section from '../../components/Section.astro';
+import Button from '../../components/Button.astro';
+import LeadGate from '../../components/LeadGate.astro';
+
+const faqs = [
+  {
+    q: "À quoi correspondent les frais de souscription d'une SCPI ?",
+    a: "La plupart des SCPI de rendement prélèvent 8 à 11 % de frais de souscription, inclus dans le prix de la part : ils rémunèrent la collecte, la recherche d'immeubles et les droits de mutation. Concrètement, vous ne les payez pas à l'entrée mais à la sortie : la valeur de retrait (ce que vous récupérez en revendant) est inférieure d'autant au prix de souscription. C'est pourquoi une SCPI s'envisage sur au moins 8 à 10 ans, le temps que les revenus distribués amortissent ces frais. Des SCPI récentes dites « sans frais de souscription » (0 à 2 %) existent, avec en contrepartie des frais de gestion annuels plus élevés.",
+  },
+  {
+    q: "Comment les revenus de SCPI sont-ils imposés ?",
+    a: "Pour des SCPI françaises détenues en direct, les loyers distribués sont des revenus fonciers : ils s'ajoutent à vos revenus et sont imposés à votre tranche marginale d'imposition, plus 17,2 % de prélèvements sociaux. À 41 % de TMI, plus de la moitié du rendement affiché part donc en fiscalité. Des stratégies permettent d'adoucir ce constat : achat à crédit (les intérêts d'emprunt sont déductibles), SCPI investies en Europe (fiscalité conventionnelle souvent plus douce, sans prélèvements sociaux), détention en assurance vie, ou achat en nue-propriété. C'est précisément ce que nous étudions avec vous.",
+  },
+  {
+    q: "Peut-on vraiment acheter des SCPI à crédit ?",
+    a: "Oui, et c'est souvent la bonne façon de le faire quand on est en activité : vous vous constituez un patrimoine immobilier avec un effort d'épargne mensuel limité, les loyers remboursent une partie du crédit, et les intérêts d'emprunt se déduisent de vos revenus fonciers. Toutes les banques ne financent pas les parts de SCPI — c'est un crédit plus rare que le crédit immobilier classique. Notre cabinet frère Medemprunt, courtier spécialisé dans les professions de santé, sait quelles banques solliciter.",
+  },
+  {
+    q: "Quels sont les risques d'un investissement en SCPI ?",
+    a: "Ni le capital ni les revenus ne sont garantis : la valeur des parts et les loyers distribués dépendent du marché immobilier et de la gestion de la SCPI. La liquidité est limitée — revendre ses parts peut prendre du temps, surtout en période de marché tendu. S'y ajoutent un délai de jouissance de 3 à 6 mois à l'entrée (période sans revenus) et, à crédit, le risque classique de l'effet de levier : le crédit se rembourse même si les loyers baissent. La diversification (plusieurs SCPI, plusieurs gestionnaires, plusieurs zones) est la première protection.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((f) => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
+
+const appSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Simulateur d'investissement en SCPI",
+  "url": "https://patrimed.fr/simulateurs/investissement-scpi",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "provider": { "@type": "Organization", "name": "Patrimed", "url": "https://patrimed.fr" },
+  "description": "Simulez un investissement en SCPI au comptant ou à crédit : revenus mensuels nets de fiscalité (TMI + prélèvements sociaux), frais de souscription intégrés, effort d'épargne réel.",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://patrimed.fr" },
+    { "@type": "ListItem", "position": 2, "name": "Simulateurs", "item": "https://patrimed.fr/simulateurs" },
+    { "@type": "ListItem", "position": 3, "name": "Investissement SCPI" },
+  ],
+};
+
+const inputClass =
+  'w-full px-4 py-3 pr-10 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold';
+---
+
+<Layout
+  title="Simulateur SCPI — Vos revenus réels, au comptant ou à crédit"
+  description="Combien rapporte vraiment un investissement en SCPI ? Simulateur gratuit : revenus nets de fiscalité (TMI + 17,2 %), frais de souscription intégrés, mode à crédit avec effort d'épargne réel."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(appSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" />
+
+  <HeroCompact
+    title="Simulateur SCPI :"
+    highlight="vos revenus réels"
+    subtitle="Le rendement affiché d'une SCPI n'est ni net de frais, ni net d'impôt. Ce simulateur vous montre ce qu'il vous reste vraiment — au comptant ou à crédit."
+  />
+
+  <Section bg="gray">
+    <nav class="text-sm text-gray-400 mb-8" aria-label="Fil d'Ariane">
+      <a href="/simulateurs" class="hover:text-pat-plum transition-colors">Simulateurs</a>
+      <span class="mx-2">/</span>
+      <span class="text-gray-600">Investissement SCPI</span>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+      <!-- Formulaire -->
+      <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
+        <h2 class="font-display text-xl font-bold text-dark mb-6">Votre projet</h2>
+
+        <div class="space-y-5">
+          <div>
+            <span class="block text-sm font-semibold text-dark mb-2">Mode d'acquisition</span>
+            <div class="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Mode d'acquisition">
+              <button type="button" id="scpi-mode-comptant" data-mode="comptant"
+                class="scpi-mode px-4 py-3 rounded-xl border-2 font-semibold text-sm transition-colors border-pat-plum bg-pat-pink/40 text-pat-plum">
+                Au comptant
+              </button>
+              <button type="button" id="scpi-mode-credit" data-mode="credit"
+                class="scpi-mode px-4 py-3 rounded-xl border-2 font-semibold text-sm transition-colors border-gray-200 text-gray-500 hover:border-pat-plum/40">
+                À crédit
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label for="scpi-montant" class="block text-sm font-semibold text-dark mb-2">Montant investi</label>
+            <div class="relative">
+              <input type="number" id="scpi-montant" value="100000" min="1000" max="5000000" step="5000" class={inputClass} />
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">€</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="scpi-td" class="block text-sm font-semibold text-dark mb-2">Taux de distribution</label>
+            <div class="relative">
+              <input type="number" id="scpi-td" value="5" min="0" max="12" step="0.1" class={inputClass} />
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">%</span>
+            </div>
+            <p class="mt-1.5 text-xs text-gray-400">Moyenne du marché 2025 : environ 4,7 %. Les millésimes récents font souvent mieux.</p>
+          </div>
+
+          <div>
+            <label for="scpi-frais" class="block text-sm font-semibold text-dark mb-2">Frais de souscription</label>
+            <div class="relative">
+              <input type="number" id="scpi-frais" value="9" min="0" max="15" step="0.5" class={inputClass} />
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">%</span>
+            </div>
+            <p class="mt-1.5 text-xs text-gray-400">SCPI classiques : 8 à 11 %. SCPI récentes « sans frais » : 0 à 2 % (frais de gestion plus élevés en contrepartie).</p>
+          </div>
+
+          <div>
+            <label for="scpi-tmi" class="block text-sm font-semibold text-dark mb-2">Votre tranche marginale d'imposition</label>
+            <select id="scpi-tmi" class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none bg-white text-dark">
+              <option value="0">0 %</option>
+              <option value="0.11">11 %</option>
+              <option value="0.30" selected>30 %</option>
+              <option value="0.41">41 %</option>
+              <option value="0.45">45 %</option>
+            </select>
+            <p class="mt-1.5 text-xs text-gray-400">
+              S'y ajoutent 17,2 % de prélèvements sociaux.
+              <a href="/simulateurs/economie-impot-per" class="text-pat-plum hover:underline">Votre TMI est calculée dans notre simulateur PER.</a>
+            </p>
+          </div>
+
+          <!-- Champs crédit -->
+          <div id="scpi-credit-fields" class="hidden space-y-5 pt-2 border-t border-gray-100">
+            <div>
+              <label for="scpi-apport" class="block text-sm font-semibold text-dark mb-2">Apport personnel</label>
+              <div class="relative">
+                <input type="number" id="scpi-apport" value="10000" min="0" step="1000" class={inputClass} />
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">€</span>
+              </div>
+            </div>
+            <div>
+              <label for="scpi-taux-credit" class="block text-sm font-semibold text-dark mb-2">Taux du crédit (assurance comprise)</label>
+              <div class="relative">
+                <input type="number" id="scpi-taux-credit" value="3.8" min="0" max="8" step="0.1" class={inputClass} />
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">%</span>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <label for="scpi-duree-credit" class="text-sm font-semibold text-dark">Durée du crédit</label>
+                <span id="scpi-duree-credit-display" class="text-pat-plum font-bold">20 ans</span>
+              </div>
+              <input type="range" id="scpi-duree-credit" min="10" max="25" step="1" value="20" class="w-full accent-pat-plum" />
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-gray-100">
+            <div class="flex items-center justify-between mb-2">
+              <label for="scpi-duree" class="text-sm font-semibold text-dark">Horizon de projection</label>
+              <span id="scpi-duree-display" class="text-pat-plum font-bold">20 ans</span>
+            </div>
+            <input type="range" id="scpi-duree" min="5" max="30" step="1" value="20" class="w-full accent-pat-plum" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Teaser + coordonnées (avant déblocage) -->
+      <div class="lg:col-span-3 space-y-6">
+        <LeadGate sim="scpi">
+          <div slot="teaser">
+            <div class="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p id="scpi-teaser-label" class="text-white/70 text-sm font-medium mb-1">Vos revenus nets mensuels</p>
+                <p class="font-display text-4xl md:text-5xl font-bold tracking-wider select-none" aria-hidden="true">•• ••• €</p>
+              </div>
+              <div class="text-right">
+                <p class="text-white/70 text-sm font-medium mb-1">Revenus bruts mensuels</p>
+                <p id="scpi-teaser-brut" class="font-display text-2xl md:text-3xl font-bold text-primary-100">—</p>
+              </div>
+            </div>
+            <p class="mt-4 text-sm text-white/80">
+              Le brut, tout le monde vous le donne. Le net après frais et fiscalité — et l'effort
+              d'épargne réel à crédit — c'est ce que nous vous montrons.
+            </p>
+          </div>
+        </LeadGate>
+
+        <!-- Résultats (débloqués après envoi des coordonnées) -->
+        <div id="scpi-results" class="hidden space-y-6">
+          <div class="gradient-bg rounded-2xl p-6 md:p-8 text-white">
+            <div class="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p id="scpi-main-label" class="text-white/70 text-sm font-medium mb-1">Vos revenus nets mensuels</p>
+                <p id="scpi-main-value" class="font-display text-4xl md:text-5xl font-bold">—</p>
+              </div>
+              <div class="text-right">
+                <p id="scpi-side-label" class="text-white/70 text-sm font-medium mb-1">Rendement net réel</p>
+                <p id="scpi-side-value" class="font-display text-2xl md:text-3xl font-bold text-primary-100">—</p>
+              </div>
+            </div>
+            <p id="scpi-main-note" class="mt-4 text-sm text-white/80"></p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-white rounded-2xl border border-gray-100 p-5">
+              <p id="scpi-stat1-label" class="text-xs text-gray-400 font-medium mb-1">Revenus bruts annuels</p>
+              <p id="scpi-stat1" class="font-display text-xl font-bold text-dark">—</p>
+            </div>
+            <div class="bg-white rounded-2xl border border-gray-100 p-5">
+              <p id="scpi-stat2-label" class="text-xs text-gray-400 font-medium mb-1">Fiscalité annuelle</p>
+              <p id="scpi-stat2" class="font-display text-xl font-bold text-pat-plum">—</p>
+            </div>
+            <div class="bg-white rounded-2xl border border-gray-100 p-5">
+              <p id="scpi-stat3-label" class="text-xs text-gray-400 font-medium mb-1">Valeur de retrait jour 1</p>
+              <p id="scpi-stat3" class="font-display text-xl font-bold text-dark">—</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 p-5">
+            <div class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-pat-plum flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p id="scpi-frais-note" class="text-sm text-gray-500 leading-relaxed"></p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-gray-100 p-6">
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mb-4 text-sm">
+              <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#81286b"></span> <span id="scpi-legend1">Patrimoine (valeur de retrait + revenus cumulés)</span></span>
+              <span class="flex items-center gap-2"><span class="w-6 h-0.5 border-t-2 border-dashed border-gray-300"></span> <span id="scpi-legend2">Montant investi</span></span>
+            </div>
+            <div id="scpi-chart"></div>
+          </div>
+
+          <!-- CTA -->
+          <div class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+            <h3 class="font-display text-lg font-bold text-dark mb-2">Et maintenant ?</h3>
+            <p class="text-gray-500 text-sm leading-relaxed mb-5">
+              Votre étude détaillée arrive par email. La suite dépend de choix que ce simulateur ne
+              tranche pas : quelles SCPI (zones, secteurs, gestionnaires), quelle enveloppe fiscale,
+              quel financement. SCPI européennes, assurance vie ou nue-propriété changent
+              radicalement la fiscalité — c'est ce que nous regardons avec vous.
+            </p>
+            <Button href="/rdv" variant="primary">
+              En parler à un conseiller
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-8 text-xs text-gray-400 leading-relaxed max-w-4xl">
+      Simulation indicative et non contractuelle. Hypothèses : taux de distribution constant, prix de part et loyers
+      non revalorisés, fiscalité des revenus fonciers français au régime réel (TMI + prélèvements sociaux de 17,2 %),
+      intérêts d'emprunt déductibles des revenus fonciers en mode crédit. Ne sont pas pris en compte : délai de
+      jouissance (3 à 6 mois sans revenus à l'entrée), SCPI européennes ou fiscales, IFI, revente anticipée,
+      variation de la valeur des parts. Les parts de SCPI sont un investissement immobilier : le capital et les
+      revenus ne sont pas garantis, et la liquidité peut être limitée. Cette simulation ne constitue pas un conseil
+      en investissement personnalisé. Chiffres à jour en août 2026.
+    </p>
+  </Section>
+
+  <!-- Éditorial -->
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-dark mb-6">
+        La SCPI : l'immobilier <span class="gradient-text">sans la gestion</span>
+      </h2>
+      <div class="space-y-4 text-gray-600 leading-relaxed">
+        <p>
+          Une SCPI (société civile de placement immobilier) collecte l'épargne de milliers d'associés pour
+          acheter et gérer un parc immobilier — bureaux, commerces, santé, logistique — et vous en reverse
+          les loyers, au prorata de vos parts. Pour un professionnel de santé qui n'a ni le temps ni l'envie
+          de gérer un locataire, c'est le moyen le plus simple de percevoir des revenus immobiliers :
+          <strong>zéro gestion, mise de départ libre, diversification immédiate</strong>.
+        </p>
+        <p>
+          Mais le taux de distribution mis en avant dans les plaquettes — 5 %, 6 %, parfois 7 % — n'est
+          <strong>ni net de frais d'entrée, ni net d'impôt</strong>. Entre les frais de souscription et la
+          fiscalité des revenus fonciers, le rendement qui vous reste peut être moitié moindre. Ce simulateur
+          existe pour vous montrer ce chiffre-là avant que vous n'investissiez.
+        </p>
+      </div>
+
+      <h3 class="font-display text-xl font-bold text-dark mt-10 mb-4">Les frais de souscription, sans détour</h3>
+      <div class="space-y-4 text-gray-600 leading-relaxed">
+        <p>
+          8 à 11 % sur la plupart des SCPI de rendement : c'est beaucoup, et peu de vendeurs s'attardent
+          dessus. Ils sont inclus dans le prix de part et se matérialisent à la revente — la valeur de
+          retrait est inférieure d'autant. Conséquence pratique : <strong>une SCPI se garde longtemps</strong>,
+          le temps que les loyers amortissent ce coût d'entrée. Notre simulateur vous donne ce délai
+          d'amortissement pour votre propre projet, et intègre les frais dans tous ses calculs.
+        </p>
+        <p>
+          Des SCPI récentes cassent ce modèle avec 0 à 2 % de frais de souscription, contre des frais de
+          gestion annuels plus élevés. Ni meilleures ni moins bonnes par principe : adaptées à des horizons
+          différents. Le bon choix dépend de votre durée de détention envisagée.
+        </p>
+      </div>
+
+      <h3 class="font-display text-xl font-bold text-dark mt-10 mb-4">La fiscalité, sans maquillage</h3>
+      <div class="space-y-4 text-gray-600 leading-relaxed">
+        <p>
+          Des parts de SCPI françaises détenues en direct produisent des <strong>revenus fonciers</strong> :
+          imposés à votre tranche marginale, plus 17,2 % de prélèvements sociaux. À 41 % de TMI, il ne
+          reste que 41,8 % du loyer distribué. C'est le talon d'Achille de la SCPI pour les contribuables
+          fortement imposés — et la raison pour laquelle la question de l'enveloppe se pose avant celle
+          de la SCPI elle-même : SCPI européennes (fiscalité conventionnelle, sans prélèvements sociaux),
+          détention en assurance vie, démembrement temporaire. Chacune a ses contreparties.
+        </p>
+      </div>
+
+      <h3 class="font-display text-xl font-bold text-dark mt-10 mb-4">Pourquoi envisager l'achat à crédit</h3>
+      <div class="space-y-4 text-gray-600 leading-relaxed">
+        <p>
+          Acheter ses parts à crédit transforme l'opération : au lieu d'immobiliser un capital, vous
+          construisez un patrimoine avec un <strong>effort d'épargne mensuel</strong> — les loyers remboursent
+          une partie des mensualités, et les intérêts d'emprunt se déduisent de vos revenus fonciers, ce qui
+          allège l'impôt pendant toute la durée du prêt. Au terme, les parts sont à vous et les loyers
+          deviennent un revenu complémentaire net de crédit.
+        </p>
+        <p>
+          Le financement de parts de SCPI reste un crédit de spécialistes : toutes les banques ne le
+          proposent pas. C'est le métier de notre cabinet frère
+          <a href="https://medemprunt.fr" target="_blank" rel="noopener" class="text-pat-plum font-medium hover:underline">Medemprunt</a>,
+          courtier dédié aux professions de santé — le même groupe, les deux faces d'une même stratégie.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- FAQ -->
+  <Section bg="gray">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-dark mb-8 text-center">
+        Questions <span class="gradient-text">fréquentes</span>
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f) => (
+          <details class="faq-item group bg-white rounded-2xl border border-gray-100 hover:border-pat-plum/20 transition-colors">
+            <summary class="flex items-center justify-between gap-4 cursor-pointer list-none p-6">
+              <h3 class="font-display text-base md:text-lg font-bold text-dark">{f.q}</h3>
+              <svg class="w-5 h-5 text-pat-plum flex-shrink-0 transition-transform duration-300 group-open:rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+              </svg>
+            </summary>
+            <p class="px-6 pb-6 text-gray-500 leading-relaxed">{f.a}</p>
+          </details>
+        ))}
+      </div>
+
+      <div class="mt-12 text-center">
+        <Button href="/rdv" variant="primary" size="lg">
+          RDV visio gratuit avec un conseiller
+        </Button>
+      </div>
+    </div>
+  </Section>
+</Layout>
+
+<style>
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
+
+<script>
+  import { fmtEuro, fmtPercent, readNumber, debounce, trackEvent, drawLineChart } from '../../scripts/sim-utils.js';
+  import { initLeadGate } from '../../scripts/lead-gate.js';
+
+  const PS = 0.172; // prélèvements sociaux sur les revenus fonciers
+
+  const $ = (id) => document.getElementById(id);
+  const els = {
+    modeButtons: Array.from(document.querySelectorAll('.scpi-mode')),
+    creditFields: $('scpi-credit-fields'),
+    montant: $('scpi-montant'),
+    td: $('scpi-td'),
+    frais: $('scpi-frais'),
+    tmi: $('scpi-tmi'),
+    apport: $('scpi-apport'),
+    tauxCredit: $('scpi-taux-credit'),
+    dureeCredit: $('scpi-duree-credit'),
+    dureeCreditDisplay: $('scpi-duree-credit-display'),
+    duree: $('scpi-duree'),
+    dureeDisplay: $('scpi-duree-display'),
+    teaserLabel: $('scpi-teaser-label'),
+    teaserBrut: $('scpi-teaser-brut'),
+    mainLabel: $('scpi-main-label'),
+    mainValue: $('scpi-main-value'),
+    mainNote: $('scpi-main-note'),
+    sideLabel: $('scpi-side-label'),
+    sideValue: $('scpi-side-value'),
+    stat1Label: $('scpi-stat1-label'),
+    stat1: $('scpi-stat1'),
+    stat2Label: $('scpi-stat2-label'),
+    stat2: $('scpi-stat2'),
+    stat3Label: $('scpi-stat3-label'),
+    stat3: $('scpi-stat3'),
+    fraisNote: $('scpi-frais-note'),
+    legend1: $('scpi-legend1'),
+    legend2: $('scpi-legend2'),
+    chart: $('scpi-chart'),
+  };
+
+  let mode = 'comptant';
+  let last = null;
+  let tracked = false;
+
+  function markUse() {
+    if (tracked) return;
+    tracked = true;
+    trackEvent('simulateur_calcul', { simulateur: 'scpi' });
+  }
+
+  // Mensualité d'un prêt amortissable (taux annuel, années). Gère taux = 0.
+  function annuity(capital, annualRate, years) {
+    const n = years * 12;
+    if (n <= 0 || capital <= 0) return 0;
+    const r = annualRate / 12;
+    if (r === 0) return capital / n;
+    return (capital * r) / (1 - Math.pow(1 + r, -n));
+  }
+
+  function compute() {
+    const montant = Math.max(0, readNumber(els.montant));
+    const td = Math.max(0, readNumber(els.td, 5)) / 100;
+    const frais = Math.max(0, readNumber(els.frais, 9)) / 100;
+    const tmi = parseFloat(els.tmi.value);
+    const years = Math.max(1, readNumber(els.duree, 20));
+
+    els.dureeDisplay.textContent = `${years} ans`;
+
+    const brutAnnual = montant * td;
+    const taxRate = tmi + PS;
+    const valeurRetrait = montant * (1 - frais);
+    const fraisMontant = montant * frais;
+
+    els.teaserBrut.textContent = `${fmtEuro(brutAnnual / 12)}/mois`;
+
+    if (mode === 'comptant') {
+      const taxAnnual = brutAnnual * taxRate;
+      const netAnnual = brutAnnual - taxAnnual;
+      const netMonthly = netAnnual / 12;
+      const netYield = montant > 0 ? netAnnual / montant : 0;
+      const amortYears = netAnnual > 0 ? fraisMontant / netAnnual : 0;
+
+      els.teaserLabel.textContent = 'Vos revenus nets mensuels';
+      els.mainLabel.textContent = 'Vos revenus nets mensuels';
+      els.mainValue.textContent = `${fmtEuro(netMonthly)}`;
+      els.sideLabel.textContent = 'Rendement net réel';
+      els.sideValue.textContent = fmtPercent(netYield * 100, 2);
+      els.mainNote.textContent = `Soit ${fmtEuro(netAnnual)} par an après fiscalité (TMI ${fmtPercent(tmi * 100, 0)} + 17,2 % de prélèvements sociaux), sur un taux de distribution de ${fmtPercent(td * 100, 1)}.`;
+
+      els.stat1Label.textContent = 'Revenus bruts annuels';
+      els.stat1.textContent = fmtEuro(brutAnnual);
+      els.stat2Label.textContent = 'Fiscalité annuelle';
+      els.stat2.textContent = fmtEuro(taxAnnual);
+      els.stat3Label.textContent = 'Valeur de retrait jour 1';
+      els.stat3.textContent = fmtEuro(valeurRetrait);
+
+      els.fraisNote.innerHTML = fraisMontant > 0
+        ? `Frais de souscription : <strong class="text-dark">${fmtEuro(fraisMontant)}</strong> (${fmtPercent(frais * 100, 1)}), intégrés au prix des parts. À ce rythme de revenus nets, ils sont amortis en <strong class="text-dark">${amortYears.toFixed(1).replace('.', ',')} ans</strong> — la SCPI est un placement de long terme.`
+        : `SCPI sans frais de souscription : la valeur de retrait égale votre investissement dès le premier jour. Vérifiez en contrepartie les frais de gestion annuels.`;
+
+      els.legend1.textContent = 'Patrimoine (valeur de retrait + revenus nets cumulés)';
+      els.legend2.textContent = 'Montant investi';
+
+      const points = [];
+      const invested = [];
+      for (let y = 0; y <= years; y++) {
+        points.push({ x: y, y: valeurRetrait + netAnnual * y });
+        invested.push({ x: y, y: montant });
+      }
+      drawLineChart(els.chart, [
+        { label: 'Patrimoine', color: '#81286b', fill: true, points },
+        { label: 'Investi', color: '#d1d5db', dash: '6 6', points: invested },
+      ], { xLabel: 'Années', ariaLabel: 'Projection du patrimoine SCPI au comptant' });
+
+      last = { mode, montant, td, frais, tmi, years, brutAnnual, netAnnual, netMonthly, taxAnnual, valeurRetrait, fraisMontant, amortYears };
+    } else {
+      const apport = Math.min(Math.max(0, readNumber(els.apport)), montant);
+      const rate = Math.max(0, readNumber(els.tauxCredit, 3.8)) / 100;
+      const creditYears = Math.max(1, readNumber(els.dureeCredit, 20));
+      els.dureeCreditDisplay.textContent = `${creditYears} ans`;
+
+      const financed = montant - apport;
+      const mensualite = annuity(financed, rate, creditYears);
+
+      // Amortissement annuel : intérêts payés, capital restant dû, fiscalité
+      // (intérêts déductibles des revenus fonciers), cash-flow.
+      let crd = financed;
+      const r = rate / 12;
+      const patrimoinePoints = [];
+      const effortPoints = [];
+      let cumulEffort = 0;
+      let totalEffortCredit = 0;
+      patrimoinePoints.push({ x: 0, y: Math.max(0, valeurRetrait - crd) });
+      effortPoints.push({ x: 0, y: 0 });
+      for (let y = 1; y <= years; y++) {
+        let interestYear = 0;
+        if (y <= creditYears) {
+          for (let m = 0; m < 12; m++) {
+            const i = crd * r;
+            interestYear += i;
+            crd = Math.max(0, crd - (mensualite - i));
+          }
+        }
+        const taxable = Math.max(0, brutAnnual - interestYear);
+        const taxYear = taxable * taxRate;
+        const paidYear = y <= creditYears ? mensualite * 12 : 0;
+        const cashflow = brutAnnual - paidYear - taxYear;
+        if (cashflow < 0) cumulEffort += -cashflow;
+        if (y <= creditYears) totalEffortCredit += -cashflow;
+        patrimoinePoints.push({ x: y, y: Math.max(0, valeurRetrait - crd) });
+        effortPoints.push({ x: y, y: apport + cumulEffort });
+      }
+      // L'apport fait partie de l'effort dès le jour 0.
+      effortPoints[0].y = apport;
+
+      const effortMensuelMoyen = totalEffortCredit / (creditYears * 12);
+      const netAnnualApres = brutAnnual * (1 - taxRate);
+
+      els.teaserLabel.textContent = "Votre effort d'épargne mensuel";
+      els.mainLabel.textContent = "Effort d'épargne mensuel moyen";
+      els.mainValue.textContent = effortMensuelMoyen > 0 ? fmtEuro(effortMensuelMoyen) : 'Autofinancé';
+      els.sideLabel.textContent = 'Patrimoine au terme du crédit';
+      els.sideValue.textContent = fmtEuro(valeurRetrait);
+      els.mainNote.textContent = effortMensuelMoyen > 0
+        ? `Sur ${creditYears} ans : les loyers et l'économie d'impôt sur les intérêts financent le reste de la mensualité de ${fmtEuro(mensualite)}. Après le crédit, les parts vous versent ${fmtEuro(netAnnualApres / 12)} nets par mois.`
+        : `Les loyers couvrent la mensualité de ${fmtEuro(mensualite)} et la fiscalité : l'opération s'autofinance. Après le crédit, les parts vous versent ${fmtEuro(netAnnualApres / 12)} nets par mois.`;
+
+      els.stat1Label.textContent = 'Mensualité du crédit';
+      els.stat1.textContent = fmtEuro(mensualite);
+      els.stat2Label.textContent = 'Montant financé';
+      els.stat2.textContent = fmtEuro(financed);
+      els.stat3Label.textContent = 'Revenus nets après crédit';
+      els.stat3.textContent = `${fmtEuro(netAnnualApres / 12)}/mois`;
+
+      els.fraisNote.innerHTML = `Frais de souscription : <strong class="text-dark">${fmtEuro(fraisMontant)}</strong> (${fmtPercent(frais * 100, 1)}), intégrés au prix des parts — la valeur de retrait jour 1 est de ${fmtEuro(valeurRetrait)}. Les intérêts d'emprunt sont déduits de vos revenus fonciers dans ce calcul : c'est l'un des atouts fiscaux de l'achat à crédit.`;
+
+      els.legend1.textContent = 'Patrimoine net (valeur de retrait − capital restant dû)';
+      els.legend2.textContent = 'Effort cumulé (apport + épargne mensuelle)';
+
+      drawLineChart(els.chart, [
+        { label: 'Patrimoine net', color: '#81286b', fill: true, points: patrimoinePoints },
+        { label: 'Effort cumulé', color: '#d1d5db', dash: '6 6', points: effortPoints },
+      ], { xLabel: 'Années', ariaLabel: 'Projection du patrimoine SCPI à crédit' });
+
+      last = {
+        mode, montant, td, frais, tmi, years, brutAnnual, valeurRetrait, fraisMontant,
+        apport, rate, creditYears, financed, mensualite, effortMensuelMoyen, netAnnualApres,
+      };
+    }
+  }
+
+  const recompute = debounce(compute, 120);
+
+  function setMode(next) {
+    mode = next;
+    els.creditFields.classList.toggle('hidden', mode !== 'credit');
+    for (const btn of els.modeButtons) {
+      const active = btn.dataset.mode === mode;
+      btn.classList.toggle('border-pat-plum', active);
+      btn.classList.toggle('bg-pat-pink/40', active);
+      btn.classList.toggle('text-pat-plum', active);
+      btn.classList.toggle('border-gray-200', !active);
+      btn.classList.toggle('text-gray-500', !active);
+    }
+    markUse();
+    compute();
+  }
+
+  for (const btn of els.modeButtons) {
+    btn.addEventListener('click', () => setMode(btn.dataset.mode));
+  }
+
+  [els.montant, els.td, els.frais, els.apport, els.tauxCredit].forEach((el) => {
+    el.addEventListener('input', () => { markUse(); recompute(); });
+    el.addEventListener('change', compute);
+  });
+  [els.tmi].forEach((el) => el.addEventListener('change', () => { markUse(); compute(); }));
+  [els.duree, els.dureeCredit].forEach((el) => {
+    el.addEventListener('input', () => { markUse(); recompute(); });
+    el.addEventListener('change', compute);
+  });
+
+  compute();
+
+  // ——— Gate de capture (modèle validé : coordonnées avant le résultat) ———
+  function buildRecap() {
+    if (!last) compute();
+    const lines = [
+      'Simulateur : investissement SCPI',
+      `Mode : ${last.mode === 'credit' ? 'à crédit' : 'au comptant'}`,
+      `Montant investi : ${fmtEuro(last.montant)}`,
+      `Taux de distribution : ${fmtPercent(last.td * 100, 1)}`,
+      `Frais de souscription : ${fmtPercent(last.frais * 100, 1)} (${fmtEuro(last.fraisMontant)})`,
+      `TMI : ${fmtPercent(last.tmi * 100, 0)} + 17,2 % PS`,
+    ];
+    if (last.mode === 'credit') {
+      lines.push(
+        `Apport : ${fmtEuro(last.apport)} — financé : ${fmtEuro(last.financed)}`,
+        `Crédit : ${fmtPercent(last.rate * 100, 1)} sur ${last.creditYears} ans — mensualité : ${fmtEuro(last.mensualite)}`,
+        `Effort d'épargne mensuel moyen : ${last.effortMensuelMoyen > 0 ? fmtEuro(last.effortMensuelMoyen) : 'autofinancé'}`,
+        `Patrimoine au terme du crédit (valeur de retrait) : ${fmtEuro(last.valeurRetrait)}`,
+        `Revenus nets après crédit : ${fmtEuro(last.netAnnualApres / 12)}/mois`,
+      );
+    } else {
+      lines.push(
+        `Revenus bruts : ${fmtEuro(last.brutAnnual)}/an — nets : ${fmtEuro(last.netAnnual)}/an (${fmtEuro(last.netMonthly)}/mois)`,
+        `Valeur de retrait jour 1 : ${fmtEuro(last.valeurRetrait)}`,
+        `Frais amortis en ${last.amortYears.toFixed(1).replace('.', ',')} ans de revenus nets`,
+      );
+    }
+    return lines;
+  }
+
+  initLeadGate({
+    sim: 'scpi',
+    buildRecap,
+    headline: () => {
+      if (!last) return '';
+      return last.mode === 'credit'
+        ? `SCPI à crédit — effort moyen : ${last.effortMensuelMoyen > 0 ? fmtEuro(last.effortMensuelMoyen) : 'autofinancé'}/mois`
+        : `SCPI au comptant — revenus nets : ${fmtEuro(last.netMonthly)}/mois`;
+    },
+  });
+</script>

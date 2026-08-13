@@ -1,0 +1,76 @@
+---
+/**
+ * Carte teaser + coordonnées des simulateurs (modèle validé 13/08/2026) :
+ * le slot `teaser` montre ce qu'on donne avant le gate (jamais le chiffre clé),
+ * le formulaire capture prénom/nom/email/mobile + consentement, et le script de
+ * page appelle initLeadGate() (src/scripts/lead-gate.js) pour le câblage.
+ * Le bloc résultats associé doit avoir l'id `${sim}-results` et la classe `hidden`.
+ */
+interface Props {
+  sim: string;
+}
+const { sim } = Astro.props;
+const inputClass =
+  'w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark';
+---
+
+<div id={`${sim}-gate`} class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+  <div class="gradient-bg p-6 md:p-8 text-white">
+    <slot name="teaser" />
+  </div>
+
+  <form id={`${sim}-gate-form`} class="p-6 md:p-8" novalidate>
+    <h3 class="font-display text-lg md:text-xl font-bold text-dark mb-1.5">Votre résultat est prêt</h3>
+    <p class="text-sm text-gray-500 leading-relaxed mb-5">
+      Dites-nous où envoyer votre étude détaillée : le résultat s'affiche immédiatement à l'écran,
+      et vous recevez le détail par email.
+    </p>
+
+    <!-- Honeypot anti-bot : champ invisible, ignoré par les humains -->
+    <div class="absolute -left-[9999px] top-auto" aria-hidden="true">
+      <label>Ne pas remplir <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label for={`${sim}-gate-prenom`} class="block text-sm font-semibold text-dark mb-2">Prénom</label>
+        <input id={`${sim}-gate-prenom`} name="prenom" type="text" autocomplete="given-name" required class={inputClass} />
+      </div>
+      <div>
+        <label for={`${sim}-gate-nom`} class="block text-sm font-semibold text-dark mb-2">Nom</label>
+        <input id={`${sim}-gate-nom`} name="nom" type="text" autocomplete="family-name" required class={inputClass} />
+      </div>
+      <div>
+        <label for={`${sim}-gate-email`} class="block text-sm font-semibold text-dark mb-2">Email</label>
+        <input id={`${sim}-gate-email`} name="email" type="email" autocomplete="email" placeholder="prenom@exemple.fr" required class={inputClass} />
+      </div>
+      <div>
+        <label for={`${sim}-gate-tel`} class="block text-sm font-semibold text-dark mb-2">Mobile</label>
+        <input id={`${sim}-gate-tel`} name="tel" type="tel" autocomplete="tel" placeholder="06 12 34 56 78" required class={inputClass} />
+      </div>
+    </div>
+
+    <label class="flex items-start gap-3 mt-5 cursor-pointer">
+      <input type="checkbox" name="consent" required class="mt-1 w-4 h-4 accent-pat-plum flex-shrink-0" />
+      <span class="text-sm text-gray-500 leading-relaxed">
+        J'accepte que Patrimed utilise ces informations pour m'envoyer mon étude et me proposer un échange.
+      </span>
+    </label>
+
+    <p data-gate-error class="hidden mt-4 text-sm font-medium text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3"></p>
+
+    <button type="submit"
+      class="mt-5 w-full inline-flex items-center justify-center gap-2 px-6 py-4 gradient-bg text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-pat-plum/20 disabled:opacity-60">
+      Voir mon résultat
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg>
+    </button>
+
+    <p class="mt-4 text-xs text-gray-400 leading-relaxed">
+      Votre étude est gratuite. Vos coordonnées servent à vous l'envoyer et à vous proposer un
+      échange — rien d'autre, pas de démarchage en rafale.
+      <a href="/donnees-personnelles" class="underline hover:text-pat-plum">Données personnelles</a>
+    </p>
+  </form>
+</div>

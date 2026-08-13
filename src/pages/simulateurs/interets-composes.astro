@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import HeroCompact from '../../components/HeroCompact.astro';
 import Section from '../../components/Section.astro';
 import Button from '../../components/Button.astro';
+import LeadGate from '../../components/LeadGate.astro';
 
 const appSchema = {
   "@context": "https://schema.org",
@@ -91,8 +92,29 @@ const breadcrumbSchema = {
         </div>
       </div>
 
-      <!-- Résultats -->
+      <!-- Teaser + coordonnées (avant déblocage) -->
       <div class="lg:col-span-3 space-y-6">
+        <LeadGate sim="interets-composes">
+          <div slot="teaser">
+            <div class="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p class="text-white/70 text-sm font-medium mb-1">Capital au terme</p>
+                <p class="font-display text-4xl md:text-5xl font-bold tracking-wider select-none" aria-hidden="true">••• ••• €</p>
+              </div>
+              <div class="text-right">
+                <p class="text-white/70 text-sm font-medium mb-1">Épargne totale versée</p>
+                <p id="ic-teaser-verse" class="font-display text-2xl md:text-3xl font-bold text-primary-100">—</p>
+              </div>
+            </div>
+            <p class="mt-4 text-sm text-white/80">
+              Votre projection est calculée : capital au terme, part des intérêts, graphique et
+              détail année par année vous attendent ci-dessous.
+            </p>
+          </div>
+        </LeadGate>
+
+        <!-- Résultats (débloqués après envoi des coordonnées) -->
+        <div id="interets-composes-results" class="hidden space-y-6">
         <div class="gradient-bg rounded-2xl p-6 md:p-8 text-white">
           <div class="flex flex-wrap items-center justify-between gap-4">
             <div>
@@ -160,6 +182,7 @@ const breadcrumbSchema = {
             </svg>
           </Button>
         </div>
+        </div>
       </div>
     </div>
 
@@ -200,7 +223,8 @@ const breadcrumbSchema = {
 </Layout>
 
 <script>
-  import { fmtEuro, readNumber, debounce, trackEvent, drawLineChart, projectMonthly } from '../../scripts/sim-utils.js';
+  import { fmtEuro, fmtPercent, readNumber, debounce, trackEvent, drawLineChart, projectMonthly } from '../../scripts/sim-utils.js';
+  import { initLeadGate } from '../../scripts/lead-gate.js';
 
   const $ = (id) => document.getElementById(id);
   const els = {
@@ -216,7 +240,10 @@ const breadcrumbSchema = {
     partVerse: $('ic-part-verse'),
     chart: $('ic-chart'),
     table: $('ic-table'),
+    teaserVerse: $('ic-teaser-verse'),
   };
+
+  let last = null;
 
   function compute() {
     const initial = Math.max(0, readNumber(els.initial));
@@ -234,7 +261,10 @@ const breadcrumbSchema = {
     els.interets.textContent = fmtEuro(interest);
     els.partInterets.textContent = fmtEuro(interest);
     els.partVerse.textContent = fmtEuro(invested);
+    els.teaserVerse.textContent = fmtEuro(invested);
     els.bar.style.width = final > 0 ? `${Math.min(100, (interest / final) * 100)}%` : '0%';
+
+    last = { initial, monthly, rate, years, final, invested, interest };
 
     const investedLine = [];
     for (let y = 0; y <= years; y++) investedLine.push({ x: y, y: initial + monthly * 12 * y });
@@ -273,4 +303,22 @@ const breadcrumbSchema = {
   });
 
   compute();
+
+  // ——— Gate de capture (modèle validé : coordonnées avant le résultat) ———
+  initLeadGate({
+    sim: 'interets-composes',
+    buildRecap: () => {
+      if (!last) compute();
+      return [
+        "Simulateur : intérêts composés",
+        `Capital de départ : ${fmtEuro(last.initial)}`,
+        `Versement mensuel : ${fmtEuro(last.monthly)}`,
+        `Taux de rendement annuel : ${fmtPercent(last.rate * 100, 1)}`,
+        `Durée : ${last.years} ans`,
+        `Épargne totale versée : ${fmtEuro(last.invested)}`,
+        `Capital au terme : ${fmtEuro(last.final)} — dont intérêts : ${fmtEuro(last.interest)}`,
+      ];
+    },
+    headline: () => (last ? `Capital au terme : ${fmtEuro(last.final)}` : ''),
+  });
 </script>

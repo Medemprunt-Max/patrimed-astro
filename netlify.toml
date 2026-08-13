@@ -16,6 +16,17 @@
 #   - l'article « livret A » à slug tronqué (capté par /:année/* → /patriactu)
 # ------------------------------------------------------------------
 
+# --- Proxy same-origin vers le service leads/RDV du VPS ---
+# Les réseaux filtrants (hôpitaux notamment) coupent les appels vers des
+# domaines tiers : le front appelle /api/* et Netlify relaie. Modèle éprouvé
+# sur medemprunt.fr. Le front garde un repli direct vers api.patrimed.fr
+# (src/scripts/lead-api.js) si ce proxy est indisponible.
+[[redirects]]
+  from = "/api/*"
+  to = "https://api.patrimed.fr/rdv/api/:splat"
+  status = 200
+  force = true
+
 # --- Anciens articles WordPress, forme datée /AAAA/MM/JJ/slug ---
 [[redirects]]
   from = "/:y/:m/:d/la-diversification-de-linvestissement-pour-minimiser-les-risques"
