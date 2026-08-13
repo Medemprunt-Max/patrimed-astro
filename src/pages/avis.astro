@@ -1,0 +1,44 @@
+---
+// Redirection vers le formulaire d'avis Google de la fiche Patrimed (131 Bd Pereire).
+// Si la fiche Google change un jour de Place ID, il suffit de mettre a jour cette URL.
+const GOOGLE_REVIEW_URL =
+  'https://search.google.com/local/writereview?placeid=ChIJr7mjzZZv5kcR_btAOIRrS-s';
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="refresh" content={`0;url=${GOOGLE_REVIEW_URL}`} />
+    <title>Donner votre avis — Patrimed</title>
+    <script is:inline define:vars={{ GOOGLE_REVIEW_URL }}>
+      window.location.replace(GOOGLE_REVIEW_URL);
+    </script>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        background: #f9fafb;
+        color: #1f2937;
+        text-align: center;
+        padding: 24px;
+      }
+      a {
+        color: #81286b;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      Redirection vers Google&hellip;<br />
+      Si rien ne se passe, <a href={GOOGLE_REVIEW_URL}>cliquez ici pour donner votre avis</a>.
+    </p>
+  </body>
+</html>
