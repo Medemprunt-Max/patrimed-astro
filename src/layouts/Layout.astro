@@ -31,7 +31,10 @@ const fullTitle = title.includes('Patrimed') ? title : `${title} | Patrimed`;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" type="application/rss+xml" title="PatriActu — Patrimed" href="/rss.xml" />
 
     <title>{fullTitle}</title>
 
@@ -75,13 +78,25 @@ const fullTitle = title.includes('Patrimed') ? title : `${title} | Patrimed`;
       ]
     })} />
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RHR767P7QX"></script>
+    <!-- Google Analytics — chargé uniquement après consentement (exigence CNIL) -->
     <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-RHR767P7QX');
+      (function () {
+        var GA_ID = 'G-RHR767P7QX';
+        window.__loadGA = function () {
+          if (window.__gaLoaded) return;
+          window.__gaLoaded = true;
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+          document.head.appendChild(s);
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_ID, { anonymize_ip: true });
+        };
+        if (localStorage.getItem('patrimed-consent') === 'granted') window.__loadGA();
+      })();
     </script>
 
     <!-- Fonts -->
@@ -96,6 +111,56 @@ const fullTitle = title.includes('Patrimed') ? title : `${title} | Patrimed`;
       <slot />
     </main>
     <Footer />
+
+    <!-- Bannière de consentement cookies (CNIL : accepter et refuser au même niveau) -->
+    <div
+      id="cookie-banner"
+      class="hidden fixed bottom-4 left-4 right-4 sm:left-auto sm:max-w-md z-[60] bg-white rounded-2xl shadow-2xl border border-gray-100 p-6"
+      role="dialog"
+      aria-label="Gestion des cookies"
+    >
+      <p class="font-display font-bold text-dark mb-2">Cookies et mesure d'audience</p>
+      <p class="text-sm text-gray-500 leading-relaxed mb-4">
+        Nous utilisons Google Analytics pour mesurer la fréquentation du site. Ces cookies ne sont
+        déposés qu'avec votre accord.
+        <a href="/donnees-personnelles" class="text-pat-plum hover:underline">En savoir plus</a>
+      </p>
+      <div class="flex items-center gap-3">
+        <button
+          id="cookie-refuse"
+          class="flex-1 px-4 py-2.5 rounded-xl border-2 border-gray-200 text-gray-600 text-sm font-semibold hover:bg-gray-50 transition-colors"
+        >
+          Refuser
+        </button>
+        <button
+          id="cookie-accept"
+          class="flex-1 px-4 py-2.5 rounded-xl bg-pat-plum text-white text-sm font-semibold hover:bg-pat-burgundy transition-colors"
+        >
+          Accepter
+        </button>
+      </div>
+    </div>
+
+    <script is:inline>
+      (function () {
+        var KEY = 'patrimed-consent';
+        var banner = document.getElementById('cookie-banner');
+        function show() { banner.classList.remove('hidden'); }
+        function hide() { banner.classList.add('hidden'); }
+        function choose(value) {
+          localStorage.setItem(KEY, value);
+          hide();
+          if (value === 'granted' && window.__loadGA) window.__loadGA();
+        }
+        document.getElementById('cookie-accept').addEventListener('click', function () { choose('granted'); });
+        document.getElementById('cookie-refuse').addEventListener('click', function () { choose('denied'); });
+        if (!localStorage.getItem(KEY)) show();
+        // Lien « Gérer les cookies » (footer) : rouvre la bannière
+        document.querySelectorAll('[data-cookie-settings]').forEach(function (el) {
+          el.addEventListener('click', function (e) { e.preventDefault(); show(); });
+        });
+      })();
+    </script>
 
     <script>
       // Scroll reveal

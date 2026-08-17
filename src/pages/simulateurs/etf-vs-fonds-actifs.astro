@@ -1,0 +1,391 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HeroCompact from '../../components/HeroCompact.astro';
+import Section from '../../components/Section.astro';
+import Button from '../../components/Button.astro';
+import SchemaFrais from '../../components/SchemaFrais.astro';
+
+const faqs = [
+  {
+    q: "Que sont les « frais courants » d'un fonds ?",
+    a: "Ce sont les frais de fonctionnement et de gestion prélevés chaque année par le fonds lui-même : ils sont déduits directement de sa valeur liquidative, jamais facturés sur votre relevé. Vous ne les voyez donc pas — mais ils sont indiqués dans le document d'informations clés (DIC) de chaque fonds. Un fonds actions géré activement affiche souvent 1,5 % à 2 % de frais courants par an, un ETF indiciel entre 0,05 % et 0,4 %.",
+  },
+  {
+    q: "Qu'est-ce qu'un ETF ?",
+    a: "Un ETF (fonds indiciel coté, ou « tracker ») est un fonds qui réplique un indice de marché — CAC 40, S&P 500, MSCI World — au lieu de payer une équipe de gérants pour tenter de le battre. Cette gestion passive coûte très peu, d'où des frais courants souvent dix fois inférieurs à ceux d'un fonds classique, pour une exposition aux marchés comparable.",
+  },
+  {
+    q: "Les fonds gérés activement ne battent-ils pas les ETF ?",
+    a: "C'est rare sur longue période. Selon les études SPIVA de S&P Global, plus de 80 % des fonds actions gérés activement en Europe font moins bien que leur indice de référence sur 10 ans, après frais. Quelques gérants créent réellement de la valeur sur certaines classes d'actifs, mais les identifier à l'avance est très difficile — alors que l'économie de frais d'un fonds indiciel, elle, est certaine et se capitalise chaque année.",
+  },
+  {
+    q: "Puis-je loger des ETF dans mon assurance vie ou mon PER ?",
+    a: "Oui, à condition que le contrat les référence : c'est loin d'être le cas partout, et c'est un critère majeur de notre sélection. Lors d'un bilan, nous examinons les fonds que vous détenez, leurs frais courants réels et les alternatives indicielles disponibles — dans votre contrat actuel ou dans un contrat qui leur donne accès.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((f) => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
+
+const appSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Simulateur ETF vs fonds actifs : l'impact des frais des fonds",
+  "url": "https://patrimed.fr/simulateurs/etf-vs-fonds-actifs",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "provider": { "@type": "Organization", "name": "Patrimed", "url": "https://patrimed.fr" },
+  "description": "Comparez un fonds indiciel (ETF) à frais bas et un fonds géré activement sur 5 à 40 ans : l'écart de capital dû aux frais courants, chiffré sur vos propres montants.",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://patrimed.fr" },
+    { "@type": "ListItem", "position": 2, "name": "Simulateurs", "item": "https://patrimed.fr/simulateurs" },
+    { "@type": "ListItem", "position": 3, "name": "ETF vs fonds actifs" },
+  ],
+};
+---
+
+<Layout
+  title="ETF ou fonds actifs : l'impact réel des frais de vos fonds"
+  description="Un fonds classique prélève 1,5 à 2 % de frais invisibles par an, un ETF moins de 0,4 %. Simulateur gratuit : mesurez l'écart de capital sur 10, 20 ou 30 ans."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(appSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" />
+
+  <HeroCompact
+    title="ETF ou fonds classiques :"
+    highlight="mesurez l'écart"
+    subtitle="Un fonds géré activement prélève chaque année 1,5 à 2 % de frais, invisibles car déduits directement de sa valeur. Un fonds indiciel (ETF) : souvent moins de 0,4 %. Voici ce que cette différence fait à votre capital."
+  />
+
+  <Section bg="gray">
+    <nav class="text-sm text-gray-400 mb-8" aria-label="Fil d'Ariane">
+      <a href="/simulateurs" class="hover:text-pat-plum transition-colors">Simulateurs</a>
+      <span class="mx-2">/</span>
+      <span class="text-gray-600">ETF vs fonds actifs</span>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+      <!-- Formulaire -->
+      <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
+        <h2 class="font-display text-xl font-bold text-dark mb-6">Votre épargne</h2>
+
+        <div class="space-y-5">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="fr-initial" class="block text-sm font-semibold text-dark mb-2">Versement initial</label>
+              <div class="relative">
+                <input type="number" id="fr-initial" value="10000" min="0" step="1000"
+                  class="w-full px-4 py-3 pr-8 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold" />
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">€</span>
+              </div>
+            </div>
+            <div>
+              <label for="fr-mensuel" class="block text-sm font-semibold text-dark mb-2">Versement mensuel</label>
+              <div class="relative">
+                <input type="number" id="fr-mensuel" value="500" min="0" step="50"
+                  class="w-full px-4 py-3 pr-8 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold" />
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">€</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label for="fr-duree" class="text-sm font-semibold text-dark">Durée de placement</label>
+              <span id="fr-duree-display" class="text-pat-plum font-bold">25 ans</span>
+            </div>
+            <input type="range" id="fr-duree" min="5" max="40" step="1" value="25" class="w-full accent-pat-plum" />
+          </div>
+
+          <div>
+            <label for="fr-rendement" class="block text-sm font-semibold text-dark mb-2">Rendement annuel brut des marchés</label>
+            <div class="relative">
+              <input type="number" id="fr-rendement" value="5" min="0" max="12" step="0.1"
+                class="w-full px-4 py-3 pr-8 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold" />
+              <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">%</span>
+            </div>
+            <p class="mt-1.5 text-xs text-gray-400">Avant frais des fonds. Identique pour les deux scénarios ; jamais garanti.</p>
+          </div>
+
+          <!-- Fonds indiciels -->
+          <div class="rounded-xl border-2 border-pat-plum/30 bg-pat-pink/20 p-4">
+            <p class="text-sm font-bold text-pat-plum mb-3">Fonds indiciels (ETF)</p>
+            <label for="fr-a-frais" class="block text-xs font-semibold text-dark mb-1.5">Frais courants annuels</label>
+            <div class="relative">
+              <input type="number" id="fr-a-frais" value="0.3" min="0" max="5" step="0.05"
+                class="w-full px-3 py-2 pr-7 rounded-lg border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold text-sm" />
+              <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-semibold">%</span>
+            </div>
+            <p class="mt-2 text-xs text-gray-400">Typiquement 0,05 % à 0,4 % selon l'indice répliqué.</p>
+          </div>
+
+          <!-- Fonds actifs -->
+          <div class="rounded-xl border-2 border-gray-200 bg-gray-50 p-4">
+            <p class="text-sm font-bold text-gray-600 mb-3">Fonds gérés activement</p>
+            <label for="fr-b-frais" class="block text-xs font-semibold text-dark mb-1.5">Frais courants annuels</label>
+            <div class="relative">
+              <input type="number" id="fr-b-frais" value="1.8" min="0" max="5" step="0.05"
+                class="w-full px-3 py-2 pr-7 rounded-lg border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold text-sm" />
+              <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-semibold">%</span>
+            </div>
+            <p class="mt-2 text-xs text-gray-400">Souvent 1,5 % à 2 % pour un fonds actions classique (voir le DIC du fonds).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Résultats -->
+      <div class="lg:col-span-3 space-y-6">
+        <div class="gradient-bg rounded-2xl p-6 md:p-8 text-white">
+          <p class="text-white/70 text-sm font-medium mb-1">Écart de capital au terme, à versements et marchés identiques</p>
+          <p id="fr-ecart" class="font-display text-4xl md:text-5xl font-bold">—</p>
+          <p class="mt-2 text-white/70 text-sm">
+            soit <strong id="fr-ecart-pct" class="text-primary-100">—</strong> de capital en plus en privilégiant les fonds à frais bas
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-white rounded-2xl border-2 border-pat-plum/30 p-5">
+            <p class="text-xs text-pat-plum font-bold mb-1">Avec fonds indiciels</p>
+            <p id="fr-capital-a" class="font-display text-xl font-bold text-dark">—</p>
+          </div>
+          <div class="bg-white rounded-2xl border border-gray-100 p-5">
+            <p class="text-xs text-gray-400 font-medium mb-1">Avec fonds classiques</p>
+            <p id="fr-capital-b" class="font-display text-xl font-bold text-dark">—</p>
+          </div>
+          <div class="bg-white rounded-2xl border border-gray-100 p-5">
+            <p class="text-xs text-gray-400 font-medium mb-1">Total épargné</p>
+            <p id="fr-verse" class="font-display text-xl font-bold text-dark">—</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-gray-100 p-6">
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mb-4 text-sm">
+            <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#81286b"></span> Fonds indiciels (ETF)</span>
+            <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#9ca3af"></span> Fonds gérés activement</span>
+            <span class="flex items-center gap-2"><span class="w-6 h-0.5 border-t-2 border-dashed border-gray-300"></span> Épargne versée</span>
+          </div>
+          <div id="fr-chart"></div>
+        </div>
+
+        <!-- CTA -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+          <h3 class="font-display text-lg font-bold text-dark mb-2">Que contiennent vraiment vos contrats ?</h3>
+          <p class="text-gray-500 text-sm leading-relaxed mb-5">
+            La plupart des épargnants ignorent les frais courants des fonds qu'ils détiennent — ils ne
+            figurent sur aucun relevé. Lors d'un bilan gratuit, nous les passons en revue ligne par ligne
+            et nous vous montrons les alternatives indicielles accessibles pour votre stratégie.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <Button href="/rdv" variant="primary">
+              Faire auditer mes fonds
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Button>
+            <button id="fr-cta-email" class="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-pat-plum text-pat-plum font-semibold rounded-xl transition-all duration-300 hover:bg-pat-plum hover:text-white">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              Recevoir une étude personnalisée
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-8 text-xs text-gray-400 leading-relaxed max-w-4xl">
+      Simulation indicative et non contractuelle. Hypothèses : même rendement brut de marché pour les deux scénarios,
+      seuls les frais courants des fonds diffèrent ; capitalisation mensuelle ; frais du contrat et fiscalité non
+      modélisés car identiques dans les deux cas ; les écarts de performance de gestion entre fonds ne sont pas
+      simulés. Les performances passées ne préjugent pas des performances futures et les unités de compte présentent
+      un risque de perte en capital. Cette simulation ne constitue pas une recommandation d'investissement
+      personnalisée. Mise à jour : juillet 2026.
+    </p>
+  </Section>
+
+  <!-- Éditorial -->
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-dark mb-6">
+        Les frais des fonds : <span class="gradient-text">la couche invisible</span>
+      </h2>
+
+      <div class="mb-8">
+        <SchemaFrais />
+      </div>
+
+      <div class="space-y-4 text-gray-600 leading-relaxed">
+        <p>
+          Quand on parle des frais d'une assurance vie ou d'un PER, on pense aux frais du contrat. C'est pourtant
+          rarement là que se joue l'essentiel : <strong>les frais courants des fonds détenus à l'intérieur</strong>
+          sont souvent la première source d'érosion du capital — et la moins visible, car ils sont prélevés
+          directement dans la valeur du fonds, sans jamais apparaître sur un relevé.
+        </p>
+        <p>
+          Or ces frais agissent comme des <strong>intérêts composés inversés</strong> : prélevés chaque année sur la
+          totalité du capital, gains compris, ils absorbent une part qui grossit avec le temps. Entre un fonds actions
+          classique à 1,8 % et un ETF à 0,3 %, l'écart de 1,5 point par an finit par représenter, sur 25 ans,
+          plusieurs années de versements.
+        </p>
+        <p>
+          Cette différence de coût serait justifiée si la gestion active faisait durablement mieux que le marché.
+          Les données disent le contraire : selon les études <strong>SPIVA de S&P Global</strong>, plus de 80 % des
+          fonds actions gérés activement en Europe sous-performent leur indice de référence sur 10 ans, une fois les
+          frais déduits. L'économie de frais d'un fonds indiciel, elle, est acquise chaque année, quoi que fassent
+          les marchés.
+        </p>
+        <p>
+          C'est pourquoi, chez Patrimed, la sélection des supports commence par leurs frais réels. Nos conseillers
+          sont rémunérés de la même façon quel que soit le support recommandé : rien ne nous retient de privilégier
+          les fonds indiciels à frais bas quand ils servent votre stratégie — et de réserver la gestion active aux
+          cas où elle apporte réellement quelque chose.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- FAQ -->
+  <Section bg="gray">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-dark mb-8 text-center">
+        Questions <span class="gradient-text">fréquentes</span>
+      </h2>
+      <div class="space-y-4">
+        {faqs.map((f) => (
+          <details class="faq-item group bg-white rounded-2xl border border-gray-100 hover:border-pat-plum/20 transition-colors">
+            <summary class="flex items-center justify-between gap-4 cursor-pointer list-none p-6">
+              <h3 class="font-display text-base md:text-lg font-bold text-dark">{f.q}</h3>
+              <svg class="w-5 h-5 text-pat-plum flex-shrink-0 transition-transform duration-300 group-open:rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+              </svg>
+            </summary>
+            <p class="px-6 pb-6 text-gray-500 leading-relaxed">{f.a}</p>
+          </details>
+        ))}
+      </div>
+
+      <div class="mt-12 text-center">
+        <Button href="/rdv" variant="primary" size="lg">
+          RDV visio gratuit avec un conseiller
+        </Button>
+      </div>
+    </div>
+  </Section>
+</Layout>
+
+<style>
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
+
+<script>
+  import { fmtEuro, fmtPercent, readNumber, debounce, trackEvent, drawLineChart, projectMonthly } from '../../scripts/sim-utils.js';
+
+  const $ = (id) => document.getElementById(id);
+  const els = {
+    initial: $('fr-initial'),
+    mensuel: $('fr-mensuel'),
+    duree: $('fr-duree'),
+    dureeDisplay: $('fr-duree-display'),
+    rendement: $('fr-rendement'),
+    aFrais: $('fr-a-frais'),
+    bFrais: $('fr-b-frais'),
+    ecart: $('fr-ecart'),
+    ecartPct: $('fr-ecart-pct'),
+    capitalA: $('fr-capital-a'),
+    capitalB: $('fr-capital-b'),
+    verse: $('fr-verse'),
+    chart: $('fr-chart'),
+    ctaEmail: $('fr-cta-email'),
+  };
+
+  let tracked = false;
+  let last = null;
+
+  function compute() {
+    const initial = Math.max(0, readNumber(els.initial));
+    const monthly = Math.max(0, readNumber(els.mensuel));
+    const years = Math.max(1, readNumber(els.duree, 25));
+    const grossRate = Math.max(0, readNumber(els.rendement, 5)) / 100;
+    const aFrais = Math.max(0, readNumber(els.aFrais)) / 100;
+    const bFrais = Math.max(0, readNumber(els.bFrais)) / 100;
+
+    els.dureeDisplay.textContent = `${years} ans`;
+
+    const a = projectMonthly({ initial, monthly, years, annualRate: Math.max(-0.99, grossRate - aFrais) });
+    const b = projectMonthly({ initial, monthly, years, annualRate: Math.max(-0.99, grossRate - bFrais) });
+    const invested = initial + monthly * 12 * years;
+    const gap = a.final - b.final;
+
+    els.ecart.textContent = fmtEuro(Math.abs(gap));
+    els.ecartPct.textContent = b.final > 0 ? fmtPercent((gap / b.final) * 100, 1) : '—';
+    els.capitalA.textContent = fmtEuro(a.final);
+    els.capitalB.textContent = fmtEuro(b.final);
+    els.verse.textContent = fmtEuro(invested);
+
+    const investedLine = [];
+    for (let y = 0; y <= years; y++) investedLine.push({ x: y, y: initial + monthly * 12 * y });
+
+    drawLineChart(els.chart, [
+      { label: 'Fonds indiciels (ETF)', color: '#81286b', fill: true, points: a.byYear },
+      { label: 'Fonds gérés activement', color: '#9ca3af', points: b.byYear },
+      { label: 'Épargne versée', color: '#d1d5db', dash: '6 6', points: investedLine },
+    ], { xLabel: 'Années', ariaLabel: 'Comparaison de la croissance du capital selon les frais des fonds' });
+
+    last = { initial, monthly, years, grossRate, aFrais, bFrais, finalA: a.final, finalB: b.final, gap };
+  }
+
+  const recompute = debounce(compute, 120);
+  [els.initial, els.mensuel, els.duree, els.rendement, els.aFrais, els.bFrais].forEach((el) => {
+    el.addEventListener('input', () => {
+      if (!tracked) {
+        tracked = true;
+        trackEvent('simulateur_calcul', { simulateur: 'etf_vs_fonds_actifs' });
+      }
+      recompute();
+    });
+    el.addEventListener('change', compute);
+  });
+
+  els.ctaEmail.addEventListener('click', () => {
+    if (!last) return;
+    trackEvent('simulateur_cta_email', { simulateur: 'etf_vs_fonds_actifs' });
+    const lignes = [
+      'Bonjour,',
+      '',
+      "Je viens d'utiliser le simulateur ETF vs fonds actifs sur patrimed.fr et j'aimerais recevoir une étude personnalisée (audit des fonds de mes contrats).",
+      '',
+      `Versement initial : ${fmtEuro(last.initial)} — versements mensuels : ${fmtEuro(last.monthly)}`,
+      `Durée : ${last.years} ans — rendement brut supposé : ${(last.grossRate * 100).toLocaleString('fr-FR')} %`,
+      `Capital simulé en fonds indiciels : ${fmtEuro(last.finalA)}`,
+      `Capital simulé en fonds classiques : ${fmtEuro(last.finalB)}`,
+      `Écart : ${fmtEuro(Math.abs(last.gap))}`,
+      '',
+      'Voici mes coordonnées pour être recontacté(e) :',
+      'Nom :',
+      'Téléphone :',
+      '',
+      'Merci !',
+    ];
+    const subject = encodeURIComponent('Ma simulation ETF vs fonds actifs — demande d’étude');
+    const body = encodeURIComponent(lignes.join('\n'));
+    window.location.href = `mailto:contact@patrimed.fr?subject=${subject}&body=${body}`;
+  });
+
+  compute();
+</script>

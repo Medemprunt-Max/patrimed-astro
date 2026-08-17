@@ -1,0 +1,324 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HeroCompact from '../../components/HeroCompact.astro';
+import Section from '../../components/Section.astro';
+import Button from '../../components/Button.astro';
+import LeadGate from '../../components/LeadGate.astro';
+
+const appSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Calculatrice d'intérêts composés",
+  "url": "https://patrimed.fr/simulateurs/interets-composes",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "provider": { "@type": "Organization", "name": "Patrimed", "url": "https://patrimed.fr" },
+  "description": "Calculez la croissance de votre épargne avec les intérêts composés : capital initial, versements mensuels, taux de rendement et durée, avec graphique et détail année par année.",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://patrimed.fr" },
+    { "@type": "ListItem", "position": 2, "name": "Simulateurs", "item": "https://patrimed.fr/simulateurs" },
+    { "@type": "ListItem", "position": 3, "name": "Intérêts composés" },
+  ],
+};
+---
+
+<Layout
+  title="Calculatrice d'intérêts composés — Projetez votre épargne"
+  description="Calculatrice d'intérêts composés gratuite : capital initial, versements mensuels, taux et durée. Visualisez la croissance de votre épargne et la part des intérêts, année par année."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(appSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} slot="head" />
+
+  <HeroCompact
+    title="Calculatrice"
+    highlight="d'intérêts composés"
+    subtitle="« La plus grande force de l'univers », selon la formule prêtée à Einstein. Visualisez ce que le temps fait à votre épargne."
+  />
+
+  <Section bg="gray">
+    <nav class="text-sm text-gray-400 mb-8" aria-label="Fil d'Ariane">
+      <a href="/simulateurs" class="hover:text-pat-plum transition-colors">Simulateurs</a>
+      <span class="mx-2">/</span>
+      <span class="text-gray-600">Intérêts composés</span>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+      <!-- Formulaire -->
+      <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
+        <h2 class="font-display text-xl font-bold text-dark mb-6">Vos paramètres</h2>
+
+        <div class="space-y-5">
+          <div>
+            <label for="ic-initial" class="block text-sm font-semibold text-dark mb-2">Capital de départ</label>
+            <div class="relative">
+              <input type="number" id="ic-initial" value="10000" min="0" step="1000"
+                class="w-full px-4 py-3 pr-10 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold" />
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">€</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="ic-mensuel" class="block text-sm font-semibold text-dark mb-2">Versement mensuel</label>
+            <div class="relative">
+              <input type="number" id="ic-mensuel" value="300" min="0" step="50"
+                class="w-full px-4 py-3 pr-10 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold" />
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">€</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="ic-taux" class="block text-sm font-semibold text-dark mb-2">Taux de rendement annuel</label>
+            <div class="relative">
+              <input type="number" id="ic-taux" value="5" min="0" max="15" step="0.1"
+                class="w-full px-4 py-3 pr-10 rounded-xl border-2 border-gray-200 focus:border-pat-plum focus:outline-none text-dark font-semibold" />
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">%</span>
+            </div>
+            <p class="mt-1.5 text-xs text-gray-400">Net de frais, avant fiscalité. Un rendement n'est jamais garanti.</p>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label for="ic-duree" class="text-sm font-semibold text-dark">Durée</label>
+              <span id="ic-duree-display" class="text-pat-plum font-bold">20 ans</span>
+            </div>
+            <input type="range" id="ic-duree" min="1" max="40" step="1" value="20" class="w-full accent-pat-plum" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Teaser + coordonnées (avant déblocage) -->
+      <div class="lg:col-span-3 space-y-6">
+        <LeadGate sim="interets-composes">
+          <div slot="teaser">
+            <div class="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p class="text-white/70 text-sm font-medium mb-1">Capital au terme</p>
+                <p class="font-display text-4xl md:text-5xl font-bold tracking-wider select-none" aria-hidden="true">••• ••• €</p>
+              </div>
+              <div class="text-right">
+                <p class="text-white/70 text-sm font-medium mb-1">Épargne totale versée</p>
+                <p id="ic-teaser-verse" class="font-display text-2xl md:text-3xl font-bold text-primary-100">—</p>
+              </div>
+            </div>
+            <p class="mt-4 text-sm text-white/80">
+              Votre projection est calculée : capital au terme, part des intérêts, graphique et
+              détail année par année vous attendent ci-dessous.
+            </p>
+          </div>
+        </LeadGate>
+
+        <!-- Résultats (débloqués après envoi des coordonnées) -->
+        <div id="interets-composes-results" class="hidden space-y-6">
+        <div class="gradient-bg rounded-2xl p-6 md:p-8 text-white">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p class="text-white/70 text-sm font-medium mb-1">Capital au terme</p>
+              <p id="ic-final" class="font-display text-4xl md:text-5xl font-bold">—</p>
+            </div>
+            <div class="text-right">
+              <p class="text-white/70 text-sm font-medium mb-1">dont intérêts</p>
+              <p id="ic-interets" class="font-display text-2xl md:text-3xl font-bold text-primary-100">—</p>
+            </div>
+          </div>
+          <div class="mt-6">
+            <div class="flex h-4 rounded-full overflow-hidden bg-white/15">
+              <div id="ic-bar" class="bg-primary-100 transition-all duration-500" style="width:0%"></div>
+            </div>
+            <div class="flex justify-between mt-2 text-xs text-white/70">
+              <span>Intérêts : <strong id="ic-part-interets" class="text-primary-100">—</strong></span>
+              <span>Épargne versée : <strong id="ic-part-verse" class="text-white">—</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-gray-100 p-6">
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mb-4 text-sm">
+            <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#81286b"></span> Capital total</span>
+            <span class="flex items-center gap-2"><span class="w-6 h-0.5 border-t-2 border-dashed border-gray-300"></span> Épargne versée</span>
+          </div>
+          <div id="ic-chart"></div>
+        </div>
+
+        <details class="bg-white rounded-2xl border border-gray-100 group">
+          <summary class="flex items-center justify-between gap-4 cursor-pointer list-none p-6">
+            <h3 class="font-display text-base font-bold text-dark">Détail année par année</h3>
+            <svg class="w-5 h-5 text-pat-plum flex-shrink-0 transition-transform duration-300 group-open:rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-6 overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="text-left text-xs text-gray-400 border-b border-gray-100">
+                  <th class="py-2 pr-4 font-semibold">Année</th>
+                  <th class="py-2 pr-4 font-semibold text-right">Épargne versée</th>
+                  <th class="py-2 pr-4 font-semibold text-right">Intérêts cumulés</th>
+                  <th class="py-2 font-semibold text-right">Capital</th>
+                </tr>
+              </thead>
+              <tbody id="ic-table"></tbody>
+            </table>
+          </div>
+        </details>
+
+        <!-- CTA -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8">
+          <h3 class="font-display text-lg font-bold text-dark mb-2">Le taux ne fait pas tout</h3>
+          <p class="text-gray-500 text-sm leading-relaxed mb-5">
+            Le résultat dépend de trois leviers : le temps, le montant épargné… et les frais courants des
+            fonds que vous détenez, qui rognent le taux chaque année. <a href="/simulateurs/etf-vs-fonds-actifs" class="text-pat-plum font-medium hover:underline">Mesurez l'écart entre ETF et fonds classiques</a> —
+            ou construisez votre stratégie d'épargne avec un conseiller dédié aux soignants.
+          </p>
+          <Button href="/rdv" variant="primary">
+            RDV visio gratuit
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Button>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-8 text-xs text-gray-400 leading-relaxed max-w-4xl">
+      Simulation indicative et non contractuelle : taux constant, capitalisation mensuelle, fiscalité non prise en
+      compte. Les performances passées ne préjugent pas des performances futures. Cette simulation ne constitue pas
+      une recommandation d'investissement personnalisée.
+    </p>
+  </Section>
+
+  <!-- Éditorial -->
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-dark mb-6">
+        Comprendre les <span class="gradient-text">intérêts composés</span>
+      </h2>
+      <div class="space-y-4 text-gray-600 leading-relaxed">
+        <p>
+          Les intérêts composés, c'est le principe des <strong>intérêts qui produisent eux-mêmes des intérêts</strong> :
+          chaque année, le rendement s'applique non seulement à votre épargne, mais aussi à tous les gains accumulés
+          auparavant. La croissance n'est pas une droite, c'est une courbe qui s'accélère — et l'essentiel de l'effet
+          se produit dans les dernières années.
+        </p>
+        <p>
+          La conséquence pratique est contre-intuitive : <strong>la date de départ compte plus que le montant</strong>.
+          À 5 % par an, 300 € par mois placés pendant 30 ans produisent bien plus que 600 € par mois pendant 15 ans,
+          à épargne totale pourtant comparable. Pour un interne ou un jeune installé, commencer tôt — même modestement —
+          est le levier patrimonial le plus puissant qui existe.
+        </p>
+        <p>
+          Trois paramètres font le résultat : le temps (le plus précieux), le taux net — d'où l'importance des
+          <a href="/simulateurs/etf-vs-fonds-actifs" class="text-pat-plum font-medium hover:underline">frais courants de vos fonds</a> —
+          et la régularité des versements, qui lisse les points d'entrée sur les marchés.
+        </p>
+      </div>
+    </div>
+  </Section>
+</Layout>
+
+<script>
+  import { fmtEuro, fmtPercent, readNumber, debounce, trackEvent, drawLineChart, projectMonthly } from '../../scripts/sim-utils.js';
+  import { initLeadGate } from '../../scripts/lead-gate.js';
+
+  const $ = (id) => document.getElementById(id);
+  const els = {
+    initial: $('ic-initial'),
+    mensuel: $('ic-mensuel'),
+    taux: $('ic-taux'),
+    duree: $('ic-duree'),
+    dureeDisplay: $('ic-duree-display'),
+    final: $('ic-final'),
+    interets: $('ic-interets'),
+    bar: $('ic-bar'),
+    partInterets: $('ic-part-interets'),
+    partVerse: $('ic-part-verse'),
+    chart: $('ic-chart'),
+    table: $('ic-table'),
+    teaserVerse: $('ic-teaser-verse'),
+  };
+
+  let last = null;
+
+  function compute() {
+    const initial = Math.max(0, readNumber(els.initial));
+    const monthly = Math.max(0, readNumber(els.mensuel));
+    const rate = Math.max(0, readNumber(els.taux, 5)) / 100;
+    const years = Math.max(1, readNumber(els.duree, 20));
+
+    els.dureeDisplay.textContent = `${years} ans`;
+
+    const { final, byYear } = projectMonthly({ initial, monthly, years, annualRate: rate });
+    const invested = initial + monthly * 12 * years;
+    const interest = final - invested;
+
+    els.final.textContent = fmtEuro(final);
+    els.interets.textContent = fmtEuro(interest);
+    els.partInterets.textContent = fmtEuro(interest);
+    els.partVerse.textContent = fmtEuro(invested);
+    els.teaserVerse.textContent = fmtEuro(invested);
+    els.bar.style.width = final > 0 ? `${Math.min(100, (interest / final) * 100)}%` : '0%';
+
+    last = { initial, monthly, rate, years, final, invested, interest };
+
+    const investedLine = [];
+    for (let y = 0; y <= years; y++) investedLine.push({ x: y, y: initial + monthly * 12 * y });
+
+    drawLineChart(els.chart, [
+      { label: 'Capital', color: '#81286b', fill: true, points: byYear },
+      { label: 'Épargne versée', color: '#d1d5db', dash: '6 6', points: investedLine },
+    ], { xLabel: 'Années', ariaLabel: "Croissance du capital grâce aux intérêts composés" });
+
+    // Tableau annuel (limité aux lignes utiles : toutes les années).
+    els.table.innerHTML = byYear
+      .slice(1)
+      .map((p, i) => {
+        const versed = initial + monthly * 12 * (i + 1);
+        return `<tr class="border-b border-gray-50">
+          <td class="py-2 pr-4 text-gray-500">${i + 1}</td>
+          <td class="py-2 pr-4 text-right text-gray-500">${fmtEuro(versed)}</td>
+          <td class="py-2 pr-4 text-right text-pat-plum font-medium">${fmtEuro(p.y - versed)}</td>
+          <td class="py-2 text-right font-semibold text-dark">${fmtEuro(p.y)}</td>
+        </tr>`;
+      })
+      .join('');
+  }
+
+  const recompute = debounce(compute, 120);
+  let tracked = false;
+  [els.initial, els.mensuel, els.taux, els.duree].forEach((el) => {
+    el.addEventListener('input', () => {
+      if (!tracked) {
+        tracked = true;
+        trackEvent('simulateur_calcul', { simulateur: 'interets_composes' });
+      }
+      recompute();
+    });
+    el.addEventListener('change', compute);
+  });
+
+  compute();
+
+  // ——— Gate de capture (modèle validé : coordonnées avant le résultat) ———
+  initLeadGate({
+    sim: 'interets-composes',
+    buildRecap: () => {
+      if (!last) compute();
+      return [
+        "Simulateur : intérêts composés",
+        `Capital de départ : ${fmtEuro(last.initial)}`,
+        `Versement mensuel : ${fmtEuro(last.monthly)}`,
+        `Taux de rendement annuel : ${fmtPercent(last.rate * 100, 1)}`,
+        `Durée : ${last.years} ans`,
+        `Épargne totale versée : ${fmtEuro(last.invested)}`,
+        `Capital au terme : ${fmtEuro(last.final)} — dont intérêts : ${fmtEuro(last.interest)}`,
+      ];
+    },
+    headline: () => (last ? `Capital au terme : ${fmtEuro(last.final)}` : ''),
+  });
+</script>

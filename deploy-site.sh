@@ -55,7 +55,7 @@ echo "[deploy] Cible: ftps://$FTP_USER@$FTP_HOST:21$FTP_REMOTE_DIR"
 # Exclusions:
 #   .DS_Store       — artefact macOS
 #   .well-known     — challenges Let's Encrypt (NE JAMAIS écraser)
-#   images/blog     — images blog non versionnées dans le repo (uploadées hors deploy)
+#   (images/blog est désormais versionné dans le repo — exclusion retirée)
 #
 # Note: pas de --delete. On ne supprime rien sur le serveur (conservateur).
 #       Les vieux assets (anciens hash CSS/JS) restent mais ne sont plus référencés.
@@ -69,7 +69,6 @@ set mirror:parallel-transfer-count 4
 mirror --reverse --verbose=1 --parallel=4 $DRY_RUN_FLAG \
   --exclude-glob '.DS_Store' \
   --exclude '^\\.well-known/' \
-  --exclude '^images/blog/' \
   "$DIST_DIR" "$FTP_REMOTE_DIR"
 quit
 EOF

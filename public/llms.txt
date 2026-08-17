@@ -1,0 +1,38 @@
+# Patrimed
+
+> Patrimed est un cabinet de conseil en gestion de patrimoine indépendant, dédié exclusivement aux professionnels de santé (médecins, internes, pharmaciens, chirurgiens-dentistes et autres soignants) en France. Immatriculé à l'ORIAS sous le n° 23003677 en tant que Conseiller en Investissements Financiers (CIF) et Courtier en Assurance (COA). Premier rendez-vous gratuit en visioconférence, 6j/7 de 9h à 23h.
+
+Points clés :
+- Indépendance : aucun lien capitalistique avec une banque ou un assureur ; plus de 25 partenaires financiers ; les conseillers perçoivent la même rémunération quel que soit le produit recommandé.
+- Spécialisation santé : fiscalité des BNC, exercice en SELARL, retraite CARMF/CARPIMKO, protection sociale des libéraux.
+- Domaines : assurance vie, PER, SCPI, compte-titres/PEA, défiscalisation (Girardin, Malraux), prévoyance, retraite, immobilier.
+- Marque sœur : Medemprunt (https://medemprunt.fr), courtage en crédit pour les professions médicales.
+- Coordonnées : 131 boulevard Pereire, 75017 Paris — 01 77 62 44 81 — contact@patrimed.fr.
+
+## Pages principales
+
+- [Accueil](https://patrimed.fr) : présentation du cabinet et de ses engagements
+- [Nos solutions patrimoniales](https://patrimed.fr/gestion-patrimoine) : les 5 domaines d'expertise (patrimoine, fiscalité, protection, retraite, immobilier & crédit)
+- [Qui sommes-nous](https://patrimed.fr/qui-sommes-nous) : histoire du cabinet, fondateur, cadre réglementaire
+- [FAQ](https://patrimed.fr/faq) : questions fréquentes (coût, indépendance, rémunération, déroulement)
+- [Partenaires](https://patrimed.fr/partenaires) : compagnies et sociétés de gestion partenaires
+- [Parrainage](https://patrimed.fr/parrainage) : programme de parrainage entre confrères
+- [Prendre rendez-vous](https://patrimed.fr/rdv) : réservation d'une visioconférence gratuite
+
+## Simulateurs gratuits
+
+- [Simulateurs](https://patrimed.fr/simulateurs) : outils de calcul gratuits avec les chiffres fiscaux 2026 — résultat à l'écran, étude détaillée envoyée par email
+- [Économie d'impôt PER](https://patrimed.fr/simulateurs/economie-impot-per) : économie d'impôt d'un versement PER selon le barème 2026, avec plafonds de déduction TNS (BNC, SELARL) et salarié
+- [Investissement SCPI](https://patrimed.fr/simulateurs/investissement-scpi) : revenus SCPI réels — nets de frais de souscription et de fiscalité (TMI + prélèvements sociaux) — au comptant ou à crédit, avec l'effort d'épargne mensuel
+- [ETF ou fonds classiques](https://patrimed.fr/simulateurs/etf-vs-fonds-actifs) : impact des frais courants des fonds — comparaison d'un fonds indiciel à frais bas et d'un fonds géré activement sur 5 à 40 ans
+- [Intérêts composés](https://patrimed.fr/simulateurs/interets-composes) : projection d'épargne avec versements mensuels, graphique et détail annuel
+
+## Blog (PatriActu)
+
+- [PatriActu](https://patrimed.fr/patriactu) : actualités et conseils patrimoniaux pour les soignants
+- [Flux RSS](https://patrimed.fr/rss.xml)
+
+## Légal
+
+- [Mentions légales](https://patrimed.fr/mentions-legales)
+- [Politique de confidentialité](https://patrimed.fr/donnees-personnelles)

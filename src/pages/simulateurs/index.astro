@@ -1,0 +1,181 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HeroCompact from '../../components/HeroCompact.astro';
+import Section from '../../components/Section.astro';
+import Button from '../../components/Button.astro';
+
+// Entrées par OBJECTIF, jamais par produit (arbitrage Maximilien 13/08/2026) :
+// le produit n'apparaît qu'en sous-titre.
+const principaux = [
+  {
+    href: '/simulateurs/economie-impot-per',
+    objectif: 'Réduire mes impôts',
+    produit: 'avec le PER',
+    tag: 'Fiscalité',
+    description:
+      "Combien d'impôt un versement PER vous fait-il économiser ? Calcul exact avec le barème 2026, votre tranche marginale et votre plafond de déduction TNS ou salarié.",
+    points: ['Barème 2026 en vigueur', 'Plafonds BNC / SELARL / salarié', 'Effort d’épargne réel'],
+    icon: 'M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z',
+  },
+  {
+    href: '/simulateurs/investissement-scpi',
+    objectif: 'Percevoir des loyers',
+    produit: 'avec les SCPI',
+    tag: 'Immobilier',
+    description:
+      "L'immobilier sans la gestion : vos revenus mensuels réels — nets de frais de souscription et de fiscalité — au comptant ou à crédit, avec l'effort d'épargne exact.",
+    points: ['Frais de souscription intégrés', 'Fiscalité TMI + 17,2 % assumée', 'Mode à crédit (effet de levier)'],
+    icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
+  },
+  {
+    href: '/simulateurs/interets-composes',
+    objectif: 'Faire fructifier mon épargne',
+    produit: 'intérêts composés',
+    tag: 'Épargne',
+    description:
+      "Le grand classique : capital de départ, versements mensuels, taux, durée. Visualisez la courbe qui s'accélère et la part des intérêts dans votre capital final.",
+    points: ['Graphique de croissance', 'Détail année par année', 'Part des intérêts'],
+    icon: 'M4 4v16h16M8 16l3-6 3 3 4-8',
+  },
+];
+
+const collectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Simulateurs patrimoniaux Patrimed",
+  "url": "https://patrimed.fr/simulateurs",
+  "description": "Simulateurs financiers gratuits pour professionnels de santé : économie d'impôt PER, investissement SCPI, intérêts composés, comparateur ETF vs fonds actifs.",
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      ...principaux.map((s, i) => ({
+        "@type": "ListItem",
+        "position": i + 1,
+        "name": `${s.objectif} (${s.produit})`,
+        "url": `https://patrimed.fr${s.href}`,
+      })),
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": 'ETF ou fonds classiques',
+        "url": 'https://patrimed.fr/simulateurs/etf-vs-fonds-actifs',
+      },
+    ],
+  },
+};
+---
+
+<Layout
+  title="Simulateurs patrimoniaux gratuits pour professionnels de santé"
+  description="PER, SCPI, intérêts composés : chiffrez votre projet en 2 minutes avec les paramètres fiscaux 2026, et recevez votre étude détaillée. Pensé pour les médecins et soignants."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} slot="head" />
+
+  <HeroCompact
+    title="Chiffrez"
+    highlight="votre projet"
+    subtitle="Choisissez votre objectif, répondez à quelques questions, obtenez un chiffre honnête — calculé avec les paramètres fiscaux 2026, pas avec des promesses."
+  />
+
+  <Section bg="gray">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {principaux.map((s) => (
+        <a href={s.href} class="group bg-white rounded-2xl border border-gray-100 p-6 md:p-8 card-hover flex flex-col">
+          <div class="flex items-center justify-between mb-5">
+            <div class="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d={s.icon} />
+              </svg>
+            </div>
+            <span class="bento-tag bg-pat-pink/60 text-pat-burgundy">{s.tag}</span>
+          </div>
+          <h2 class="font-display text-xl font-bold text-dark group-hover:text-pat-plum transition-colors">{s.objectif}</h2>
+          <p class="text-sm text-gray-400 font-medium mb-3">{s.produit}</p>
+          <p class="text-gray-500 text-sm leading-relaxed mb-5 flex-1">{s.description}</p>
+          <ul class="space-y-1.5 mb-6">
+            {s.points.map((p) => (
+              <li class="flex items-center gap-2 text-xs text-gray-500">
+                <svg class="w-3.5 h-3.5 text-pat-plum flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                {p}
+              </li>
+            ))}
+          </ul>
+          <span class="inline-flex items-center gap-2 text-pat-plum font-semibold text-sm">
+            Simuler mon projet
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <!-- Outils complémentaires -->
+    <div class="mt-10">
+      <h2 class="font-display text-lg font-bold text-dark mb-4">Aussi dans la boîte à outils</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <a href="/simulateurs/etf-vs-fonds-actifs" class="group bg-white rounded-2xl border border-gray-100 p-6 card-hover flex items-start gap-4">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-pat-pink to-primary-100 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-pat-plum" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-display text-base font-bold text-dark group-hover:text-pat-plum transition-colors">ETF ou fonds classiques</h3>
+            <p class="text-sm text-gray-500 leading-relaxed mt-1">
+              L'impact réel des frais courants de vos fonds sur 5 à 40 ans, chiffré en euros.
+              En libre accès, sans coordonnées — c'est notre argument, autant le prouver.
+            </p>
+          </div>
+        </a>
+        <div class="bg-white/60 rounded-2xl border-2 border-dashed border-gray-200 p-6 flex items-start gap-4">
+          <div class="w-11 h-11 rounded-xl bg-gray-100 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="font-display text-base font-bold text-gray-400">Retraite du médecin libéral <span class="bento-tag bg-gray-100 text-gray-500 ml-1">Bientôt</span></h3>
+            <p class="text-sm text-gray-400 leading-relaxed mt-1">
+              Votre future pension CARMF face à votre revenu actuel. En attendant, ce calcul fait partie
+              de notre <a href="/rdv" class="text-gray-500 hover:text-pat-plum font-semibold transition-colors">bilan retraite personnalisé, gratuit au premier rendez-vous</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <Section bg="white">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-display text-2xl md:text-3xl font-bold text-dark mb-6 text-center">
+        Des outils <span class="gradient-text">honnêtes</span>, pas des gadgets
+      </h2>
+      <div class="space-y-4 text-gray-600 leading-relaxed">
+        <p>
+          Ces simulateurs utilisent les <strong>paramètres fiscaux réellement en vigueur</strong> — barème de
+          l'impôt sur le revenu issu de la loi de finances pour 2026, PASS 2026, plafonds de déduction PER,
+          prélèvements sociaux — et chaque page précise ses hypothèses et ses limites. Le calcul se fait
+          dans votre navigateur, et on vous montre aussi ce que les plaquettes taisent : frais d'entrée,
+          fiscalité réelle, effort d'épargne.
+        </p>
+        <p>
+          Pour recevoir votre résultat détaillé, nous vous demandons vos coordonnées — et nous vous disons
+          pourquoi : votre étude vous est envoyée par email, et un conseiller peut vous proposer un échange
+          pour l'affiner. Rien d'autre. Un simulateur ne remplace pas une stratégie : votre statut d'exercice,
+          votre fiscalité réelle, vos projets et votre protection sociale s'articulent ensemble. C'est le
+          travail que nous faisons lors d'un
+          <a href="/rdv" class="text-pat-plum font-medium hover:underline">premier rendez-vous gratuit</a>,
+          en visioconférence, 6j/7 de 9h à 23h.
+        </p>
+      </div>
+      <div class="mt-10 text-center">
+        <Button href="/rdv" variant="primary" size="lg">
+          RDV visio gratuit
+        </Button>
+      </div>
+    </div>
+  </Section>
+</Layout>
